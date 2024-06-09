@@ -1,4 +1,4 @@
-package com.khve.dndcompanion
+package com.khve.dndcompanion.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

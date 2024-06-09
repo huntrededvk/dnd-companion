@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.khve.dndcompanion.R
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.databinding.FragmentAuthBinding
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.presentation.MainFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -70,17 +73,22 @@ class SignUpFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.userState.collect {
                     when (it) {
-                        is UserState.Authorized -> Toast.makeText(context, "Authorized", Toast.LENGTH_SHORT).show()
+                        is UserState.Authorized -> startMainFragment()
                         is UserState.Error -> Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()
-                            UserState.NotAuthorized -> Toast.makeText(context, "Not Authorized", Toast.LENGTH_SHORT).show()
-                            UserState.Progress -> Toast.makeText(context, "Progress", Toast.LENGTH_SHORT).show()
-                        else -> {
-                            Toast.makeText(context, "Unknown error", Toast.LENGTH_SHORT).show()
-                        }
+                            UserState.NotAuthorized -> {}
+                            UserState.Progress -> {}
+                            UserState.Initial -> {}
                     }
                 }
             }
         }
+    }
+
+    private fun startMainFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.auth_container, MainFragment.newInstance())
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {
