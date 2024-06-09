@@ -6,9 +6,8 @@ import com.khve.dndcompanion.di.module.AuthModule
 import com.khve.dndcompanion.di.module.MetaModule
 import com.khve.dndcompanion.di.module.ViewModelModule
 import com.khve.dndcompanion.di.scope.ApplicationScope
-import com.khve.dndcompanion.presentation.MainActivity
 import com.khve.dndcompanion.presentation.ViewModelFactory
-import com.khve.dndcompanion.presentation.auth.AuthFragment
+import com.khve.dndcompanion.presentation.auth.SignUpFragment
 import dagger.BindsInstance
 import dagger.Component
 
@@ -23,7 +22,7 @@ import dagger.Component
 interface ApplicationComponent {
 
     fun getViewModelFactory(): ViewModelFactory
-    fun inject(fragment: AuthFragment)
+    fun inject(fragment: SignUpFragment)
 
     @Component.Factory
     interface Factory {

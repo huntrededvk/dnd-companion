@@ -17,7 +17,7 @@ import com.khve.dndcompanion.domain.auth.entity.UserState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AuthFragment : Fragment() {
+class SignUpFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: AuthViewModel
@@ -86,6 +86,6 @@ class AuthFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() =
-            AuthFragment()
+            SignUpFragment()
     }
 }
