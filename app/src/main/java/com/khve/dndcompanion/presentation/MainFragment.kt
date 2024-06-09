@@ -11,7 +11,7 @@ class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
-        get() = _binding ?: throw RuntimeException("FragmentShopItemBinding == null")
+        get() = _binding ?: throw RuntimeException("FragmentMainBinding == null")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

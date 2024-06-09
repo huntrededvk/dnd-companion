@@ -4,7 +4,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.data.auth.mapper.UserMapper
-import com.khve.dndcompanion.data.auth.model.UserDto
+import com.khve.dndcompanion.data.auth.model.UserDbDto
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.repository.UserRepository
@@ -53,7 +53,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun setUserToDb(user: UserDto, userUid: String) {
+    private fun setUserToDb(user: UserDbDto, userUid: String) {
         mDocRef.document(userUid)
             .set(user)
             .addOnSuccessListener {
@@ -67,12 +67,12 @@ class UserRepositoryImpl @Inject constructor(
 
     private fun checkAuthorization(): Boolean {
         val currentUser = auth.currentUser
-        if (currentUser != null) {
+        return if (currentUser != null) {
             userState.value = UserState.Authorized(currentUser)
-            return true
+            true
         } else {
             userState.value = UserState.NotAuthorized
-            return false
+            false
         }
     }
 
