@@ -1,24 +1,78 @@
 [versions]
 agp = "8.3.2"
-kotlin = "1.9.0"
+androidXTestVersion = "1.5.0"
+core = "1.6.0-rc01"
+dagger = "2.51.1"
+espressoCoreVersion = "3.5.1"
+firebaseAnalytics = "22.0.1"
+firebaseAuth = "23.0.0"
+firebaseBom = "33.1.0"
+firebaseFirestore = "25.0.0"
+gson = "2.10.1"
+kaspresso = "1.5.5"
+kotlin = "1.9.21"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.7.0"
+kotlinxCoroutinesAndroid = "1.7.3"
+kotlinxCoroutinesCore = "1.7.3"
+lifecycleRuntimeKtx = "2.8.1"
+lifecycleViewmodelKtx = "2.8.1"
 material = "1.12.0"
-activity = "1.8.0"
+activity = "1.9.0"
 constraintlayout = "2.1.4"
+mockk = "1.13.11"
+orchestrator = "1.4.2"
+playServicesAds = "23.1.0"
+roomRuntime = "2.6.1"
+symbolProcessingApi = "2.0.0-1.0.21"
+testRunnerVersion = "1.5.2"
+uiDesktop = "1.6.7"
+annotation = "1.8.0"
+lifecycleLivedataKtx = "2.8.1"
 
 [libraries]
+adb-server-common = { module = "com.kaspersky.android-components:adb-server-common", version.ref = "kaspresso" }
+androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-v150 = { module = "androidx.test:core", version.ref = "androidXTestVersion" }
+androidx-espresso-core-v1 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitVersion" }
+androidx-orchestrator = { module = "androidx.test:orchestrator", version.ref = "orchestrator" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-rules = { module = "androidx.test:rules", version.ref = "androidXTestVersion" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "testRunnerVersion" }
+androidx-truth = { module = "androidx.test.ext:truth", version.ref = "androidXTestVersion" }
+core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidXTestVersion" }
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kaspresso = { module = "com.kaspersky.android-components:kaspresso", version.ref = "kaspresso" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "symbolProcessingApi" }
+androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
