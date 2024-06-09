@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
-import com.khve.dndcompanion.databinding.FragmentAuthBinding
+import com.khve.dndcompanion.databinding.FragmentSignUpBinding
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.presentation.MainFragment
@@ -24,8 +23,8 @@ class SignUpFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: AuthViewModel
-    private var _binding: FragmentAuthBinding? = null
-    private val binding: FragmentAuthBinding
+    private var _binding: FragmentSignUpBinding? = null
+    private val binding: FragmentSignUpBinding
         get() = _binding ?: throw RuntimeException("FragmentShopItemBinding == null")
 
     private val component by lazy {
@@ -41,7 +40,7 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAuthBinding.inflate(inflater, container, false)
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
 

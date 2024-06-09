@@ -20,9 +20,10 @@ class UserRepositoryImpl @Inject constructor(
     private val auth = Firebase.auth
     private val mDocRef = FirebaseFirestore.getInstance().collection("users")
 
-    private val userState = MutableStateFlow<UserState>(UserState.Initial)
-    override suspend fun createUser(userSignUpDto: UserSignUpDto) : StateFlow<UserState> {
-        userState.value = UserState.Progress
+    private val _userState = MutableStateFlow<UserState>(UserState.Initial)
+    private val userState = _userState.asStateFlow()
+    override fun createUser(userSignUpDto: UserSignUpDto) : StateFlow<UserState> {
+        _userState.value = UserState.Progress
         // Validate user
         if (!isValidated(userSignUpDto))
             return userState
@@ -39,18 +40,22 @@ class UserRepositoryImpl @Inject constructor(
                 } else {
                     if (task.exception != null) {
                         // TODO: Make it clean
-                        userState.value = UserState.Error(task.exception!!.message.toString())
+                        _userState.value = UserState.Error(task.exception!!.message.toString())
                     }
                 }
             }
 
-        return userState.asStateFlow()
+        return _userState.asStateFlow()
     }
 
-    fun deleteUser() {
-        if (checkAuthorization()) {
-            auth.currentUser!!.delete()
-        }
+    override fun deleteCurrentUser(): StateFlow<UserState> {
+            if (checkAuthorization()) {
+                auth.currentUser!!.delete()
+                _userState.value = UserState.NotAuthorized
+            } else {
+                _userState.value = UserState.Error("User wasn't deleted.")
+            }
+        return _userState.asStateFlow()
     }
 
     private fun setUserToDb(user: UserDbDto, userUid: String) {
@@ -60,18 +65,18 @@ class UserRepositoryImpl @Inject constructor(
                 checkAuthorization()
             }
             .addOnFailureListener { e ->
-                deleteUser()
-                userState.value = UserState.Error(e.message.toString())
+                deleteCurrentUser()
+                _userState.value = UserState.Error(e.message.toString())
             }
     }
 
     private fun checkAuthorization(): Boolean {
         val currentUser = auth.currentUser
         return if (currentUser != null) {
-            userState.value = UserState.Authorized(currentUser)
+            _userState.value = UserState.Authorized(currentUser)
             true
         } else {
-            userState.value = UserState.NotAuthorized
+            _userState.value = UserState.NotAuthorized
             false
         }
     }
@@ -102,7 +107,7 @@ class UserRepositoryImpl @Inject constructor(
         }
 
         if (error.isNotEmpty()) {
-            userState.value = UserState.Error(error)
+            _userState.value = UserState.Error(error)
             return false
         }
 

@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface UserRepository {
 
-    suspend fun createUser(userSignUpDto: UserSignUpDto): StateFlow<UserState>
+    fun createUser(userSignUpDto: UserSignUpDto): StateFlow<UserState>
+    fun deleteCurrentUser(): StateFlow<UserState>
 }
