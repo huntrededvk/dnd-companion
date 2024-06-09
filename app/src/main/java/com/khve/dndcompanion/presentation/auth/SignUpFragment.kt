@@ -37,7 +37,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAuthBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -49,7 +49,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun addViewListeners() {
-        binding.btnSignUp.setOnClickListener() {
+        binding.btnSignUp.setOnClickListener {
             val userSignUpDto = UserSignUpDto(
                 email = binding.etEmail.text.toString(),
                 password = binding.etPassword.text.toString(),
@@ -71,7 +71,7 @@ class SignUpFragment : Fragment() {
                 viewModel.userState.collect {
                     when (it) {
                         is UserState.Authorized -> Toast.makeText(context, "Authorized", Toast.LENGTH_SHORT).show()
-                        is UserState.Error -> Toast.makeText(context, it.errorMessage.toString(), Toast.LENGTH_SHORT).show()
+                        is UserState.Error -> Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()
                             UserState.NotAuthorized -> Toast.makeText(context, "Not Authorized", Toast.LENGTH_SHORT).show()
                             UserState.Progress -> Toast.makeText(context, "Progress", Toast.LENGTH_SHORT).show()
                         else -> {
