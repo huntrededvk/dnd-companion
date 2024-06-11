@@ -1,5 +1,6 @@
 package com.khve.dndcompanion.data.network
 
+import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -28,7 +29,8 @@ class FirebaseUserManager @Inject constructor(
         val currentUser = auth.currentUser
         if (currentUser != null) {
             getUserFromDbByUid(currentUser.uid)
-            addUserListener(currentUser.uid)
+            addUserDbListener(currentUser.uid)
+            addUserAuthListener()
         } else {
             _userState.value = UserState.NotAuthorized
         }
@@ -51,7 +53,7 @@ class FirebaseUserManager @Inject constructor(
             }
     }
 
-    private fun addUserListener(userUid: String) {
+    private fun addUserDbListener(userUid: String) {
         mDocRef.document(userUid).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 _userState.value = UserState.Error(e.localizedMessage ?: "Unknown error")
@@ -63,6 +65,17 @@ class FirebaseUserManager @Inject constructor(
                 UserState.User(userMapper.mapUserDbDtoToUser(userDbDto))
             } else {
                 UserState.Error("User's data is empty")
+            }
+        }
+    }
+
+    private fun addUserAuthListener() {
+        auth.addAuthStateListener {
+            val currentUser = it.currentUser
+            if (currentUser == null) {
+                _userState.value = UserState.NotAuthorized
+            } else {
+                getUserFromDbByUid(currentUser.uid)
             }
         }
     }

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleUserState(userState: UserState) {
         when (userState) {
-            is UserState.Authorized -> Log.d("MainActivity", "Activity: Authorized")
+            is UserState.Authorized -> {}
             is UserState.Error -> Toast.makeText(
                 this@MainActivity,
                 userState.errorMessage,

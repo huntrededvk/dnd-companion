@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface SignInRepository {
 
-    fun signInWithEmailAndPassword(email: String, password: String): StateFlow<UserState>
+    fun signInWithEmailAndPassword(email: String, password: String)
 
 }

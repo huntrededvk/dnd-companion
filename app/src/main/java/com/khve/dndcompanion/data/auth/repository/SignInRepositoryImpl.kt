@@ -13,17 +13,9 @@ class SignInRepositoryImpl @Inject constructor() : SignInRepository {
 
     private val auth = Firebase.auth
 
-    private val _userState = MutableStateFlow<UserState>(UserState.Initial)
-    private val userState = _userState.asStateFlow()
-    override fun signInWithEmailAndPassword(email: String, password: String): StateFlow<UserState> {
+
+    override fun signInWithEmailAndPassword(email: String, password: String) {
         auth.signInWithEmailAndPassword(email.trim(), password.trim())
-            .addOnSuccessListener {
-                _userState.value = UserState.Authorized
-            } .addOnFailureListener {
-                _userState.value = UserState.Error(it.message.toString())
-                _userState.value = UserState.Initial
-            }
-        return userState
     }
 
 }

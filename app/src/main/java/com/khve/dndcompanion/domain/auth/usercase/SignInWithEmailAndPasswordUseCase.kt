@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SignInWithEmailAndPasswordUseCase @Inject constructor(
     private val repository: SignInRepository
 ) {
-    operator fun invoke(email: String, password: String): StateFlow<UserState> {
+    operator fun invoke(email: String, password: String) {
         return repository.signInWithEmailAndPassword(email, password)
     }
 }

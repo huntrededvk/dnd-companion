@@ -16,15 +16,8 @@ class SignInViewModel @Inject constructor(
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase
 ): ViewModel() {
 
-    private val _userState = MutableStateFlow<UserState>(UserState.Initial)
-    val userState = _userState.asStateFlow()
-
     fun signInWithEmailAndPassword(email: String, password: String) {
-        viewModelScope.launch {
-            signInWithEmailAndPasswordUseCase(email, password).collect {
-                _userState.value = it
-            }
-        }
+        signInWithEmailAndPasswordUseCase(email, password)
     }
 
 }

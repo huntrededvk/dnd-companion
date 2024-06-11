@@ -47,7 +47,6 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeViewModel()
         listenViews()
     }
 
@@ -63,32 +62,6 @@ class SignInFragment : Fragment() {
             val password = binding.etPassword.text.toString()
             viewModel.signInWithEmailAndPassword(email, password)
         }
-    }
-
-    private fun observeViewModel() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.userState.collect {
-                    if (it is UserState.Authorized) {
-                        popBackToMainActivity()
-                    }
-                    if (it is UserState.Error) {
-                        Toast.makeText(
-                            requireContext(),
-                            it.errorMessage,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
-    }
-    private fun popBackToMainActivity() {
-        requireActivity().supportFragmentManager
-            .popBackStack(
-                MainActivity.BACK_STACK_NAME,
-                1
-            )
     }
 
     private fun startSignUpFragment() {
