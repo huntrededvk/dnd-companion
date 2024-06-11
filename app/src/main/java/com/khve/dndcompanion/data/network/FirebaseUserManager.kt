@@ -32,10 +32,10 @@ class FirebaseUserManager @Inject constructor(
         if (currentUser != null) {
             getUserFromDbByUid(currentUser.uid)
             addUserDbListener(currentUser.uid)
-            addUserAuthListener()
         } else {
             _userState.value = UserState.NotAuthorized
         }
+            addUserAuthListener()
     }
 
     private fun getUserFromDbByUid(userUid: String) {
@@ -73,7 +73,6 @@ class FirebaseUserManager @Inject constructor(
 
     private fun addUserAuthListener() {
         instance.addAuthStateListener {
-            Log.d("TESTTEST", "addUserAuthListener")
             val currentUser = it.currentUser
             if (currentUser == null) {
                 _userState.value = UserState.NotAuthorized

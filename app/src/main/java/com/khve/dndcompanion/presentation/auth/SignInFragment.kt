@@ -61,7 +61,10 @@ class SignInFragment : Fragment() {
                         is AuthState.Error -> {
                             Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                         }
-                        AuthState.Progress -> TODO()
+
+                        AuthState.Progress -> {
+                            // TODO
+                        }
                     }
                 }
             }
@@ -92,6 +95,7 @@ class SignInFragment : Fragment() {
     companion object {
         const val BACKSTACK_NAME = "sign_in_fragment"
         private const val POP_BACK_STACK_NOT_INCLUSIVE = 0
+
         @JvmStatic
         fun newInstance() = SignInFragment()
     }

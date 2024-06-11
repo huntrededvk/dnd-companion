@@ -2,7 +2,6 @@ package com.khve.dndcompanion.presentation
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.databinding.FragmentMainBinding
 import com.khve.dndcompanion.domain.auth.entity.User
-import com.khve.dndcompanion.presentation.auth.SignUpFragment
 
 class MainFragment : Fragment() {
 
@@ -57,6 +55,11 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listenViews()
+        setupInitialValuesForViews()
+    }
+
+    private fun setupInitialValuesForViews() {
+        binding.tvUserUsername.text = currentUser.username
     }
 
     private fun listenViews() {

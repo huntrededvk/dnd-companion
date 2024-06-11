@@ -1,5 +1,6 @@
 package com.khve.dndcompanion.data.auth.repository
 
+import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.domain.auth.entity.AuthState
