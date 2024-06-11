@@ -2,27 +2,29 @@ package com.khve.dndcompanion.presentation.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.khve.dndcompanion.data.auth.model.UserSignUpDto
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.auth.usercase.CreateUserUseCase
+import com.khve.dndcompanion.domain.auth.usercase.SignInWithEmailAndPasswordUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(
-    private val createUserUseCase: CreateUserUseCase
-) : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase
+): ViewModel() {
 
     private val _userState = MutableStateFlow<UserState>(UserState.Initial)
     val userState = _userState.asStateFlow()
 
-    fun createUser(userSignUpDto: UserSignUpDto) {
+    fun signInWithEmailAndPassword(email: String, password: String) {
         viewModelScope.launch {
-            createUserUseCase(userSignUpDto).collect {
+            signInWithEmailAndPasswordUseCase(email, password).collect {
                 _userState.value = it
             }
         }
     }
+
 }

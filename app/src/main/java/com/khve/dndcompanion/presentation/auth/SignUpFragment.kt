@@ -15,6 +15,7 @@ import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.databinding.FragmentSignUpBinding
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.presentation.MainActivity
 import com.khve.dndcompanion.presentation.MainFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,10 +23,10 @@ import javax.inject.Inject
 class SignUpFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: AuthViewModel
+    lateinit var viewModel: SignUpViewModel
     private var _binding: FragmentSignUpBinding? = null
     private val binding: FragmentSignUpBinding
-        get() = _binding ?: throw RuntimeException("FragmentShopItemBinding == null")
+        get() = _binding ?: throw RuntimeException("FragmentSignUpFragment == null")
 
     private val component by lazy {
         (requireActivity().application as CompanionApplication).component
@@ -71,26 +72,27 @@ class SignUpFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.userState.collect {
-                    when (it) {
-                        is UserState.Authorized -> startMainFragment()
-                        is UserState.Error -> Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()
-                            UserState.NotAuthorized -> {}
-                            UserState.Progress -> {}
-                            UserState.Initial -> {}
+                    if (it is UserState.Authorized) {
+                        popBackToMainActivity()
+                    }
+                    if (it is UserState.Error) {
+                        Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
     }
 
-    private fun startMainFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.auth_container, MainFragment.newInstance())
-            .addToBackStack(null)
-            .commit()
+    private fun popBackToMainActivity() {
+        requireActivity().supportFragmentManager
+            .popBackStack(
+                MainActivity.BACK_STACK_NAME,
+                POP_BACK_STACK_NOT_INCLUSIVE
+            )
     }
 
     companion object {
+        private const val POP_BACK_STACK_NOT_INCLUSIVE = 0
         @JvmStatic
         fun newInstance() =
             SignUpFragment()

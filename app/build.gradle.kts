@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp") version "2.0.0-1.0.21"
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {

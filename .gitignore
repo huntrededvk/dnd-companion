@@ -7,5 +7,14 @@
 /captures
 .externalNativeBuild
 .cxx
-local.properties
 /app/google-services.json
+*.apk
+*.ap_
+*.aab
+*.dex
+/bin
+/gen
+.navigation
+.output.json
+/output.json
+/obj

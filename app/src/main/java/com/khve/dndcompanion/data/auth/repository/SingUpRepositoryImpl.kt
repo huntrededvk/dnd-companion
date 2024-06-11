@@ -7,15 +7,15 @@ import com.khve.dndcompanion.data.auth.mapper.UserMapper
 import com.khve.dndcompanion.data.auth.model.UserDbDto
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.auth.repository.UserRepository
+import com.khve.dndcompanion.domain.auth.repository.SingUpRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+class SingUpRepositoryImpl @Inject constructor(
     private val userMapper: UserMapper
-): UserRepository {
+): SingUpRepository {
 
     private val auth = Firebase.auth
     private val mDocRef = FirebaseFirestore.getInstance().collection("users")
@@ -35,7 +35,7 @@ class UserRepositoryImpl @Inject constructor(
                     val createdUserUid = task.result.user?.uid
                     if (createdUserUid != null) {
                         // Save created user to db by uid
-                        setUserToDb(userMapper.mapUserSignUpDtoToUserDto(userSignUpDto), createdUserUid)
+                        setUserToDb(userMapper.mapUserSignUpDtoToUserDbDto(userSignUpDto), createdUserUid)
                     }
                 } else {
                     if (task.exception != null) {
@@ -48,37 +48,16 @@ class UserRepositoryImpl @Inject constructor(
         return _userState.asStateFlow()
     }
 
-    override fun deleteCurrentUser(): StateFlow<UserState> {
-            if (checkAuthorization()) {
-                auth.currentUser!!.delete()
-                _userState.value = UserState.NotAuthorized
-            } else {
-                _userState.value = UserState.Error("User wasn't deleted.")
-            }
-        return _userState.asStateFlow()
-    }
-
     private fun setUserToDb(user: UserDbDto, userUid: String) {
         mDocRef.document(userUid)
             .set(user)
             .addOnSuccessListener {
-                checkAuthorization()
+                _userState.value = UserState.Authorized
             }
             .addOnFailureListener { e ->
-                deleteCurrentUser()
+                auth.currentUser?.delete()
                 _userState.value = UserState.Error(e.message.toString())
             }
-    }
-
-    private fun checkAuthorization(): Boolean {
-        val currentUser = auth.currentUser
-        return if (currentUser != null) {
-            _userState.value = UserState.Authorized(currentUser)
-            true
-        } else {
-            _userState.value = UserState.NotAuthorized
-            false
-        }
     }
 
     private fun isValidated(validateUserSignUpDto: UserSignUpDto): Boolean {

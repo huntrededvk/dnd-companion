@@ -2,7 +2,9 @@ package com.khve.dndcompanion.di.module
 
 import androidx.lifecycle.ViewModel
 import com.khve.dndcompanion.di.key.ViewModelKey
-import com.khve.dndcompanion.presentation.auth.AuthViewModel
+import com.khve.dndcompanion.presentation.MainViewModel
+import com.khve.dndcompanion.presentation.auth.SignUpViewModel
+import com.khve.dndcompanion.presentation.auth.SignInViewModel
 import com.khve.dndcompanion.presentation.meta.MetaViewModel
 import dagger.Binds
 import dagger.Module
@@ -17,7 +19,17 @@ interface ViewModelModule {
     fun bindMetaViewModel(viewModel: MetaViewModel): ViewModel
 
     @IntoMap
-    @ViewModelKey(AuthViewModel::class)
+    @ViewModelKey(MainViewModel::class)
     @Binds
-    fun bindAuthViewModel(viewModel: AuthViewModel): ViewModel
+    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(SignInViewModel::class)
+    @Binds
+    fun bindSignInViewModel(viewModel: SignInViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(SignUpViewModel::class)
+    @Binds
+    fun bindSignUpViewModel(viewModel: SignUpViewModel): ViewModel
 }
