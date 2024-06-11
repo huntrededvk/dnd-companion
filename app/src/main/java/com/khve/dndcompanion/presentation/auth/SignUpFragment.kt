@@ -55,10 +55,10 @@ class SignUpFragment : Fragment() {
     private fun addViewListeners() {
         binding.btnSignUp.setOnClickListener {
             val userSignUpDto = UserSignUpDto(
-                email = binding.etEmail.text.toString(),
-                password = binding.etPassword.text.toString(),
-                username = binding.etUsername.text.toString(),
-                discord = binding.etDiscord.text.toString()
+                email = binding.etEmail.text.toString().trim(),
+                password = binding.etPassword.text.toString().trim(),
+                username = binding.etUsername.text.toString().trim(),
+                discord = binding.etDiscord.text.toString().trim()
             )
 
             viewModel.createUser(userSignUpDto)

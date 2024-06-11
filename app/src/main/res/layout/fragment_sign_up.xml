@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/email"
+                    android:hint="@string/email_field"
                     android:importantForAutofill="no"
                     android:inputType="textEmailAddress" />
 
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/password"
+                    android:hint="@string/password_field"
                     android:importantForAutofill="no"
                     android:inputType="textPassword" />
 
@@ -110,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/username"
+                    android:hint="@string/username_field"
                     android:importantForAutofill="no"
                     android:inputType="text" />
 
@@ -131,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/discord"
+                    android:hint="@string/discord_field"
                     android:importantForAutofill="no"
                     android:inputType="text" />
 

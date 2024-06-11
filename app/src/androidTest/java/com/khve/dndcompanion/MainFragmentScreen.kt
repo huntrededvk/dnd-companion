@@ -1,7 +1,6 @@
-package com.khve.dndcompanion.screen
+package com.khve.dndcompanion
 
 import com.kaspersky.kaspresso.screens.KScreen
-import com.khve.dndcompanion.R
 import io.github.kakaocup.kakao.text.KButton
 
 object MainFragmentScreen : KScreen<MainFragmentScreen>() {

@@ -1,34 +1,35 @@
-package com.khve.dndcompanion
+package com.khve.dndcompanion.auth.scenario
 
 import com.kaspersky.kaspresso.testcases.api.scenario.Scenario
 import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
-import com.khve.dndcompanion.screen.SignInScreen
+import com.khve.dndcompanion.R
+import com.khve.dndcompanion.auth.screen.SignInScreen
 
 class SignInScenario : Scenario() {
     override val steps: TestContext<Unit>.() -> Unit = {
         step("Check UI elements") {
             SignInScreen {
-                with(tvForgotPassword) {
+                tvForgotPassword {
                     isVisible()
                     hasText(R.string.forgot_password)
                 }
-                with(tvTitle) {
+                tvTitle {
                     isVisible()
                     hasText(R.string.sign_in)
                 }
-                with(tvSignUp) {
+                tvSignUp {
                     isVisible()
                     hasText(R.string.sign_up)
                 }
-                with(etEmail) {
+                etEmail {
                     isVisible()
-                    hasHint(R.string.email)
+                    hasHint(R.string.email_field)
                 }
-                with(etPassword) {
+                etPassword {
                     isVisible()
-                    hasHint(R.string.password)
+                    hasHint(R.string.password_field)
                 }
-                with(btnSignIn) {
+                btnSignIn {
                     isVisible()
                     isClickable()
                 }

@@ -79,8 +79,8 @@ class SignInFragment : Fragment() {
             // TODO: Forgot password
         }
         binding.btnSignIn.setOnClickListener {
-            val email = binding.etEmail.text.toString()
-            val password = binding.etPassword.text.toString()
+            val email = binding.etEmail.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
             viewModel.signInWithEmailAndPassword(email, password)
         }
     }

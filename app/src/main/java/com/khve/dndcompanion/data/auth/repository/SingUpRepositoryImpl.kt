@@ -62,9 +62,9 @@ class SingUpRepositoryImpl @Inject constructor(
         var error = ""
 
         val userToValidate = validateUserSignUpDto.copy(
-            email = validateUserSignUpDto.email.trim(),
-            username = validateUserSignUpDto.username.trim(),
-            discord = validateUserSignUpDto.discord.trim()
+            email = validateUserSignUpDto.email,
+            username = validateUserSignUpDto.username,
+            discord = validateUserSignUpDto.discord
         )
 
         userToValidate.username.let {

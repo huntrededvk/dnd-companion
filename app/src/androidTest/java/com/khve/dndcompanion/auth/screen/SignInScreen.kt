@@ -1,4 +1,4 @@
-package com.khve.dndcompanion.screen
+package com.khve.dndcompanion.auth.screen
 
 import com.kaspersky.kaspresso.screens.KScreen
 import com.khve.dndcompanion.R
@@ -6,7 +6,6 @@ import io.github.kakaocup.kakao.edit.KEditText
 import io.github.kakaocup.kakao.image.KImageView
 import io.github.kakaocup.kakao.text.KButton
 import io.github.kakaocup.kakao.text.KTextView
-import org.junit.Test
 
 object SignInScreen: KScreen<SignInScreen>() {
     override val layoutId: Int? = null
