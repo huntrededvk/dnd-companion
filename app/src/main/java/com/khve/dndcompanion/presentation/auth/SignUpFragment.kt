@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.databinding.FragmentSignUpBinding
+import com.khve.dndcompanion.domain.auth.entity.AuthState
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.presentation.MainActivity
@@ -71,12 +72,9 @@ class SignUpFragment : Fragment() {
     private fun observeAuth() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.userState.collect {
-                    if (it is UserState.Authorized) {
-                        popBackToMainActivity()
-                    }
-                    if (it is UserState.Error) {
-                        Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()
+                viewModel.authState.collect {
+                    if (it is AuthState.Error) {
+                        Toast.makeText(context, it.error, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

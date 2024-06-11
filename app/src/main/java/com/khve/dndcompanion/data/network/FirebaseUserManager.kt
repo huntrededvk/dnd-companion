@@ -1,6 +1,7 @@
 package com.khve.dndcompanion.data.network
 
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -15,6 +16,7 @@ class FirebaseUserManager @Inject constructor(
     private val userMapper: UserMapper
 ) {
 
+    private val instance = FirebaseAuth.getInstance()
     private val auth = Firebase.auth
     private val mDocRef = FirebaseFirestore.getInstance().collection("users")
 
@@ -70,7 +72,8 @@ class FirebaseUserManager @Inject constructor(
     }
 
     private fun addUserAuthListener() {
-        auth.addAuthStateListener {
+        instance.addAuthStateListener {
+            Log.d("TESTTEST", "addUserAuthListener")
             val currentUser = it.currentUser
             if (currentUser == null) {
                 _userState.value = UserState.NotAuthorized

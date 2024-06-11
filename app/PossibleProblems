@@ -1,0 +1,1 @@
+1. SignUpRepositoryImpl - After user create, Activity can close Fragment before user's data will be added to database, since Firebase login User on create

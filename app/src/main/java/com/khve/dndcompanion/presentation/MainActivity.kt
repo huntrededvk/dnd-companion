@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleUserState(userState: UserState) {
         when (userState) {
-            is UserState.Authorized -> {}
             is UserState.Error -> Toast.makeText(
                 this@MainActivity,
                 userState.errorMessage,
@@ -58,7 +57,6 @@ class MainActivity : AppCompatActivity() {
             ).show()
             is UserState.User -> startMainFragment(userState.user)
             UserState.NotAuthorized -> startSignInFragment()
-            UserState.Progress -> {}
             UserState.Initial -> {}
         }
     }

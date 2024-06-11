@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.2"
+androidxEspressoCore = "3.4.0"
 androidXTestVersion = "1.5.0"
 core = "1.6.0-rc01"
 dagger = "2.51.1"
@@ -28,6 +29,8 @@ mockk = "1.13.11"
 orchestrator = "1.4.2"
 playServicesAds = "23.1.0"
 roomRuntime = "2.6.1"
+rules = "1.4.0"
+runner = "1.4.0"
 symbolProcessingApi = "2.0.0-1.0.21"
 testRunnerVersion = "1.5.2"
 uiDesktop = "1.6.7"
@@ -40,6 +43,7 @@ androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-v150 = { module = "androidx.test:core", version.ref = "androidXTestVersion" }
 androidx-espresso-core-v1 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+androidx-espresso-core-v340 = { module = "androidx.test.espresso:espresso-core", version.ref = "androidxEspressoCore" }
 androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitVersion" }
 androidx-orchestrator = { module = "androidx.test:orchestrator", version.ref = "orchestrator" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
@@ -48,7 +52,9 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-rules = { module = "androidx.test:rules", version.ref = "androidXTestVersion" }
+androidx-rules-v140 = { module = "androidx.test:rules", version.ref = "rules" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "testRunnerVersion" }
+androidx-runner-v140 = { module = "androidx.test:runner", version.ref = "runner" }
 androidx-truth = { module = "androidx.test.ext:truth", version.ref = "androidXTestVersion" }
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidXTestVersion" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }

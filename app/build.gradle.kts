@@ -90,5 +90,6 @@ dependencies {
     androidTestImplementation(libs.androidx.truth)
     androidTestImplementation(libs.androidx.runner)
     androidTestUtil(libs.androidx.orchestrator)
+    androidTestImplementation(libs.androidx.rules)
 
 }

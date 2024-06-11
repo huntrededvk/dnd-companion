@@ -6,6 +6,7 @@ import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.data.auth.mapper.UserMapper
 import com.khve.dndcompanion.data.auth.model.UserDbDto
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
+import com.khve.dndcompanion.domain.auth.entity.AuthState
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.repository.SingUpRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,13 +21,13 @@ class SingUpRepositoryImpl @Inject constructor(
     private val auth = Firebase.auth
     private val mDocRef = FirebaseFirestore.getInstance().collection("users")
 
-    private val _userState = MutableStateFlow<UserState>(UserState.Initial)
-    private val userState = _userState.asStateFlow()
-    override fun createUser(userSignUpDto: UserSignUpDto) : StateFlow<UserState> {
-        _userState.value = UserState.Progress
+    private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
+    private val authState = _authState.asStateFlow()
+    override fun createUser(userSignUpDto: UserSignUpDto) : StateFlow<AuthState> {
+        _authState.value = AuthState.Progress
         // Validate user
         if (!isValidated(userSignUpDto))
-            return userState
+            return authState
         // Attempt to create user
         auth.createUserWithEmailAndPassword(userSignUpDto.email, userSignUpDto.password)
             .addOnCompleteListener { task ->
@@ -39,24 +40,21 @@ class SingUpRepositoryImpl @Inject constructor(
                     }
                 } else {
                     if (task.exception != null) {
-                        // TODO: Make it clean
-                        _userState.value = UserState.Error(task.exception!!.message.toString())
+                        val exception = task.exception
+                        _authState.value = AuthState.Error(exception?.localizedMessage ?: "Unknown error")
                     }
                 }
             }
 
-        return _userState.asStateFlow()
+        return _authState.asStateFlow()
     }
 
     private fun setUserToDb(user: UserDbDto, userUid: String) {
         mDocRef.document(userUid)
             .set(user)
-            .addOnSuccessListener {
-                _userState.value = UserState.Authorized
-            }
             .addOnFailureListener { e ->
                 auth.currentUser?.delete()
-                _userState.value = UserState.Error(e.message.toString())
+                _authState.value = AuthState.Error(e.message.toString())
             }
     }
 
@@ -86,7 +84,7 @@ class SingUpRepositoryImpl @Inject constructor(
         }
 
         if (error.isNotEmpty()) {
-            _userState.value = UserState.Error(error)
+            _authState.value = AuthState.Error(error)
             return false
         }
 

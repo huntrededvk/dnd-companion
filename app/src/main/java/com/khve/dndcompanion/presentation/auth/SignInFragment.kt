@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentSignInBinding
+import com.khve.dndcompanion.domain.auth.entity.AuthState
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.MainActivity
@@ -48,6 +49,23 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listenViews()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.authState.collect {
+                    when (it) {
+                        AuthState.Initial -> {}
+                        is AuthState.Error -> {
+                            Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                        }
+                        AuthState.Progress -> TODO()
+                    }
+                }
+            }
+        }
     }
 
     private fun listenViews() {
