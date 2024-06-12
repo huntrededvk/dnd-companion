@@ -10,14 +10,10 @@ import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.khve.dndcompanion.R
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.databinding.FragmentSignUpBinding
 import com.khve.dndcompanion.domain.auth.entity.AuthState
 import com.khve.dndcompanion.presentation.CompanionApplication
-import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.presentation.MainActivity
-import com.khve.dndcompanion.presentation.MainFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -1,7 +1,6 @@
-package com.khve.dndcompanion.presentation
+package com.khve.dndcompanion.presentation.main
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +8,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
-import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.auth.SignInFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject

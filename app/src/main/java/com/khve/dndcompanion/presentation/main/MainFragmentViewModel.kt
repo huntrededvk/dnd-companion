@@ -1,4 +1,4 @@
-package com.khve.dndcompanion.presentation
+package com.khve.dndcompanion.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

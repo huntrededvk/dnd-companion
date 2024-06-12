@@ -10,7 +10,7 @@ import com.khve.dndcompanion.auth.scenario.SignInScenario
 import com.khve.dndcompanion.auth.scenario.SignUpScenario
 import com.khve.dndcompanion.auth.screen.SignInScreen
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
-import com.khve.dndcompanion.presentation.MainActivity
+import com.khve.dndcompanion.presentation.main.MainActivity
 import org.junit.Rule
 import org.junit.Test
 

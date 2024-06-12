@@ -13,11 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentSignInBinding
 import com.khve.dndcompanion.domain.auth.entity.AuthState
-import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.presentation.CompanionApplication
-import com.khve.dndcompanion.presentation.MainActivity
-import com.khve.dndcompanion.presentation.MainFragment
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

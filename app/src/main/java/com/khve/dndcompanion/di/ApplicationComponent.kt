@@ -9,8 +9,8 @@ import com.khve.dndcompanion.di.module.MainModule
 import com.khve.dndcompanion.di.module.MetaModule
 import com.khve.dndcompanion.di.module.ViewModelModule
 import com.khve.dndcompanion.di.scope.ApplicationScope
-import com.khve.dndcompanion.presentation.MainActivity
-import com.khve.dndcompanion.presentation.MainFragment
+import com.khve.dndcompanion.presentation.main.MainActivity
+import com.khve.dndcompanion.presentation.main.MainFragment
 import com.khve.dndcompanion.presentation.ViewModelFactory
 import com.khve.dndcompanion.presentation.auth.SignInFragment
 import com.khve.dndcompanion.presentation.auth.SignUpFragment

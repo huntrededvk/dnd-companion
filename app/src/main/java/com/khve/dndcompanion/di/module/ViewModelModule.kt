@@ -2,8 +2,8 @@ package com.khve.dndcompanion.di.module
 
 import androidx.lifecycle.ViewModel
 import com.khve.dndcompanion.di.key.ViewModelKey
-import com.khve.dndcompanion.presentation.MainFragmentViewModel
-import com.khve.dndcompanion.presentation.MainViewModel
+import com.khve.dndcompanion.presentation.main.MainFragmentViewModel
+import com.khve.dndcompanion.presentation.main.MainViewModel
 import com.khve.dndcompanion.presentation.auth.SignUpViewModel
 import com.khve.dndcompanion.presentation.auth.SignInViewModel
 import com.khve.dndcompanion.presentation.meta.MetaListViewModel
