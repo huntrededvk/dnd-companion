@@ -2,10 +2,11 @@ package com.khve.dndcompanion.di.module
 
 import androidx.lifecycle.ViewModel
 import com.khve.dndcompanion.di.key.ViewModelKey
+import com.khve.dndcompanion.presentation.MainFragmentViewModel
 import com.khve.dndcompanion.presentation.MainViewModel
 import com.khve.dndcompanion.presentation.auth.SignUpViewModel
 import com.khve.dndcompanion.presentation.auth.SignInViewModel
-import com.khve.dndcompanion.presentation.meta.MetaViewModel
+import com.khve.dndcompanion.presentation.meta.MetaListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -14,9 +15,9 @@ import dagger.multibindings.IntoMap
 interface ViewModelModule {
 
     @IntoMap
-    @ViewModelKey(MetaViewModel::class)
+    @ViewModelKey(MetaListViewModel::class)
     @Binds
-    fun bindMetaViewModel(viewModel: MetaViewModel): ViewModel
+    fun bindMetaViewModel(viewModel: MetaListViewModel): ViewModel
 
     @IntoMap
     @ViewModelKey(MainViewModel::class)
@@ -32,4 +33,9 @@ interface ViewModelModule {
     @ViewModelKey(SignUpViewModel::class)
     @Binds
     fun bindSignUpViewModel(viewModel: SignUpViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(MainFragmentViewModel::class)
+    @Binds
+    fun bindMainFragmentViewModel(viewModel: MainFragmentViewModel): ViewModel
 }

@@ -1,14 +1,15 @@
 package com.khve.dndcompanion.domain.meta.usecase
 
-import com.khve.dndcompanion.domain.meta.entity.MetaItem
+import com.khve.dndcompanion.data.meta.model.MetaItemDto
+import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.domain.meta.repository.MetaListRepository
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class AddMetaItemUseCase @Inject constructor(
-    private val metaListRepository: MetaListRepository
+    private val repository: MetaListRepository
 ) {
-
-    suspend fun addMetaItem(metaItem: MetaItem) {
-        metaListRepository.addMetaItem(metaItem)
+    operator fun invoke(metaItemDto: MetaItemDto): StateFlow<MetaItemState> {
+        return repository.addMetaItem(metaItemDto)
     }
 }

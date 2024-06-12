@@ -82,7 +82,7 @@ class SignUpFragment : Fragment() {
     }
 
     companion object {
-        private const val POP_BACK_STACK_NOT_INCLUSIVE = 0
+        const val BACKSTACK_NAME = "sign_up_fragment"
         @JvmStatic
         fun newInstance() =
             SignUpFragment()

@@ -17,8 +17,9 @@ class UserMapper @Inject constructor() {
         )
     }
 
-    fun mapUserDbDtoToUser(userDbDto: UserDbDto): User {
+    fun mapUserDbDtoToUser(userDbDto: UserDbDto, userUid: String): User {
         return User(
+            uid = userUid,
             email = userDbDto.email,
             username = userDbDto.username,
             discord = userDbDto.discord,

@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserDbDto(
+    @SerializedName("uid") val uid: String = DEFAULT_EMPTY_STRING,
     @SerializedName("email") val email: String = DEFAULT_EMPTY_STRING,
     @SerializedName("username") val username: String = DEFAULT_EMPTY_STRING,
     @SerializedName("discord") val discord: String = DEFAULT_EMPTY_STRING,

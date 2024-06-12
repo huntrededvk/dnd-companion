@@ -37,6 +37,7 @@ testRunnerVersion = "1.5.2"
 uiDesktop = "1.6.7"
 annotation = "1.8.0"
 lifecycleLivedataKtx = "2.8.1"
+databindingRuntime = "8.4.2"
 
 [libraries]
 adb-server-common = { module = "com.kaspersky.android-components:adb-server-common", version.ref = "kaspresso" }
@@ -83,6 +84,7 @@ symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-ap
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

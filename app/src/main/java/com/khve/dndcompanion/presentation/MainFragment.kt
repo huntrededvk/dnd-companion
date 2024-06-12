@@ -1,47 +1,38 @@
 package com.khve.dndcompanion.presentation
 
-import android.os.Build
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentMainBinding
-import com.khve.dndcompanion.domain.auth.entity.User
+import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.presentation.meta.MetaListFragment
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModel: MainFragmentViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding ?: throw RuntimeException("FragmentMainBinding == null")
 
-    private lateinit var currentUser: User
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        parseParams()
-        super.onCreate(savedInstanceState)
-
+    private val component by lazy {
+        (requireActivity().application as CompanionApplication).component
     }
 
-    private fun parseParams() {
-        val args = requireArguments()
-        if (args.containsKey(ARG_CURRENT_USER)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                val userFromBundle: User? = args.getParcelable(ARG_CURRENT_USER, User::class.java)
-                if (userFromBundle != null) {
-                    currentUser = userFromBundle
-                }
-            } else {
-                val userFromBundle: User? = args.getParcelable(ARG_CURRENT_USER)
-                if (userFromBundle != null) {
-                    currentUser = userFromBundle
-                }
-            }
-        } else {
-            throw RuntimeException("No current user passed to MainFragment params")
-        }
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(
@@ -54,38 +45,42 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
         listenViews()
-        setupInitialValuesForViews()
     }
 
-    private fun setupInitialValuesForViews() {
-        binding.tvUserUsername.text = currentUser.username
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.currentUser.collect {
+                    if (it is UserState.User) {
+                        binding.tvUserUsername.text = it.user.username
+                    }
+                }
+            }
+        }
     }
 
     private fun listenViews() {
         binding.btnSignOut.setOnClickListener {
             Firebase.auth.signOut()
-            popBackToMainActivity()
+        }
+        binding.clMeta.setOnClickListener {
+            startMetaListFragment()
         }
     }
 
-    private fun popBackToMainActivity() {
-        requireActivity().supportFragmentManager
-            .popBackStack(
-                MainActivity.BACK_STACK_NAME,
-                1
-            )
+    private fun startMetaListFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.auth_container, MetaListFragment.newInstance())
+            .addToBackStack(MetaListFragment.BACKSTACK_NAME)
+            .commit()
     }
 
     companion object {
         const val BACKSTACK_NAME = "main_fragment"
-        private const val ARG_CURRENT_USER = "arg_current_user"
 
         @JvmStatic
-        fun newInstance(currentUser: User) = MainFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(ARG_CURRENT_USER, currentUser)
-            }
-        }
+        fun newInstance() = MainFragment()
     }
 }

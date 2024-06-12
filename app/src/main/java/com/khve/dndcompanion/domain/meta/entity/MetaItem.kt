@@ -1,13 +1,16 @@
 package com.khve.dndcompanion.domain.meta.entity
 
-import com.khve.dndcompanion.domain.auth.entity.User
-
 
 data class MetaItem (
-    val id: Int,
-    val title: String,
-    val author: User,
-    val previewImg: String,
-    val createdAt: Long,
-    val deletedAt: Long
-)
+    val uid: String = EMPTY_STRING_VALUE,
+    val title: String = EMPTY_STRING_VALUE,
+    val description: String = EMPTY_STRING_VALUE,
+    val tier: String = EMPTY_STRING_VALUE,
+    val authorUsername: String = EMPTY_STRING_VALUE,
+    val authorUid: String = EMPTY_STRING_VALUE,
+    val previewImg: String = EMPTY_STRING_VALUE
+) {
+    companion object {
+        private const val EMPTY_STRING_VALUE = ""
+    }
+}

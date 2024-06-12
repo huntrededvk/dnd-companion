@@ -1,17 +1,15 @@
 package com.khve.dndcompanion.domain.meta.repository
 
+import com.khve.dndcompanion.data.meta.model.MetaItemDto
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
+import com.khve.dndcompanion.domain.meta.entity.MetaItemState
+import com.khve.dndcompanion.domain.meta.entity.MetaListState
 import kotlinx.coroutines.flow.StateFlow
 
 interface MetaListRepository {
-    suspend fun addMetaItem(metaItem: MetaItem)
+    fun getMetaList(): StateFlow<MetaListState>
 
-    suspend fun deleteMetaItem(metaItem: MetaItem)
+    fun addMetaItem(metaItemDto: MetaItemDto): StateFlow<MetaItemState>
 
-    suspend fun editMetaItem(metaItem: MetaItem)
-
-    suspend fun getMetaItem(metaItemId: Int): StateFlow<MetaItem>
-
-    fun getMetaList(): StateFlow<List<MetaItem>>
-
+    fun getMetaItem(metaItemUid: String): StateFlow<MetaItemState>
 }

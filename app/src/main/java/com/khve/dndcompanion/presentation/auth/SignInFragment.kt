@@ -88,13 +88,12 @@ class SignInFragment : Fragment() {
     private fun startSignUpFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.auth_container, SignUpFragment.newInstance())
-            .addToBackStack(null)
+            .addToBackStack(SignUpFragment.BACKSTACK_NAME)
             .commit()
     }
 
     companion object {
         const val BACKSTACK_NAME = "sign_in_fragment"
-        private const val POP_BACK_STACK_NOT_INCLUSIVE = 0
 
         @JvmStatic
         fun newInstance() = SignInFragment()

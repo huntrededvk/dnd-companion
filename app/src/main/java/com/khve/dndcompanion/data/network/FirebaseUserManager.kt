@@ -7,11 +7,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.data.auth.mapper.UserMapper
 import com.khve.dndcompanion.data.auth.model.UserDbDto
+import com.khve.dndcompanion.data.meta.model.MetaItemDto
+import com.khve.dndcompanion.di.scope.ApplicationScope
+import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
+@ApplicationScope
 class FirebaseUserManager @Inject constructor(
     private val userMapper: UserMapper
 ) {
@@ -43,7 +49,7 @@ class FirebaseUserManager @Inject constructor(
             .addOnSuccessListener { snapshot ->
                 val userDbDto = snapshot?.toObject(UserDbDto::class.java)
                 _userState.value = if (userDbDto != null) {
-                    UserState.User(userMapper.mapUserDbDtoToUser(userDbDto))
+                    UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
                 } else {
                     UserState.Error("User's data is empty")
                 }
@@ -64,7 +70,7 @@ class FirebaseUserManager @Inject constructor(
 
             val userDbDto = snapshot?.toObject(UserDbDto::class.java)
             _userState.value = if (userDbDto != null) {
-                UserState.User(userMapper.mapUserDbDtoToUser(userDbDto))
+                UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
             } else {
                 UserState.Error("User's data is empty")
             }

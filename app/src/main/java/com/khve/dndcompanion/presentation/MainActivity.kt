@@ -3,17 +3,15 @@ package com.khve.dndcompanion.presentation
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.presentation.auth.SignInFragment
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModel: MainViewModel
+
     private var currentUserState: UserState = UserState.Initial
 
     private val component by lazy {
@@ -32,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                supportFragmentManager.popBackStack()
+            }
+        })
     }
     private fun observeViewModel() {
         observeAuth()
@@ -55,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 userState.errorMessage,
                 Toast.LENGTH_SHORT
             ).show()
-            is UserState.User -> startMainFragment(userState.user)
+            is UserState.User -> startMainFragment()
             UserState.NotAuthorized -> startSignInFragment()
             UserState.Initial -> {}
         }
@@ -68,12 +72,14 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun startMainFragment(user: User) {
+    private fun startMainFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.auth_container, MainFragment.newInstance(user))
+            .replace(R.id.auth_container, MainFragment.newInstance())
             .addToBackStack(MainFragment.BACKSTACK_NAME)
             .commit()
     }
+
+
 
     companion object {
         const val BACK_STACK_NAME = "main_activity"
