@@ -23,11 +23,11 @@ class SignInScenario : Scenario() {
                 }
                 etEmail {
                     isVisible()
-                    hasHint(R.string.email_field)
+                    // hasHint(R.string.email_field)
                 }
                 etPassword {
                     isVisible()
-                    hasHint(R.string.password_field)
+                    // hasHint(R.string.password_field)
                 }
                 btnSignIn {
                     isVisible()

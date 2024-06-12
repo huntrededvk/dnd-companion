@@ -81,14 +81,6 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun popBackToMainActivity() {
-        requireActivity().supportFragmentManager
-            .popBackStack(
-                MainActivity.BACK_STACK_NAME,
-                POP_BACK_STACK_NOT_INCLUSIVE
-            )
-    }
-
     companion object {
         private const val POP_BACK_STACK_NOT_INCLUSIVE = 0
         @JvmStatic

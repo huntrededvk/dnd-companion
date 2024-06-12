@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.2"
+androidSlantedTextview = "1.2"
 androidxEspressoCore = "3.4.0"
 androidXTestVersion = "1.5.0"
 core = "1.6.0-rc01"
@@ -39,6 +40,7 @@ lifecycleLivedataKtx = "2.8.1"
 
 [libraries]
 adb-server-common = { module = "com.kaspersky.android-components:adb-server-common", version.ref = "kaspresso" }
+android-slanted-textview = { module = "com.haozhang.libary:android-slanted-textview", version.ref = "androidSlantedTextview" }
 androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-v150 = { module = "androidx.test:core", version.ref = "androidXTestVersion" }

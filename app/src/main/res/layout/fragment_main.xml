@@ -25,29 +25,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:flow_verticalAlign="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/iv_user_avatar"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/auth_layout_bg"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@null"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_user_avatar"
-                    app:layout_constraintStart_toEndOf="@+id/iv_user_avatar"
-                    app:layout_constraintTop_toTopOf="@+id/iv_user_avatar">
 
                     <TextView
                         android:id="@+id/tv_welcome_user_title"
@@ -57,9 +39,7 @@
                         android:text="@string/welcome_back"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toTopOf="@+id/tv_user_username"
-                        app:layout_constraintStart_toEndOf="@id/iv_user_avatar"
-                        app:layout_constraintTop_toTopOf="@id/iv_user_avatar" />
+                        app:layout_constraintBottom_toTopOf="@+id/tv_user_username" />
 
                     <TextView
                         android:id="@+id/tv_user_username"
@@ -67,10 +47,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#DFDFDF"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_user_avatar"
-                        app:layout_constraintStart_toEndOf="@id/iv_user_avatar"
                         tools:text="Username" />
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -86,7 +63,7 @@
                     android:layout_marginBottom="20dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_1"
+                        android:id="@+id/cl_meta"
                         android:layout_width="0dp"
                         android:layout_height="170dp"
                         android:layout_marginStart="20dp"
@@ -94,26 +71,17 @@
                         android:layout_weight="1"
                         android:background="@drawable/main_button_background"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/cl_2"
+                        app:layout_constraintEnd_toStartOf="@+id/cl_guide"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/iv_meta_title_icon"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/iv_title_icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/sword_emblem"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -123,17 +91,22 @@
                             android:layout_height="wrap_content"
                             android:text="@string/meta"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="24sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@id/iv_title_icon"
-                            app:layout_constraintStart_toStartOf="@id/iv_title_icon"
-                            app:layout_constraintTop_toBottomOf="@id/iv_title_icon" />
+                            android:shadowColor="@color/black"
+                            android:shadowDx="-5"
+                            android:shadowDy="-5"
+                            android:shadowRadius="-3"
+                            app:layout_constraintEnd_toEndOf="@id/iv_meta_title_icon"
+                            app:layout_constraintStart_toStartOf="@id/iv_meta_title_icon"
+                            app:layout_constraintTop_toBottomOf="@id/iv_meta_title_icon" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_2"
+                        android:id="@+id/cl_guide"
                         android:layout_width="0dp"
                         android:layout_height="170dp"
                         android:layout_marginStart="10dp"
@@ -143,24 +116,15 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/cl_1"
+                        app:layout_constraintStart_toEndOf="@+id/cl_meta"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/iv_guide_title_icon"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/iv_title_icon_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/guide_emblem"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -168,13 +132,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/meta"
+                            android:text="@string/guides"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@id/iv_title_icon_2"
-                            app:layout_constraintStart_toStartOf="@id/iv_title_icon_2"
-                            app:layout_constraintTop_toBottomOf="@id/iv_title_icon_2" />
+                            android:layout_marginTop="10dp"
+                            android:textSize="24sp"
+                            app:layout_constraintEnd_toEndOf="@id/iv_guide_title_icon"
+                            app:layout_constraintStart_toStartOf="@id/iv_guide_title_icon"
+                            app:layout_constraintTop_toBottomOf="@id/iv_guide_title_icon" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -194,26 +159,17 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/cl_4"
+                        app:layout_constraintEnd_toStartOf="@+id/cl_events"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <ImageView
                             android:id="@+id/iv_title_icon_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/guide_emblem"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -223,7 +179,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/meta"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="24sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="@id/iv_title_icon_3"
                             app:layout_constraintStart_toStartOf="@id/iv_title_icon_3"
@@ -233,7 +190,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_4"
+                        android:id="@+id/cl_events"
                         android:layout_width="0dp"
                         android:layout_height="170dp"
                         android:layout_weight="1"
@@ -247,20 +204,11 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/iv_event_title_icon"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/iv_title_icon_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@null"
-                            android:src="@mipmap/ic_launcher"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/event"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -268,13 +216,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/meta"
+                            android:text="@string/events"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="24sp"
                             android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@id/iv_title_icon_4"
-                            app:layout_constraintStart_toStartOf="@id/iv_title_icon_4"
-                            app:layout_constraintTop_toBottomOf="@id/iv_title_icon_4" />
+                            app:layout_constraintEnd_toEndOf="@id/iv_event_title_icon"
+                            app:layout_constraintStart_toStartOf="@id/iv_event_title_icon"
+                            app:layout_constraintTop_toBottomOf="@id/iv_event_title_icon" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
