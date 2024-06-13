@@ -36,6 +36,9 @@ class AddMetaItemViewModel @Inject constructor(
         // TODO: Make it clean code
         viewModelScope.launch {
             _metaItem.value = MetaItemState.Progress
+            if (metaItemDto.tier.isEmpty()) {
+                _metaItem.value = MetaItemState.Error("Tier can not be empty")
+            }
             val currentUserState = _userState.value
             if (currentUserState is UserState.User &&
                 currentUserState.user.hasPermission(Permission.ADD_META_ITEM)) {

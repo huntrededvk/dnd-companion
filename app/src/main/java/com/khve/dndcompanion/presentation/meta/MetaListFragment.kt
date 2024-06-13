@@ -17,6 +17,7 @@ import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.enum.Permission
+import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaListState
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter
@@ -106,12 +107,9 @@ class MetaListFragment : Fragment() {
             metaListAdapter = MetaListAdapter()
             adapter = metaListAdapter
         }
-
-        setupMetaItemClickListener()
-    }
-
-    private fun setupMetaItemClickListener() {
-        // TODO
+        metaListAdapter.onMetaItemClickListener = {
+            Log.d("TESTTEST", it.toString())
+        }
     }
 
 

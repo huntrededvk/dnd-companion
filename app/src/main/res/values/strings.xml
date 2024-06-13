@@ -1,4 +1,13 @@
 <resources>
+
+    <string-array name="tiers">
+        <item>S</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+
     <string name="app_name">dndcompanion</string>
     <string name="meta">Meta</string>
     <string name="sign_up">Sign Up</string>
@@ -20,4 +29,5 @@
     <string name="title_field">Title:</string>
     <string name="description_field">Description:</string>
     <string name="add_meta">Add meta</string>
+    <string name="tier">Tier</string>
 </resources>

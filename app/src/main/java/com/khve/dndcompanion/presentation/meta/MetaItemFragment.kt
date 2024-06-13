@@ -1,10 +1,11 @@
-package com.khve.dndcompanion
+package com.khve.dndcompanion.presentation.meta
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.khve.dndcompanion.R
 
 class MetaItemFragment : Fragment() {
     private var param1: String? = null

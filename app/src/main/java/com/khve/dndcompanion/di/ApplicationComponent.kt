@@ -3,7 +3,7 @@ package com.khve.dndcompanion.di
 import android.app.Application
 import android.content.Context
 import com.khve.dndcompanion.presentation.meta.AddMetaItemFragment
-import com.khve.dndcompanion.MetaItemFragment
+import com.khve.dndcompanion.presentation.meta.MetaItemFragment
 import com.khve.dndcompanion.di.module.AuthModule
 import com.khve.dndcompanion.di.module.MainModule
 import com.khve.dndcompanion.di.module.MetaModule
