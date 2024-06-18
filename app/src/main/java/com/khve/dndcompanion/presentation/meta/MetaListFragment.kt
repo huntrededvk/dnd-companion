@@ -11,13 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaListState
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter

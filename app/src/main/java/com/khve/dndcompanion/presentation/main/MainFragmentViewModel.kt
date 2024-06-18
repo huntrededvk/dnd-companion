@@ -2,7 +2,7 @@ package com.khve.dndcompanion.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.khve.dndcompanion.data.network.FirebaseUserManager
+import com.khve.dndcompanion.data.network.firebase.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

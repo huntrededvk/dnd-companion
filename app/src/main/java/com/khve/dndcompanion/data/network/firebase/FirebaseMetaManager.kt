@@ -1,4 +1,4 @@
-package com.khve.dndcompanion.data.network
+package com.khve.dndcompanion.data.network.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.khve.dndcompanion.data.meta.mapper.MetaMapper

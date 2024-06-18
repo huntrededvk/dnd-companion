@@ -29,6 +29,7 @@ constraintlayout = "2.1.4"
 mockk = "1.13.11"
 orchestrator = "1.4.2"
 playServicesAds = "23.1.0"
+retrofit = "2.9.0"
 roomRuntime = "2.6.1"
 rules = "1.4.0"
 runner = "1.4.0"
@@ -59,6 +60,7 @@ androidx-rules-v140 = { module = "androidx.test:rules", version.ref = "rules" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "testRunnerVersion" }
 androidx-runner-v140 = { module = "androidx.test:runner", version.ref = "runner" }
 androidx-truth = { module = "androidx.test.ext:truth", version.ref = "androidXTestVersion" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidXTestVersion" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
@@ -80,6 +82,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "symbolProcessingApi" }
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }

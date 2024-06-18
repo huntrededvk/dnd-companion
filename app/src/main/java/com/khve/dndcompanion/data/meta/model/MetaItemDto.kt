@@ -2,7 +2,6 @@ package com.khve.dndcompanion.data.meta.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

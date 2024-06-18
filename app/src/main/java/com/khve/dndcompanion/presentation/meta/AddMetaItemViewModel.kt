@@ -3,9 +3,11 @@ package com.khve.dndcompanion.presentation.meta
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
-import com.khve.dndcompanion.data.network.FirebaseUserManager
+import com.khve.dndcompanion.data.network.firebase.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.enum.Permission
+import com.khve.dndcompanion.domain.dnd.entity.DndContentState
+import com.khve.dndcompanion.domain.dnd.usecase.GetDndContentUseCase
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.domain.meta.usecase.AddMetaItemUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 class AddMetaItemViewModel @Inject constructor(
     private val addMetaItemUseCase: AddMetaItemUseCase,
-    private val userManager: FirebaseUserManager
+    private val userManager: FirebaseUserManager,
+    private val getDndContentUseCase: GetDndContentUseCase
 ): ViewModel() {
 
     private val _metaItem = MutableStateFlow<MetaItemState>(MetaItemState.Initial)
@@ -24,10 +27,23 @@ class AddMetaItemViewModel @Inject constructor(
 
     private val _userState = MutableStateFlow<UserState>(UserState.Initial)
 
+    private val _dndContentState = MutableStateFlow<DndContentState>(DndContentState.Initial)
+    val dndContentState = _dndContentState.asStateFlow()
+
+
     init {
         viewModelScope.launch {
             userManager.userState.collect {
                 _userState.value = it
+            }
+        }
+        getContentData()
+    }
+
+    private fun getContentData() {
+        viewModelScope.launch {
+            getDndContentUseCase().collect {
+                _dndContentState.value = it
             }
         }
     }

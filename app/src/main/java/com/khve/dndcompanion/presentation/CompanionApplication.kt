@@ -2,7 +2,6 @@ package com.khve.dndcompanion.presentation
 
 import android.app.Application
 import com.khve.dndcompanion.di.DaggerApplicationComponent
-import com.khve.dndcompanion.domain.auth.entity.User
 
 class CompanionApplication: Application() {
     val component by lazy {

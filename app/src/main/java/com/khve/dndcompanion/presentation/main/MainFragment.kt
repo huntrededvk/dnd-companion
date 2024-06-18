@@ -48,6 +48,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         listenViews()
+
     }
 
     private fun observeViewModel() {

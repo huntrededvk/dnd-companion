@@ -1,6 +1,5 @@
-package com.khve.dndcompanion.data.network
+package com.khve.dndcompanion.data.network.firebase
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -8,12 +7,9 @@ import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.data.auth.mapper.UserMapper
 import com.khve.dndcompanion.data.auth.model.UserDbDto
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
-import com.khve.dndcompanion.data.meta.model.MetaItemDto
 import com.khve.dndcompanion.di.scope.ApplicationScope
 import com.khve.dndcompanion.domain.auth.entity.AuthState
-import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

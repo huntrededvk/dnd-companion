@@ -1,10 +1,7 @@
 package com.khve.dndcompanion.presentation.meta.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.domain.meta.entity.MetaItem

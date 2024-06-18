@@ -72,6 +72,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
     // Dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)

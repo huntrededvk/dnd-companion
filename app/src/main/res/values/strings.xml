@@ -30,4 +30,17 @@
     <string name="description_field">Description:</string>
     <string name="add_meta">Add meta</string>
     <string name="tier">Tier</string>
+    <string name="class_">Class</string>
+    <string name="head_armor">Head armor</string>
+    <string name="chest_armor">Chest armor</string>
+    <string name="legs_armor">Legs armor</string>
+    <string name="foot_armor">Foot armor</string>
+    <string name="gloves_armor">Gloves armor</string>
+    <string name="back_armor">Back armor</string>
+    <string name="new_meta_build">New meta build</string>
+    <string name="primary_weapon">Primary weapon</string>
+    <string name="slot_2">Slot 2</string>
+    <string name="secondary_weapon">Secondary weapon</string>
+    <string name="neckless">Neckless</string>
+    <string name="ring">Ring</string>
 </resources>

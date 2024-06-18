@@ -2,23 +2,24 @@ package com.khve.dndcompanion.presentation.meta
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
 import com.khve.dndcompanion.databinding.FragmentAddMetaItemBinding
-import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.auth.enum.UserRole
+import com.khve.dndcompanion.domain.dnd.entity.DndArmor
+import com.khve.dndcompanion.domain.dnd.entity.DndContentState
+import com.khve.dndcompanion.domain.dnd.entity.DndItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
-import com.khve.dndcompanion.domain.meta.enum.Tier
 import com.khve.dndcompanion.presentation.CompanionApplication
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,7 +49,7 @@ class AddMetaItemFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddMetaItemBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,11 +62,49 @@ class AddMetaItemFragment : Fragment() {
 
     private fun initDropDownMenu() {
         val tiers = resources.getStringArray(R.array.tiers)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.add_meta_item_dropdown_item, tiers)
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), R.layout.add_meta_item_dropdown_item, tiers)
         binding.acttTierDropdownMenu.setAdapter(arrayAdapter)
     }
 
+    private fun setAdapter(actt: AutoCompleteTextView, value: List<DndItem>) {
+        actt.setAdapter(
+            ArrayAdapter(
+                requireContext(),
+                R.layout.add_meta_item_dropdown_item,
+                value.map { it.name }
+            )
+        )
+    }
+
     private fun observerViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.dndContentState.collect {
+                    if (it is DndContentState.Content) {
+                        val content = it.content
+                        val weapon = content.weapon
+                        val rings = content.rings
+                        val classes: List<DndItem> = content.classes.map { DndItem(it.name) }
+                        setAdapter(binding.acttChestDropdownMenu, content.armor.chest)
+                        setAdapter(binding.acttHeadDropdownMenu, content.armor.head)
+                        setAdapter(binding.acttGlovesDropdownMenu, content.armor.gloves)
+                        setAdapter(binding.acttLegDropdownMenu, content.armor.legs)
+                        setAdapter(binding.acttFootDropdownMenu, content.armor.foot)
+                        setAdapter(binding.acttBackDropdownMenu, content.armor.back)
+                        setAdapter(binding.acttPrimaryWeaponLeftDropdownMenu, weapon)
+                        setAdapter(binding.acttPrimaryWeaponRightDropdownMenu, weapon)
+                        setAdapter(binding.acttSecondaryWeaponLeftDropdownMenu, weapon)
+                        setAdapter(binding.acttSecondaryWeaponRightDropdownMenu, weapon)
+                        setAdapter(binding.acttNecklessDropdownMenu, content.pendants)
+                        setAdapter(binding.acttRignLeftDropdownMenu, rings)
+                        setAdapter(binding.acttRingRightDropdownMenu, rings)
+                        setAdapter(binding.acttClassDropdownMenu, classes)
+                    }
+                }
+            }
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.metaItem.collect {
@@ -94,6 +133,7 @@ class AddMetaItemFragment : Fragment() {
 
     companion object {
         const val BACKSTACK_NAME = "add_meta_item_fragment"
+
         @JvmStatic
         fun newInstance() = AddMetaItemFragment()
     }

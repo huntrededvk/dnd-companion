@@ -1,10 +1,6 @@
 package com.khve.dndcompanion.data.meta.mapper
 
-import com.khve.dndcompanion.data.auth.model.UserDbDto
-import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
-import com.khve.dndcompanion.domain.auth.entity.User
-import com.khve.dndcompanion.domain.auth.enum.UserRole
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import javax.inject.Inject
 

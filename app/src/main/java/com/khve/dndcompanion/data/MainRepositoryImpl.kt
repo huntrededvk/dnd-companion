@@ -1,6 +1,6 @@
 package com.khve.dndcompanion.data
 
-import com.khve.dndcompanion.data.network.FirebaseUserManager
+import com.khve.dndcompanion.data.network.firebase.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.repository.MainRepository
 import kotlinx.coroutines.flow.StateFlow
