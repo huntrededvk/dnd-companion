@@ -1,4 +1,4 @@
-package com.khve.dndcompanion.data.network.retrofit
+package com.khve.dndcompanion.data.network.retrofit.dnd
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

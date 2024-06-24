@@ -2,7 +2,7 @@ package com.khve.dndcompanion.presentation.meta
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.khve.dndcompanion.data.network.firebase.FirebaseUserManager
+import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.usecase.GetMetaCardListUseCase

@@ -1,6 +1,6 @@
 package com.khve.dndcompanion.data.meta.repository
 
-import com.khve.dndcompanion.data.network.firebase.FirebaseMetaManager
+import com.khve.dndcompanion.data.network.firebase.meta.FirebaseMetaManager
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState

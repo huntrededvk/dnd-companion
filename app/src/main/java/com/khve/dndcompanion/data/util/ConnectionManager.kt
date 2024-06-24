@@ -1,4 +1,4 @@
-package com.khve.dndcompanion.data.network.util
+package com.khve.dndcompanion.data.util
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class ConnectionManager @Inject constructor(
-    private val context: Context
+    context: Context
 ) {
 
     private val connectivityManager =

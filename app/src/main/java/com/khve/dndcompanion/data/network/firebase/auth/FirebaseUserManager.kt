@@ -1,4 +1,4 @@
-package com.khve.dndcompanion.data.network.firebase
+package com.khve.dndcompanion.data.network.firebase.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -36,10 +36,10 @@ class FirebaseUserManager @Inject constructor(
 
     fun getCurrentDbUserState(): UserState {
         val currentDbUserState = userState.value
-        if (currentDbUserState is UserState.User) {
-            return currentDbUserState
+        return if (currentDbUserState is UserState.User) {
+            currentDbUserState
         } else {
-            return UserState.Error("User is not authorized")
+            UserState.Error("User is not authorized")
         }
     }
 

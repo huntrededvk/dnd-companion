@@ -1,9 +1,10 @@
-package com.khve.dndcompanion.data.network.firebase
+package com.khve.dndcompanion.data.network.firebase.meta
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.khve.dndcompanion.data.meta.mapper.MetaMapper
 import com.khve.dndcompanion.data.meta.model.MetaCardItemDto
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
+import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState

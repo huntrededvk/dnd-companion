@@ -1,7 +1,7 @@
 package com.khve.dndcompanion.data.dnd.repository
 
 import com.khve.dndcompanion.data.dnd.mapper.DndMapper
-import com.khve.dndcompanion.data.network.retrofit.ApiFactory
+import com.khve.dndcompanion.data.network.retrofit.dnd.ApiFactory
 import com.khve.dndcompanion.di.scope.ApplicationScope
 import com.khve.dndcompanion.domain.dnd.entity.DndArmor
 import com.khve.dndcompanion.domain.dnd.entity.DndContent
