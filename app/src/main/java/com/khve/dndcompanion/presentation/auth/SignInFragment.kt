@@ -2,11 +2,12 @@ package com.khve.dndcompanion.presentation.auth
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -23,7 +24,8 @@ class SignInFragment : Fragment() {
     lateinit var viewModel: SignInViewModel
     private var _binding: FragmentSignInBinding? = null
     private val binding: FragmentSignInBinding
-        get() = _binding ?: throw RuntimeException("FragmentSignInBinding == null")
+        get() = _binding ?: throw NullPointerException("FragmentSignInBinding == null")
+    private lateinit var backPressedCallback: OnBackPressedCallback
 
     private val component by lazy {
         (requireActivity().application as CompanionApplication).component
@@ -32,6 +34,20 @@ class SignInFragment : Fragment() {
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupBackPressed()
+    }
+
+    private fun setupBackPressed() {
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(this, backPressedCallback)
     }
 
     override fun onCreateView(
@@ -44,7 +60,7 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listenViews()
+        listenButtons()
         observeViewModel()
     }
 
@@ -53,13 +69,16 @@ class SignInFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.authState.collect {
                     when (it) {
-                        AuthState.Initial -> {}
+                        AuthState.Initial -> {
+                            signInInProgress(false)
+                        }
                         is AuthState.Error -> {
+                            signInInProgress(false)
                             Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                         }
 
                         AuthState.Progress -> {
-                            // TODO
+                            signInInProgress(true)
                         }
                     }
                 }
@@ -67,7 +86,17 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun listenViews() {
+    private fun signInInProgress(isInProgress: Boolean) {
+        if (isInProgress) {
+            binding.btnSignIn.isClickable = false
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.btnSignIn.isClickable = true
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun listenButtons() {
         binding.tvSignUp.setOnClickListener {
             startSignUpFragment()
         }
@@ -86,6 +115,11 @@ class SignInFragment : Fragment() {
             .replace(R.id.auth_container, SignUpFragment.newInstance())
             .addToBackStack(SignUpFragment.BACKSTACK_NAME)
             .commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        backPressedCallback.remove()
     }
 
     companion object {

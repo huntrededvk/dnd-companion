@@ -1,4 +1,13 @@
 <resources>
+
+    <string-array name="tiers">
+        <item>S</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+
     <string name="app_name">dndcompanion</string>
     <string name="meta">Meta</string>
     <string name="sign_up">Sign Up</string>
@@ -20,4 +29,35 @@
     <string name="title_field">Title:</string>
     <string name="description_field">Description:</string>
     <string name="add_meta">Add meta</string>
+    <string name="tier">Tier</string>
+    <string name="class_">Class</string>
+    <string name="head_armor">Head armor</string>
+    <string name="chest_armor">Chest armor</string>
+    <string name="legs_armor">Legs armor</string>
+    <string name="foot_armor">Foot armor</string>
+    <string name="gloves_armor">Gloves armor</string>
+    <string name="back_armor">Back armor</string>
+    <string name="new_meta_build">New meta build</string>
+    <string name="primary_weapon">Primary weapon</string>
+    <string name="slot_2">Slot 2</string>
+    <string name="secondary_weapon">Secondary weapon</string>
+    <string name="neckless">Neckless</string>
+    <string name="ring">Ring</string>
+    <string name="description">Description</string>
+    <string name="tier_field">Tier:</string>
+    <string name="class_field">Class:</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="gear">Gear</string>
+    <string name="weapon">Weapon</string>
+    <string name="armor">Armor</string>
+    <string name="head">Head</string>
+    <string name="chest">Chest</string>
+    <string name="legs">Legs</string>
+    <string name="foot">Foot</string>
+    <string name="back">Back</string>
+    <string name="gloves">Gloves</string>
+    <string name="jewelry">Jewelry</string>
+    <string name="pendant">Pendant</string>
+    <string name="main_fragment">main_fragment</string>
 </resources>

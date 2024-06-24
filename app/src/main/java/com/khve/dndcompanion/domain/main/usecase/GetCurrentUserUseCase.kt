@@ -1,7 +1,7 @@
-package com.khve.dndcompanion.domain.usecase
+package com.khve.dndcompanion.domain.main.usecase
 
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.repository.MainRepository
+import com.khve.dndcompanion.domain.main.repository.MainRepository
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 

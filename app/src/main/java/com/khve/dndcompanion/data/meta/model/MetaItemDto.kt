@@ -1,21 +1,78 @@
 package com.khve.dndcompanion.data.meta.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.khve.dndcompanion.domain.meta.entity.MetaItem
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class MetaItemDto (
+data class MetaItemDto(
     @SerializedName("uid") val uid: String = DEFAULT_EMPTY_STRING,
     @SerializedName("title") val title: String = DEFAULT_EMPTY_STRING,
     @SerializedName("description") val description: String = DEFAULT_EMPTY_STRING,
     @SerializedName("tier") val tier: String = DEFAULT_EMPTY_STRING,
-    @SerializedName("authorUsername") val authorUsername: String = DEFAULT_EMPTY_STRING,
-    @SerializedName("author_uid") val authorUid: String = DEFAULT_EMPTY_STRING,
-    @SerializedName("preview_img") val previewImg: String = DEFAULT_EMPTY_STRING
-) : Parcelable {
+    @SerializedName("author") val author: Map<String, String> = mapOf(
+        USERNAME to DEFAULT_EMPTY_STRING,
+        USER_UID to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("dnd_class") val dndClass: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("primary_weapon_slot_one") val primaryWeaponSlotOne: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("primary_weapon_slot_two") val primaryWeaponSlotTwo: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("secondary_weapon_slot_one") val secondaryWeaponSlotOne: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("secondary_weapon_slot_two") val secondaryWeaponSlotTwo: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("head_armor") val headArmor: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("chest_armor") val chestArmor: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("legs_armor") val legsArmor: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("foot_armor") val footArmor: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("gloves_armor") val glovesArmor: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("back_armor") val backArmor: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("pendant") val pendant: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("ring_slot_one") val ringSlotOne: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    ),
+    @SerializedName("ring_slot_two") val ringSlotTwo: Map<String, String> = mapOf(
+        NAME to DEFAULT_EMPTY_STRING,
+        PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
+    )
+) {
     companion object {
         private const val DEFAULT_EMPTY_STRING = ""
+        const val NAME = "name"
+        const val USER_UID = "uid"
+        const val USERNAME = "username"
+        const val PREVIEW_IMAGE = "preview_image"
     }
 }

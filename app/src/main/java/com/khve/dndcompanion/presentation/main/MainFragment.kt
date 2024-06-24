@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,10 +26,25 @@ class MainFragment : Fragment() {
     lateinit var viewModel: MainFragmentViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
-        get() = _binding ?: throw RuntimeException("FragmentMainBinding == null")
+        get() = _binding ?: throw NullPointerException("FragmentMainBinding == null")
+    private lateinit var backPressedCallback: OnBackPressedCallback
 
     private val component by lazy {
         (requireActivity().application as CompanionApplication).component
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupBackPressed()
+    }
+
+    private fun setupBackPressed() {
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(this, backPressedCallback)
     }
 
     override fun onAttach(context: Context) {
@@ -48,6 +64,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         listenViews()
+
     }
 
     private fun observeViewModel() {
@@ -76,6 +93,11 @@ class MainFragment : Fragment() {
             .replace(R.id.auth_container, MetaListFragment.newInstance())
             .addToBackStack(MetaListFragment.BACKSTACK_NAME)
             .commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        backPressedCallback.remove()
     }
 
     companion object {

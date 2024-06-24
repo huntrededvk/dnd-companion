@@ -16,7 +16,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="parent"/>
+            app:layout_constraintBottom_toTopOf="parent"
+            android:contentDescription="@null"/>
 
         <View
             android:layout_width="match_parent"
@@ -28,6 +29,17 @@
             app:layout_constraintTop_toTopOf="@+id/cv_sign_in"
             android:alpha="0.9"/>
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/cv_sign_in"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/white"
+            android:text="@string/sign_in"
+            android:textSize="24sp"
+            android:layout_margin="10dp"/>
+
         <LinearLayout
             android:id="@+id/cv_sign_in"
             android:layout_width="match_parent"
@@ -38,14 +50,6 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sign_in"
-                    android:textSize="24sp"
-                    android:layout_margin="10dp"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -54,6 +58,7 @@
                             android:id="@+id/til_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textColorHint="@color/black"
                             android:orientation="vertical"
                             android:layout_marginBottom="10dp">
 
@@ -62,6 +67,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
+                                    android:textColor="@color/black"
                                     android:hint="@string/email_field"
                                     android:importantForAutofill="no"
                                     android:inputType="textEmailAddress" />
@@ -72,13 +78,15 @@
                             android:id="@+id/til_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:passwordToggleEnabled="true">
+                            app:passwordToggleEnabled="true"
+                            android:textColorHint="@color/black">
 
                                 <EditText
                                     android:id="@+id/et_password"
                                     android:layout_width="match_parent"
                                     android:layout_height="61dp"
                                     android:ems="10"
+                                    android:textColor="@color/black"
                                     android:hint="@string/password_field"
                                     android:importantForAutofill="no"
                                     android:inputType="textPassword" />
@@ -141,5 +149,16 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:indeterminateTint="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

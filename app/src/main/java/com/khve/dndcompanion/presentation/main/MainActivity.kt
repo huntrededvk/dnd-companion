@@ -26,16 +26,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        onBackPressedPopBack()
+        observeInternetConnection()
         component.inject(this)
         observeViewModel()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
+
+    private fun onBackPressedPopBack() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 supportFragmentManager.popBackStack()
             }
         })
     }
+
+    private fun observeInternetConnection() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.internetState.collect {
+                    if (it) {
+                        supportFragmentManager.popBackStack(ErrorFragment.BACKSTACK_NAME, 1)
+                        viewModel.getCurrentUser()
+                    } else {
+                        startErrorFragment("Please, check your internet connection!")
+                    }
+                }
+            }
+        }
+    }
+
     private fun observeViewModel() {
         observeAuth()
     }
@@ -58,10 +79,24 @@ class MainActivity : AppCompatActivity() {
                 userState.errorMessage,
                 Toast.LENGTH_SHORT
             ).show()
-            is UserState.User -> startMainFragment()
-            UserState.NotAuthorized -> startSignInFragment()
+
+            is UserState.User -> {
+                startMainFragment()
+            }
+
+            UserState.NotAuthorized -> {
+                startSignInFragment()
+            }
+
             UserState.Initial -> {}
         }
+    }
+
+    private fun startErrorFragment(errorMessage: String) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.auth_container, ErrorFragment.newInstance(errorMessage))
+            .addToBackStack(ErrorFragment.BACKSTACK_NAME)
+            .commit()
     }
 
     private fun startSignInFragment() {
@@ -79,9 +114,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     companion object {
-        const val BACK_STACK_NAME = "main_activity"
+        private const val CURRENT_USER = "current_user"
     }
 
 }

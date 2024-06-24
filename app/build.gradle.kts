@@ -21,7 +21,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -72,12 +72,19 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
     // Dagger
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
     // Gson
     implementation(libs.gson)
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:5.0.0-rc01")
 
     // Test
     testImplementation(libs.junit)

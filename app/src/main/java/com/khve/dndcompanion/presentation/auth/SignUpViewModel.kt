@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.domain.auth.entity.AuthState
-import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.usercase.CreateUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +19,7 @@ class SignUpViewModel @Inject constructor(
 
     fun createUser(userSignUpDto: UserSignUpDto) {
         viewModelScope.launch {
+            _authState.value = AuthState.Progress
             createUserUseCase(userSignUpDto).collect {
                 _authState.value = it
             }

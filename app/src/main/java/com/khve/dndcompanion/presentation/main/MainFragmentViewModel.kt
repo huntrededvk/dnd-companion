@@ -2,7 +2,7 @@ package com.khve.dndcompanion.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.khve.dndcompanion.data.network.FirebaseUserManager
+import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class MainFragmentViewModel @Inject constructor(
     private val userManager: FirebaseUserManager
-): ViewModel() {
+) : ViewModel() {
 
     private val _currentUser = MutableStateFlow<UserState>(UserState.Initial)
     val currentUser = _currentUser.asStateFlow()
@@ -19,6 +19,7 @@ class MainFragmentViewModel @Inject constructor(
     init {
         updateUserState()
     }
+
     private fun updateUserState() {
         viewModelScope.launch {
             userManager.userState.collect {
