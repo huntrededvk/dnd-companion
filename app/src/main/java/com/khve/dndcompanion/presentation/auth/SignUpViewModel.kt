@@ -19,6 +19,7 @@ class SignUpViewModel @Inject constructor(
 
     fun createUser(userSignUpDto: UserSignUpDto) {
         viewModelScope.launch {
+            _authState.value = AuthState.Progress
             createUserUseCase(userSignUpDto).collect {
                 _authState.value = it
             }

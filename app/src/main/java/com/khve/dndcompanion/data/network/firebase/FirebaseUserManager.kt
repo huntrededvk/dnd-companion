@@ -34,7 +34,16 @@ class FirebaseUserManager @Inject constructor(
         getCurrentUserState()
     }
 
-    fun createUser(userSignUpDto: UserSignUpDto) : StateFlow<AuthState> {
+    fun getCurrentDbUserState(): UserState {
+        val currentDbUserState = userState.value
+        if (currentDbUserState is UserState.User) {
+            return currentDbUserState
+        } else {
+            return UserState.Error("User is not authorized")
+        }
+    }
+
+    fun createUser(userSignUpDto: UserSignUpDto): StateFlow<AuthState> {
         _authState.value = AuthState.Progress
         // Validate user
         if (!isValidated(userSignUpDto))
@@ -47,12 +56,16 @@ class FirebaseUserManager @Inject constructor(
                     val createdUserUid = task.result.user?.uid
                     if (createdUserUid != null) {
                         // Save created user to db by uid
-                        setUserToDb(userMapper.mapUserSignUpDtoToUserDbDto(userSignUpDto), createdUserUid)
+                        setUserToDb(
+                            userMapper.mapUserSignUpDtoToUserDbDto(userSignUpDto),
+                            createdUserUid
+                        )
                     }
                 } else {
                     if (task.exception != null) {
                         val exception = task.exception
-                        _authState.value = AuthState.Error(exception?.localizedMessage ?: "Unknown error")
+                        _authState.value =
+                            AuthState.Error(exception?.localizedMessage ?: "Unknown error")
                     }
                 }
             }
@@ -61,9 +74,17 @@ class FirebaseUserManager @Inject constructor(
     }
 
     fun signInWithEmailAndPassword(email: String, password: String): StateFlow<AuthState> {
-        auth.signInWithEmailAndPassword(email.trim(), password.trim())
-            .addOnFailureListener {
-                _authState.value = AuthState.Error(it.localizedMessage ?: "Unknown error")
+        if (email.isEmpty()) {
+            _authState.value = AuthState.Error("Email cannot be empty")
+            return authState
+        } else if (password.isEmpty()) {
+            _authState.value = AuthState.Error("Password cannot be empty")
+            return authState
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnFailureListener { e ->
+                _authState.value = AuthState.Error(e.localizedMessage ?: "Unknown error")
             }
 
         return authState
@@ -86,7 +107,7 @@ class FirebaseUserManager @Inject constructor(
         } else {
             _userState.value = UserState.NotAuthorized
         }
-            addUserAuthListener()
+        addUserAuthListener()
     }
 
     private fun getUserFromDbByUid(userUid: String) {
@@ -138,23 +159,31 @@ class FirebaseUserManager @Inject constructor(
 
         val userToValidate = validateUserSignUpDto.copy(
             email = validateUserSignUpDto.email,
+            password = validateUserSignUpDto.password,
             username = validateUserSignUpDto.username,
             discord = validateUserSignUpDto.discord
         )
 
-        userToValidate.username.let {
-            if (it.isEmpty())
+        if (userToValidate.email.isEmpty()) {
+            error = "Email can not be empty"
+        }
+        if (userToValidate.password.isEmpty()) {
+            error = "Password can not be empty"
+        }
+
+        with(userToValidate.username) {
+            if (isEmpty())
                 error = "Username can not be empty"
-            else if (it.length < 3)
+            else if (length < 3)
                 error = "Username is too short"
-            else if (it.length > 24)
+            else if (length > 24)
                 error = "Username is too long"
         }
 
-        userToValidate.discord.let {
-            if (it.isEmpty())
+        with(userToValidate.discord) {
+            if (isEmpty())
                 error = "Discord username can not be empty"
-            if (it.length > 32)
+            if (length > 32)
                 error = "Discord username is too long"
         }
 

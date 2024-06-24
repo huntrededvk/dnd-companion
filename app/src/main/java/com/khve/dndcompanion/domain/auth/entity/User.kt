@@ -13,7 +13,7 @@ data class User(
     val username: String = EMPTY_STRING_VALUE,
     val discord: String = EMPTY_STRING_VALUE,
     val role: List<UserRole> = listOf()
-) : Parcelable {
+): Parcelable {
 
     fun hasPermission(permission: Permission): Boolean {
         return UserRolePermissions.hasPermission(this, permission)

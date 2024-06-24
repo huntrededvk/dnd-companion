@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class MainFragmentViewModel @Inject constructor(
     private val userManager: FirebaseUserManager
-): ViewModel() {
+) : ViewModel() {
 
     private val _currentUser = MutableStateFlow<UserState>(UserState.Initial)
     val currentUser = _currentUser.asStateFlow()
@@ -19,6 +19,7 @@ class MainFragmentViewModel @Inject constructor(
     init {
         updateUserState()
     }
+
     private fun updateUserState() {
         viewModelScope.launch {
             userManager.userState.collect {

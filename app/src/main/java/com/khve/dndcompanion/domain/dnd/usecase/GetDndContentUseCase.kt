@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetDndContentUseCase @Inject constructor(
     private val repository: DndRepository
-){
+) {
     suspend operator fun invoke(): StateFlow<DndContentState> {
         return repository.getDndContent()
     }

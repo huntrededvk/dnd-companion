@@ -23,7 +23,7 @@ class SignUpFragment : Fragment() {
     lateinit var viewModel: SignUpViewModel
     private var _binding: FragmentSignUpBinding? = null
     private val binding: FragmentSignUpBinding
-        get() = _binding ?: throw RuntimeException("FragmentSignUpFragment == null")
+        get() = _binding ?: throw NullPointerException("FragmentSignUpBinding == null")
 
     private val component by lazy {
         (requireActivity().application as CompanionApplication).component
@@ -33,6 +33,7 @@ class SignUpFragment : Fragment() {
         component.inject(this)
         super.onAttach(context)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,16 +70,32 @@ class SignUpFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.authState.collect {
-                    if (it is AuthState.Error) {
-                        Toast.makeText(context, it.error, Toast.LENGTH_SHORT).show()
+                    when (it) {
+                        is AuthState.Error -> {
+                            signUpInProgress(false)
+                            Toast.makeText(context, it.error, Toast.LENGTH_SHORT).show()
+                        }
+                        AuthState.Initial -> signUpInProgress(false)
+                        AuthState.Progress -> signUpInProgress(true)
                     }
                 }
             }
         }
     }
 
+    private fun signUpInProgress(isInProgress: Boolean) {
+        if (isInProgress) {
+            binding.btnSignUp.isClickable = false
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.btnSignUp.isClickable = true
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
     companion object {
         const val BACKSTACK_NAME = "sign_up_fragment"
+
         @JvmStatic
         fun newInstance() =
             SignUpFragment()

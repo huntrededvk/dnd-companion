@@ -2,89 +2,162 @@ package com.khve.dndcompanion.data.network.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.khve.dndcompanion.data.meta.mapper.MetaMapper
+import com.khve.dndcompanion.data.meta.model.MetaCardItemDto
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
+import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
+import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
-import com.khve.dndcompanion.domain.meta.entity.MetaListState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class FirebaseMetaManager @Inject constructor(
+    private val userManager: FirebaseUserManager,
     private val metaMapper: MetaMapper
 ) {
 
-    private val mDocRef = FirebaseFirestore.getInstance().collection("meta")
+    private val mDocRef = FirebaseFirestore.getInstance()
+        .collection("meta")
 
-    private val _metaListState = MutableStateFlow<MetaListState>(MetaListState.Initial)
-    private val metaListState = _metaListState.asStateFlow()
+    private val _metaCardListState = MutableStateFlow<MetaCardListState>(
+        MetaCardListState.Initial
+    )
+    private val metaCardListState = _metaCardListState.asStateFlow()
 
-    private val _metaItemState = MutableStateFlow<MetaItemState>(MetaItemState.Initial)
+    private val _metaItemState = MutableStateFlow<MetaItemState>(
+        MetaItemState.Initial
+    )
     private val metaItemState = _metaItemState.asStateFlow()
 
-    fun getMetaList(): StateFlow<MetaListState> {
+    fun getMetaCardList(): StateFlow<MetaCardListState> {
         mDocRef.get()
             .addOnSuccessListener { snapshot ->
-                val metaList = mutableListOf<MetaItem>()
+                val metaList = mutableListOf<MetaCardItem>()
                 val snapshotList = snapshot?.documents ?: emptyList()
                 for (currentSnapshot in snapshotList) {
-                    val retrievedMetaItemDto = currentSnapshot?.toObject(MetaItemDto::class.java)
-                    if (retrievedMetaItemDto != null) {
+                    val retrievedMetaItem = currentSnapshot
+                        ?.toObject(MetaCardItemDto::class.java)
+                    if (retrievedMetaItem != null) {
                         metaList.add(
-                            metaMapper.mapMetaItemDtoToMetaItem(retrievedMetaItemDto)
+                            metaMapper.metaCardItemDtoToMetaCardItem(
+                                retrievedMetaItem.copy(uid = currentSnapshot.id)
+                            )
                         )
                     }
                 }
                 if (metaList.isEmpty()) {
-                    _metaListState.value = MetaListState.Error("We don't have any meta yet")
+                    _metaCardListState.value = MetaCardListState.Error(
+                        "We don't have any meta yet"
+                    )
                 } else {
-                    _metaListState.value = MetaListState.MetaList(metaList)
+                    _metaCardListState.value = MetaCardListState.MetaCardList(metaList)
                 }
             }
             .addOnFailureListener {
-                _metaListState.value = MetaListState.Error(
+                _metaCardListState.value = MetaCardListState.Error(
                     it.localizedMessage ?: "Unknown error"
                 )
             }
 
-        return metaListState
+        return metaCardListState
     }
 
-    fun addMetaItem(metaItemDto: MetaItemDto): StateFlow<MetaItemState> {
-        if (!isValidated(metaItemDto))
+    fun addMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> {
+        val mappedMetaItemDto = metaMapper.metaItemToMetaItemDto(metaItem)
+        if (!isValidated(
+                metaItemDto = mappedMetaItemDto,
+                titleMinLength = 3,
+                titleMaxLength = 200,
+                descriptionMinLength = 10,
+                descriptionMaxLength = 10000
+            ))
             return metaItemState
 
         mDocRef.document()
-            .set(metaItemDto)
+            .set(mappedMetaItemDto)
             .addOnSuccessListener {
-                updateMetaListState(metaItemDto)
+                updateMetaListState(mappedMetaItemDto)
                 _metaItemState.value = MetaItemState.Success
             }
             .addOnFailureListener { e ->
-                _metaItemState.value = MetaItemState.Error(e.localizedMessage ?: "Unknown error")
+                _metaItemState.value = MetaItemState.Error(
+                    e.localizedMessage ?: "Unknown error"
+                )
             }
 
         return metaItemState
     }
 
     private fun updateMetaListState(metaItemDto: MetaItemDto) {
-        (_metaListState.value as? MetaListState.MetaList)?.let { currentState ->
-            val updatedList = currentState.metaList.toMutableList().apply {
-                add(metaMapper.mapMetaItemDtoToMetaItem(metaItemDto))
+        (_metaCardListState.value as? MetaCardListState.MetaCardList)?.let { currentState ->
+            val updatedList = currentState.metaCardList.toMutableList().apply {
+                add(
+                    metaMapper.metaItemDtoToMetaCardItem(metaItemDto)
+                )
             }
-            _metaListState.value = MetaListState.MetaList(updatedList)
+            _metaCardListState.value = MetaCardListState.MetaCardList(updatedList)
         }
     }
 
+    fun deleteMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> {
+        val currentUser = userManager.getCurrentDbUserState()
+
+        if (currentUser is UserState.User &&
+            currentUser.user.uid == metaItem.author[MetaItemDto.USER_UID]) {
+            mDocRef.document(metaItem.uid).delete()
+                .addOnSuccessListener {
+                    _metaItemState.value = MetaItemState.Success
+                }
+                .addOnFailureListener {
+                    _metaItemState.value = MetaItemState.Error(
+                        it.localizedMessage ?: "Couldn't delete meta data"
+                    )
+                }
+        } else if (currentUser is UserState.Error) {
+            _metaItemState.value = MetaItemState.Error(currentUser.errorMessage)
+        }
+
+        return metaItemState
+    }
+
+    fun updateMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> {
+        val currentUser = userManager.getCurrentDbUserState()
+        val mappedMetaItemDto = metaMapper.metaItemToMetaItemDto(metaItem)
+
+        if (currentUser is UserState.User &&
+            currentUser.user.uid == mappedMetaItemDto.author[MetaItemDto.USER_UID]) {
+            mDocRef.document(mappedMetaItemDto.uid).set(mappedMetaItemDto)
+                .addOnSuccessListener {
+                    _metaItemState.value = MetaItemState.Success
+                }
+                .addOnFailureListener {
+                    _metaItemState.value = MetaItemState.Error(
+                        it.localizedMessage ?: "Couldn't delete meta data"
+                    )
+                }
+        } else if (currentUser is UserState.Error) {
+            _metaItemState.value = MetaItemState.Error(currentUser.errorMessage)
+        }
+
+        return metaItemState
+    }
+
     fun getMetaItem(metaItemUid: String): StateFlow<MetaItemState> {
+        _metaItemState.value = MetaItemState.Initial
         mDocRef.document(metaItemUid).get()
             .addOnSuccessListener { snapshot ->
                 val metaItemDto = snapshot?.toObject(MetaItemDto::class.java)
                 _metaItemState.value = if (metaItemDto != null) {
-                    MetaItemState.MetaItem(metaMapper.mapMetaItemDtoToMetaItem(metaItemDto))
+                    val metaItemDtoWithUid = metaItemDto.copy(uid = snapshot.id)
+                    val mappedMetaItem = metaMapper.metaItemDtoToMetaItem(metaItemDtoWithUid)
+                    MetaItemState.MetaItem(
+                        mappedMetaItem
+                    )
                 } else {
-                    MetaItemState.Error("User's data is empty")
+                    MetaItemState.Error("Meta data is empty")
                 }
             }
             .addOnFailureListener {
@@ -96,21 +169,42 @@ class FirebaseMetaManager @Inject constructor(
         return metaItemState
     }
 
-    private fun isValidated(metaItemDto: MetaItemDto): Boolean {
+    private fun isValidated(
+        metaItemDto: MetaItemDto,
+        titleMinLength: Int,
+        titleMaxLength: Int,
+        descriptionMinLength: Int,
+        descriptionMaxLength: Int
+    ): Boolean {
         var error = ""
 
-        metaItemDto.title.let {
-            if (it.isEmpty())
+        with(metaItemDto.title) {
+            if (isEmpty())
                 error = "Title can not be empty"
-            else if (it.length < 3)
+            else if (length < titleMinLength)
                 error = "Title is too short"
-            else if (it.length > 200)
+            else if (length > titleMaxLength)
                 error = "Title is too long"
         }
 
-        metaItemDto.authorUid.let {
+        with(metaItemDto.description) {
+            if (isEmpty()) {
+                error = "Description can not be empty"
+            } else if (length < descriptionMinLength) {
+                error = "Description is too short"
+            } else if (length > descriptionMaxLength) {
+                error = "Description is too long"
+            }
+        }
+
+        metaItemDto.author[MetaItem.USER_UID]?.let {
             if (it.isEmpty())
                 error = "Can't find author uid"
+        }
+
+        metaItemDto.dndClass[MetaItem.NAME]?.let {
+            if (it.isEmpty())
+                error = "Class can not be empty"
         }
 
         if (error.isNotEmpty()) {

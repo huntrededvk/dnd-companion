@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class SignInViewModel @Inject constructor(
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
     val authState = _authState.asStateFlow()
@@ -19,6 +19,7 @@ class SignInViewModel @Inject constructor(
 
     fun signInWithEmailAndPassword(email: String, password: String) {
         viewModelScope.launch {
+            _authState.value = AuthState.Progress
             signInWithEmailAndPasswordUseCase(email, password).collect {
                 _authState.value = it
             }

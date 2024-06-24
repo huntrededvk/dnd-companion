@@ -11,5 +11,4 @@ class GetMetaItemUseCase @Inject constructor(
     operator fun invoke(metaItemUid: String): StateFlow<MetaItemState> {
         return repository.getMetaItem(metaItemUid)
     }
-
 }

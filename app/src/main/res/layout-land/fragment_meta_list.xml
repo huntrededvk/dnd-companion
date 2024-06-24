@@ -37,7 +37,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/meta_item_container"
+        android:id="@+id/fcv_meta_item_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintStart_toEndOf="@id/guideline_middle"
@@ -45,7 +45,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:context=".presentation.main.MainActivity"
-        tools:layout="@layout/fragment_add_meta_item" />
+        tools:layout="@layout/fragment_meta_item" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_meta_list"
+        android:indeterminateTint="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_middle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

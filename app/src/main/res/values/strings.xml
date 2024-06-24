@@ -43,4 +43,21 @@
     <string name="secondary_weapon">Secondary weapon</string>
     <string name="neckless">Neckless</string>
     <string name="ring">Ring</string>
+    <string name="description">Description</string>
+    <string name="tier_field">Tier:</string>
+    <string name="class_field">Class:</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="gear">Gear</string>
+    <string name="weapon">Weapon</string>
+    <string name="armor">Armor</string>
+    <string name="head">Head</string>
+    <string name="chest">Chest</string>
+    <string name="legs">Legs</string>
+    <string name="foot">Foot</string>
+    <string name="back">Back</string>
+    <string name="gloves">Gloves</string>
+    <string name="jewelry">Jewelry</string>
+    <string name="pendant">Pendant</string>
+    <string name="main_fragment">main_fragment</string>
 </resources>

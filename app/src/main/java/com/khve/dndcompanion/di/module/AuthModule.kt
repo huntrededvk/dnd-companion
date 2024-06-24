@@ -11,11 +11,11 @@ import dagger.Module
 @Module
 interface AuthModule {
 
-        @ApplicationScope
-        @Binds
-        fun bindSignUpRepository(impl: SingUpRepositoryImpl): SingUpRepository
+    @ApplicationScope
+    @Binds
+    fun bindSignUpRepository(impl: SingUpRepositoryImpl): SingUpRepository
 
-        @ApplicationScope
-        @Binds
-        fun bindSignInRepository(impl: SignInRepositoryImpl): SignInRepository
+    @ApplicationScope
+    @Binds
+    fun bindSignInRepository(impl: SignInRepositoryImpl): SignInRepository
 }

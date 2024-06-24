@@ -2,7 +2,6 @@ package com.khve.dndcompanion.presentation.meta
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,8 @@ import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.meta.entity.MetaListState
+import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
+import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ class MetaListFragment : Fragment() {
     lateinit var viewModel: MetaListViewModel
     private var _binding: FragmentMetaListBinding? = null
     private val binding: FragmentMetaListBinding
-        get() = _binding ?: throw RuntimeException("FragmentMetaListFragment == null")
+        get() = _binding ?: throw NullPointerException("FragmentMetaListBinding == null")
 
     private lateinit var metaListAdapter: MetaListAdapter
 
@@ -56,21 +56,47 @@ class MetaListFragment : Fragment() {
         observeMetaList()
     }
 
+    private fun isOnPaneMode(): Boolean {
+        return binding.fcvMetaItemContainer != null
+    }
+
     private fun buttonListeners(currentUser: User) {
         if (currentUser.hasPermission(Permission.ADD_META_ITEM)) {
-            binding.fabAddMetaItem?.visibility = View.VISIBLE
-            binding.fabAddMetaItem?.isClickable = true
-            binding.fabAddMetaItem?.setOnClickListener {
-                startAddMetaItemActivity()
+            binding.fabAddMetaItem.visibility = View.VISIBLE
+            binding.fabAddMetaItem.isClickable = true
+            binding.fabAddMetaItem.setOnClickListener {
+                startAddMetaItemFragment()
             }
         }
     }
 
-    private fun startAddMetaItemActivity() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.auth_container, AddMetaItemFragment.newInstance())
-            .addToBackStack(AddMetaItemFragment.BACKSTACK_NAME)
-            .commit()
+    private fun startAddMetaItemFragment() {
+        if (isOnPaneMode()) {
+            replaceFragment(AddMetaItemFragment.newInstance(), R.id.fcv_meta_item_container)
+        } else {
+            replaceFragment(AddMetaItemFragment.newInstance(), R.id.auth_container)
+        }
+    }
+
+    private fun startMetaItemFragment(metaCardItem: MetaCardItem) {
+        if (isOnPaneMode()) {
+            replaceFragment(
+                MetaItemFragment.newInstance(metaCardItem.uid),
+                R.id.fcv_meta_item_container
+            )
+        } else {
+            replaceFragment(MetaItemFragment.newInstance(metaCardItem.uid), R.id.auth_container)
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment, containerId: Int) {
+        with(requireActivity().supportFragmentManager) {
+            popBackStack(BACKSTACK_NAME, 0)
+            beginTransaction()
+                .replace(containerId, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun observeUser() {
@@ -85,34 +111,63 @@ class MetaListFragment : Fragment() {
             }
         }
     }
+
     private fun observeMetaList() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.getMetaCardList()
                 // Collect Meta list
-                viewModel.metaList.collect {
-                    if (it is MetaListState.MetaList) {
-                        metaListAdapter.submitList(it.metaList)
-                    } else if (it is MetaListState.Error) {
-                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                viewModel.metaCardListState.collect {
+                    when(it) {
+                        MetaCardListState.Initial -> {}
+                        is MetaCardListState.MetaCardList -> {
+                            val sortedMetaList = it.metaCardList.sortedBy {
+                                resources.getStringArray(R.array.tiers).indexOf(it.tier)
+                            }
+                            metaListAdapter.submitList(sortedMetaList)
+                            loadMetaListInProgress(false)
+                        }
+                        is MetaCardListState.Error -> {
+                            loadMetaListInProgress(false)
+                            Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                        }
+
+                        MetaCardListState.Progress -> {
+                            loadMetaListInProgress(true)
+                        }
                     }
                 }
             }
+        }
+
+        metaListAdapter.onMetaItemClickListener = {
+            startMetaItemFragment(it)
+        }
+    }
+
+    private fun loadMetaListInProgress(isInProgress: Boolean) {
+        if (isInProgress) {
+            metaListAdapter.onMetaItemClickListener = {}
+            binding.progressBarMetaList.visibility = View.VISIBLE
+        } else {
+            metaListAdapter.onMetaItemClickListener = {
+                startMetaItemFragment(it)
+            }
+            binding.progressBarMetaList.visibility = View.INVISIBLE
         }
     }
 
     private fun setupRecyclerView() {
         with(binding.rvMetaList) {
-            metaListAdapter = MetaListAdapter()
+            metaListAdapter = MetaListAdapter(requireContext())
             adapter = metaListAdapter
-        }
-        metaListAdapter.onMetaItemClickListener = {
-            Log.d("TESTTEST", it.toString())
         }
     }
 
 
     companion object {
         const val BACKSTACK_NAME = "meta_list_fragment"
+
         @JvmStatic
         fun newInstance() = MetaListFragment()
     }
