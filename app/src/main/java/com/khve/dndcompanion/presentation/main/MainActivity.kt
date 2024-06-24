@@ -1,6 +1,7 @@
 package com.khve.dndcompanion.presentation.main
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -20,18 +21,26 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: MainViewModel
 
     private var currentUserState: UserState = UserState.Initial
+    private var savedOrientation: Int? = null
 
     private val component by lazy {
         (application as CompanionApplication).component
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        savedOrientation =
+            savedInstanceState?.getInt("orientation") ?: resources.configuration.orientation
         onBackPressedPopBack()
         observeInternetConnection()
         component.inject(this)
         observeViewModel()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putInt("orientation", resources.configuration.orientation)
     }
 
     private fun onBackPressedPopBack() {
@@ -81,15 +90,26 @@ class MainActivity : AppCompatActivity() {
             ).show()
 
             is UserState.User -> {
-                startMainFragment()
+                if (!isScreenRotated()) {
+                    startMainFragment()
+                }
             }
 
             UserState.NotAuthorized -> {
-                startSignInFragment()
+                if (!isScreenRotated()) {
+                    startSignInFragment()
+                }
             }
 
             UserState.Initial -> {}
         }
+    }
+
+    private fun isScreenRotated(): Boolean {
+        val currentOrientation = resources.configuration.orientation
+        val isRotated = savedOrientation != null && savedOrientation != currentOrientation
+        savedOrientation = currentOrientation
+        return isRotated
     }
 
     private fun startErrorFragment(errorMessage: String) {
@@ -111,11 +131,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.auth_container, MainFragment.newInstance())
             .addToBackStack(MainFragment.BACKSTACK_NAME)
             .commit()
-    }
-
-
-    companion object {
-        private const val CURRENT_USER = "current_user"
     }
 
 }
