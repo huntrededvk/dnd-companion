@@ -10,6 +10,7 @@ data class MetaItem(
     val partySize: PartySizeEnum?,
     val description: String = DEFAULT_EMPTY_STRING,
     val tier: String = DEFAULT_EMPTY_STRING,
+    val activated: Boolean = false,
     val author: Map<String, String> = mapOf(
         USERNAME to DEFAULT_EMPTY_STRING,
         USER_UID to DEFAULT_EMPTY_STRING

@@ -8,6 +8,7 @@ data class MetaCardItemDto(
     @SerializedName("title") val title: String = DEFAULT_EMPTY_STRING,
     @SerializedName("party_size") val partySize: PartySizeEnum? = null,
     @SerializedName("tier") val tier: String = DEFAULT_EMPTY_STRING,
+    @SerializedName("activated") val activated: Boolean = false,
     @SerializedName("author") val author: Map<String, String> = mapOf(
         USERNAME to DEFAULT_EMPTY_STRING,
         USER_UID to DEFAULT_EMPTY_STRING

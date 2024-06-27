@@ -9,6 +9,7 @@ data class MetaCardItem (
     val title: String = DEFAULT_EMPTY_STRING,
     val partySize: PartySizeEnum?,
     val tier: String = DEFAULT_EMPTY_STRING,
+    val activated: Boolean = false,
     val author: Map<String, String> = mapOf(
         USERNAME to DEFAULT_EMPTY_STRING,
         USER_UID to DEFAULT_EMPTY_STRING

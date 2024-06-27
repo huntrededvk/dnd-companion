@@ -3,6 +3,8 @@ package com.khve.dndcompanion.presentation.meta.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.khve.dndcompanion.R
@@ -24,6 +26,12 @@ class MetaListAdapter (
         val metaCardItem = getItem(position)
         holder.cvMetaItem.setOnClickListener {
             onMetaItemClickListener?.invoke(metaCardItem)
+        }
+
+        if (!metaCardItem.activated) {
+            holder.cvMetaItem.background = AppCompatResources.getDrawable(context, R.color.deactivated)
+        } else {
+            holder.cvMetaItem.background = AppCompatResources.getDrawable(context, R.color.white)
         }
 
         holder.tvTitle.text = metaCardItem.title

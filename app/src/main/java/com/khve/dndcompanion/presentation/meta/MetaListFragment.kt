@@ -16,10 +16,12 @@ import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
+import com.khve.dndcompanion.domain.auth.enum.UserRole
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.presentation.CompanionApplication
+import com.khve.dndcompanion.presentation.auth.SignInFragment
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,7 +40,9 @@ class MetaListFragment : Fragment() {
         (requireActivity().application as CompanionApplication).component
     }
 
+    private var retrievedUserState: UserState? = null
     private var partySize: PartySizeEnum? = null
+
 
     override fun onAttach(context: Context) {
         component.inject(this)
@@ -76,8 +80,9 @@ class MetaListFragment : Fragment() {
             if (partySize == null)
                 throw IllegalArgumentException("MetaListFragment received empty Party size")
 
-            viewModel.getMetaCardList(partySize ?:
-            throw IllegalArgumentException("Can not get Meta card list, Party size is empty")
+            viewModel.getMetaCardList(
+                partySize
+                    ?: throw IllegalArgumentException("Can not get Meta card list, Party size is empty")
             )
         }
     }
@@ -86,23 +91,40 @@ class MetaListFragment : Fragment() {
         return binding.fcvMetaItemContainer != null
     }
 
-    private fun buttonListeners(currentUser: User) {
-        if (currentUser.hasPermission(Permission.ADD_META_ITEM)) {
-            binding.fabAddMetaItem.visibility = View.VISIBLE
-            binding.fabAddMetaItem.isClickable = true
-            binding.fabAddMetaItem.setOnClickListener {
+    private fun buttonListeners() {
+        binding.fabAddMetaItem.visibility = View.VISIBLE
+        binding.fabAddMetaItem.isClickable = true
+        binding.fabAddMetaItem.setOnClickListener {
+            val currentUser = retrievedUserState
+
+            if (currentUser is UserState.NotAuthorized) {
+                startSignInFragment()
+            } else if (currentUser is UserState.User &&
+                currentUser.user.hasPermission(Permission.ADD_META_ITEM)) {
                 startAddMetaItemFragment()
+            } else {
+                Toast.makeText(requireContext(), "Forbidden", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun startSignInFragment() {
+        replaceFragment(SignInFragment.newInstance(), R.id.auth_container)
     }
 
     private fun startAddMetaItemFragment() {
         val currentPartySize = partySize
         if (currentPartySize != null) {
             if (isOnPaneMode()) {
-                replaceFragment(AddMetaItemFragment.newInstance(currentPartySize), R.id.fcv_meta_item_container)
+                replaceFragment(
+                    AddMetaItemFragment.newInstance(currentPartySize),
+                    R.id.fcv_meta_item_container
+                )
             } else {
-                replaceFragment(AddMetaItemFragment.newInstance(currentPartySize), R.id.auth_container)
+                replaceFragment(
+                    AddMetaItemFragment.newInstance(currentPartySize),
+                    R.id.auth_container
+                )
             }
         } else {
             throw IllegalArgumentException("Can not start AddMetaItemFragment, party size is null")
@@ -135,8 +157,8 @@ class MetaListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.currentUser.collect {
                     if (it is UserState.User) {
-                        val currentUser = it.user
-                        buttonListeners(currentUser)
+                        retrievedUserState = it
+                        buttonListeners()
                     }
                 }
             }
@@ -148,7 +170,7 @@ class MetaListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 // Collect Meta list
                 viewModel.metaCardListState.collect {
-                    when(it) {
+                    when (it) {
                         MetaCardListState.Initial -> {}
                         is MetaCardListState.MetaCardList -> {
                             val sortedMetaList = it.metaCardList.sortedBy {
@@ -157,9 +179,11 @@ class MetaListFragment : Fragment() {
                             metaListAdapter.submitList(sortedMetaList)
                             loadMetaListInProgress(false)
                         }
+
                         is MetaCardListState.Error -> {
                             loadMetaListInProgress(false)
-                            Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT)
+                                .show()
                         }
 
                         MetaCardListState.Progress -> {
