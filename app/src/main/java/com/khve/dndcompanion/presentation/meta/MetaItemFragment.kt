@@ -155,8 +155,10 @@ class MetaItemFragment : Fragment() {
 
             if (metaCardItem == null)
                 throw IllegalArgumentException("MetaItemFragment received empty Meta card item")
+            else if (metaCardItem.partySize == null)
+                throw IllegalArgumentException("MetaCardItem has null party size in MetaItemFragment")
 
-            viewModel.getMetaItem(metaCardItem.uid, metaCardItem.metaType, metaCardItem.metaBuild)
+            viewModel.getMetaItem(metaCardItem.uid, metaCardItem.partySize)
         }
     }
 

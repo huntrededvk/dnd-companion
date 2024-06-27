@@ -6,12 +6,11 @@ import com.khve.dndcompanion.data.meta.model.MetaCardItemDto
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
 import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
-import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,10 +35,10 @@ class FirebaseMetaManager @Inject constructor(
     private val metaItemState = _metaItemState.asStateFlow()
 
     fun getMetaCardList(
-        metaType: MetaTypeEnum,
-        metaBuild: MetaBuildEnum
+        partySize: PartySizeEnum
     ): StateFlow<MetaCardListState> {
-        mDocRef.document(metaType.name).collection(metaBuild.name).get()
+        _metaCardListState.value = MetaCardListState.Initial
+        mDocRef.document(META_BUILDS).collection(partySize.name).get()
             .addOnSuccessListener { snapshot ->
                 val metaList = mutableListOf<MetaCardItem>()
                 val snapshotList = snapshot?.documents ?: emptyList()
@@ -83,7 +82,10 @@ class FirebaseMetaManager @Inject constructor(
         )
             return metaItemState
 
-        mDocRef.document(metaItem.metaType.name).collection(metaItem.metaBuild.name).document()
+        mDocRef.document(META_BUILDS).collection(
+            metaItem.partySize?.name ?:
+            throw IllegalArgumentException("Can not add meta item, party size is null")
+        ).document()
             .set(mappedMetaItemDto)
             .addOnSuccessListener {
                 updateMetaListState(mappedMetaItemDto)
@@ -115,7 +117,10 @@ class FirebaseMetaManager @Inject constructor(
         if (currentUser is UserState.User &&
             currentUser.user.uid == metaItem.author[MetaItemDto.USER_UID]
         ) {
-            mDocRef.document(metaItem.metaType.name).collection(metaItem.metaBuild.name)
+            mDocRef.document(META_BUILDS).collection(
+                metaItem.partySize?.name ?:
+                throw IllegalArgumentException("Can not delete meta item, party size is null")
+            )
                 .document(metaItem.uid).delete()
                 .addOnSuccessListener {
                     _metaItemState.value = MetaItemState.Success
@@ -139,7 +144,10 @@ class FirebaseMetaManager @Inject constructor(
         if (currentUser is UserState.User &&
             currentUser.user.uid == mappedMetaItemDto.author[MetaItemDto.USER_UID]
         ) {
-            mDocRef.document(metaItem.metaType.name).collection(metaItem.metaBuild.name)
+            mDocRef.document(META_BUILDS).collection(
+                metaItem.partySize?.name ?:
+                throw IllegalArgumentException("Can not update meta item, party size is null")
+            )
                 .document(mappedMetaItemDto.uid).set(mappedMetaItemDto)
                 .addOnSuccessListener {
                     _metaItemState.value = MetaItemState.Success
@@ -158,11 +166,10 @@ class FirebaseMetaManager @Inject constructor(
 
     fun getMetaItem(
         metaItemUid: String,
-        metaType: MetaTypeEnum,
-        metaBuild: MetaBuildEnum
+        partySize: PartySizeEnum
     ): StateFlow<MetaItemState> {
         _metaItemState.value = MetaItemState.Initial
-        mDocRef.document(metaType.name).collection(metaBuild.name).document(metaItemUid).get()
+        mDocRef.document(META_BUILDS).collection(partySize.name).document(metaItemUid).get()
             .addOnSuccessListener { snapshot ->
                 val metaItemDto = snapshot?.toObject(MetaItemDto::class.java)
                 _metaItemState.value = if (metaItemDto != null) {
@@ -193,11 +200,8 @@ class FirebaseMetaManager @Inject constructor(
     ): Boolean {
         var error = ""
 
-        if (metaItemDto.metaType == MetaTypeEnum.INITIAL)
-            throw IllegalArgumentException("Meta type can not be INITIAL")
-
-        if (metaItemDto.metaBuild == MetaBuildEnum.INITIAL)
-            throw IllegalArgumentException("Meta build can not be INITIAL")
+        if (metaItemDto.partySize == null)
+            throw IllegalArgumentException("Party size can not be empty")
 
         with(metaItemDto.title) {
             if (isEmpty())
@@ -234,6 +238,10 @@ class FirebaseMetaManager @Inject constructor(
         }
 
         return true
+    }
+
+    companion object {
+        const val META_BUILDS = "builds"
     }
 
 }

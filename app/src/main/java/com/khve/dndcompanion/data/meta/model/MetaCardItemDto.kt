@@ -1,14 +1,12 @@
 package com.khve.dndcompanion.data.meta.model
 
 import com.google.gson.annotations.SerializedName
-import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
-import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 
 data class MetaCardItemDto(
     @SerializedName("uid") val uid: String = DEFAULT_EMPTY_STRING,
     @SerializedName("title") val title: String = DEFAULT_EMPTY_STRING,
-    @SerializedName("meta_type") val metaType: MetaTypeEnum = MetaTypeEnum.INITIAL,
-    @SerializedName("meta_build") val metaBuild: MetaBuildEnum = MetaBuildEnum.INITIAL,
+    @SerializedName("party_size") val partySize: PartySizeEnum? = null,
     @SerializedName("tier") val tier: String = DEFAULT_EMPTY_STRING,
     @SerializedName("author") val author: Map<String, String> = mapOf(
         USERNAME to DEFAULT_EMPTY_STRING,

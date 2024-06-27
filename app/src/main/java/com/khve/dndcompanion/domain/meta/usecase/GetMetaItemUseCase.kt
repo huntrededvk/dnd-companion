@@ -1,8 +1,7 @@
 package com.khve.dndcompanion.domain.meta.usecase
 
-import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
-import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import com.khve.dndcompanion.domain.meta.repository.MetaListRepository
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -12,9 +11,8 @@ class GetMetaItemUseCase @Inject constructor(
 ) {
     operator fun invoke(
         metaItemUid: String,
-        metaType: MetaTypeEnum,
-        metaBuild: MetaBuildEnum
+        partySize: PartySizeEnum
     ): StateFlow<MetaItemState> {
-        return repository.getMetaItem(metaItemUid, metaType, metaBuild)
+        return repository.getMetaItem(metaItemUid, partySize)
     }
 }

@@ -1,11 +1,10 @@
 package com.khve.dndcompanion.data.meta.repository
 
 import com.khve.dndcompanion.data.network.firebase.meta.FirebaseMetaManager
-import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
-import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import com.khve.dndcompanion.domain.meta.repository.MetaListRepository
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -15,19 +14,17 @@ class MetaListRepositoryImpl @Inject constructor(
 ) : MetaListRepository {
 
     override fun getMetaCardList(
-        metaType: MetaTypeEnum,
-        metaBuild: MetaBuildEnum
-    ): StateFlow<MetaCardListState> = metaManager.getMetaCardList(metaType, metaBuild)
+        partySize: PartySizeEnum
+    ): StateFlow<MetaCardListState> = metaManager.getMetaCardList(partySize)
 
     override fun addMetaItem(metaItemDto: MetaItem): StateFlow<MetaItemState> =
         metaManager.addMetaItem(metaItemDto)
 
     override fun getMetaItem(
         metaItemUid: String,
-        metaType: MetaTypeEnum,
-        metaBuild: MetaBuildEnum
+        partySize: PartySizeEnum
     ): StateFlow<MetaItemState> =
-        metaManager.getMetaItem(metaItemUid, metaType, metaBuild)
+        metaManager.getMetaItem(metaItemUid, partySize)
 
     override fun deleteMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> =
         metaManager.deleteMetaItem(metaItem)

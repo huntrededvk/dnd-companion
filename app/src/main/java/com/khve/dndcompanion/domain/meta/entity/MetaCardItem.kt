@@ -7,8 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class MetaCardItem (
     val uid: String = DEFAULT_EMPTY_STRING,
     val title: String = DEFAULT_EMPTY_STRING,
-    val metaType: MetaTypeEnum = MetaTypeEnum.INITIAL,
-    val metaBuild: MetaBuildEnum = MetaBuildEnum.INITIAL,
+    val partySize: PartySizeEnum?,
     val tier: String = DEFAULT_EMPTY_STRING,
     val author: Map<String, String> = mapOf(
         USERNAME to DEFAULT_EMPTY_STRING,

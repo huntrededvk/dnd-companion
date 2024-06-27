@@ -1,6 +1,7 @@
 package com.khve.dndcompanion.presentation.meta
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +16,9 @@ import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
-import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter
 import kotlinx.coroutines.launch
@@ -33,16 +33,15 @@ class MetaListFragment : Fragment() {
         get() = _binding ?: throw NullPointerException("FragmentMetaListBinding == null")
 
     private lateinit var metaListAdapter: MetaListAdapter
-    private var metaType = MetaTypeEnum.INITIAL
-    private var metaBuild = MetaBuildEnum.INITIAL
 
     private val component by lazy {
         (requireActivity().application as CompanionApplication).component
     }
 
+    private var partySize: PartySizeEnum? = null
+
     override fun onAttach(context: Context) {
         component.inject(this)
-        getMetaInfo()
         super.onAttach(context)
     }
 
@@ -60,11 +59,27 @@ class MetaListFragment : Fragment() {
         observeUser()
         observeMetaList()
     }
-    private fun getMetaInfo() {
-        // TODO: Remove and move logic to parse params
-        metaType = MetaTypeEnum.BUILD
-        metaBuild = MetaBuildEnum.SOLO
-        viewModel.getMetaCardList(metaType, metaBuild)
+
+    override fun onResume() {
+        super.onResume()
+        parseParams()
+    }
+
+    private fun parseParams() {
+        arguments?.let {
+            partySize = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                it.getParcelable(PARTY_SIZE, PartySizeEnum::class.java)
+            } else {
+                it.getParcelable<PartySizeEnum>(PARTY_SIZE)
+            }
+
+            if (partySize == null)
+                throw IllegalArgumentException("MetaListFragment received empty Party size")
+
+            viewModel.getMetaCardList(partySize ?:
+            throw IllegalArgumentException("Can not get Meta card list, Party size is empty")
+            )
+        }
     }
 
     private fun isOnPaneMode(): Boolean {
@@ -82,10 +97,15 @@ class MetaListFragment : Fragment() {
     }
 
     private fun startAddMetaItemFragment() {
-        if (isOnPaneMode()) {
-            replaceFragment(AddMetaItemFragment.newInstance(), R.id.fcv_meta_item_container)
+        val currentPartySize = partySize
+        if (currentPartySize != null) {
+            if (isOnPaneMode()) {
+                replaceFragment(AddMetaItemFragment.newInstance(currentPartySize), R.id.fcv_meta_item_container)
+            } else {
+                replaceFragment(AddMetaItemFragment.newInstance(currentPartySize), R.id.auth_container)
+            }
         } else {
-            replaceFragment(AddMetaItemFragment.newInstance(), R.id.auth_container)
+            throw IllegalArgumentException("Can not start AddMetaItemFragment, party size is null")
         }
     }
 
@@ -177,8 +197,13 @@ class MetaListFragment : Fragment() {
 
     companion object {
         const val BACKSTACK_NAME = "meta_list_fragment"
+        const val PARTY_SIZE = "party_size"
 
         @JvmStatic
-        fun newInstance() = MetaListFragment()
+        fun newInstance(partySize: PartySizeEnum) = MetaListFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(PARTY_SIZE, partySize)
+            }
+        }
     }
 }

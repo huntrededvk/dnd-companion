@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-enum class MetaBuildEnum: Parcelable {
-    SOLO, DUO, TRIO, INITIAL
+enum class PartySizeEnum: Parcelable {
+    SOLO, DUO, TRIO
 }
