@@ -66,4 +66,6 @@
     <string name="meta_uppercase">META</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
+    <string name="video">Video</string>
+    <string name="youtube_video_id_field">Youtube video id:</string>
 </resources>

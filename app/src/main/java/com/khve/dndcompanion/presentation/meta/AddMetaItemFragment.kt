@@ -161,6 +161,7 @@ class AddMetaItemFragment : Fragment() {
                     description = binding.etDescription.text.toString().trim(),
                     partySize = partySize,
                     tier = binding.acttTierDropdownMenu.text.toString().trim(),
+                    youtubeVideoId = binding.etYoutubeVideoId.text.toString().trim(),
                     dndClass = mapOf(
                         MetaItem.NAME to selectedClass,
                         MetaItem.PREVIEW_IMAGE to

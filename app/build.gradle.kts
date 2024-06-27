@@ -86,6 +86,9 @@ dependencies {
     // Glide
     implementation(libs.glide.v500rc01)
 
+    // YouTube Player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
     // Test
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

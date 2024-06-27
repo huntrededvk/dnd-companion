@@ -18,6 +18,8 @@ import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.presentation.CompanionApplication
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,6 +44,21 @@ class MetaItemFragment : Fragment() {
         observeViewModel()
     }
 
+    private fun setUpYoutubePlayer(youtubeVideoId: String?) {
+        if (!youtubeVideoId.isNullOrEmpty()) {
+            binding.llYoutubePlayer.visibility = View.VISIBLE
+            val youTubePlayer = binding.youtubePlayerView
+            lifecycle.addObserver(youTubePlayer)
+            val youTubePlayerListener = object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    super.onReady(youTubePlayer)
+                    youTubePlayer.cueVideo(youtubeVideoId, 0F)
+                    youTubePlayer.removeListener(this)
+                }}
+            youTubePlayer.addYouTubePlayerListener(youTubePlayerListener)
+        }
+    }
+
     private fun observeViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -57,12 +74,13 @@ class MetaItemFragment : Fragment() {
                             setupViews(metaItem)
                             buttonListeners(metaItem)
                             loadMetaItemInProgress(false)
+                            setUpYoutubePlayer(metaItem.youtubeVideoId)
                         }
                         MetaItemState.Progress -> loadMetaItemInProgress(true)
                         MetaItemState.Success -> {
                             loadMetaItemInProgress(false)
                             requireActivity().supportFragmentManager.popBackStack(
-                                MetaListFragment.BACKSTACK_NAME,
+                                MetaListTabFragment.BACKSTACK_NAME,
                                 0
                             )
                         }

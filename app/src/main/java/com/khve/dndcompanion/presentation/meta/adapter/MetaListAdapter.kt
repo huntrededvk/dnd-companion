@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.khve.dndcompanion.R
+import com.khve.dndcompanion.databinding.FragmentMetaItemBinding
+import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 

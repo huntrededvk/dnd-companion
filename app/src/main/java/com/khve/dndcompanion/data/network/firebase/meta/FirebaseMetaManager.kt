@@ -58,11 +58,11 @@ class FirebaseMetaManager @Inject constructor(
                     }
                 }
 
-                _metaCardListState.value = if (metaList.isEmpty()) {
-                    MetaCardListState.Error("We don't have any meta yet")
-                } else {
-                    MetaCardListState.MetaCardList(metaList)
+                if (metaList.isEmpty()) {
+                    _metaCardListState.value = MetaCardListState.Error("We don't have any meta yet")
                 }
+
+                _metaCardListState.value = MetaCardListState.MetaCardList(metaList)
             }
             .addOnFailureListener {
                 _metaCardListState.value =
@@ -122,10 +122,7 @@ class FirebaseMetaManager @Inject constructor(
             ).document()
                 .set(mappedMetaItemDto)
                 .addOnSuccessListener {
-                    getMetaCardList(
-                        mappedMetaItemDto.partySize
-                            ?: throw IllegalArgumentException("FirebaseMetaManager can not update Meta card list, party size is null")
-                    )
+                    resetStateAndUpdateMetaList(mappedMetaItemDto.partySize)
                     _metaItemState.value = MetaItemState.Success
                 }
                 .addOnFailureListener { e ->
@@ -140,6 +137,11 @@ class FirebaseMetaManager @Inject constructor(
         return metaItemState
     }
 
+    private fun resetStateAndUpdateMetaList(partySize: PartySizeEnum?) {
+        _metaItemState.value = MetaItemState.Initial
+        getMetaCardList(partySize ?: throw IllegalArgumentException("Can not update MetaCardList after Meta Item was deleted, party size is null"))
+    }
+
     fun deleteMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> {
         val mappedMetaItemDto = metaMapper.metaItemToMetaItemDto(metaItem)
 
@@ -150,6 +152,7 @@ class FirebaseMetaManager @Inject constructor(
             )
                 .document(metaItem.uid).delete()
                 .addOnSuccessListener {
+                    resetStateAndUpdateMetaList(mappedMetaItemDto.partySize)
                     _metaItemState.value = MetaItemState.Success
                 }
                 .addOnFailureListener {
@@ -172,6 +175,7 @@ class FirebaseMetaManager @Inject constructor(
             )
                 .document(metaItemDtoApproved.uid).set(metaItemDtoApproved)
                 .addOnSuccessListener {
+                    resetStateAndUpdateMetaList(metaItemDtoApproved.partySize)
                     _metaItemState.value = MetaItemState.Success
                 }
                 .addOnFailureListener {
@@ -194,6 +198,7 @@ class FirebaseMetaManager @Inject constructor(
             )
                 .document(mappedMetaItemDto.uid).set(mappedMetaItemDto)
                 .addOnSuccessListener {
+                    resetStateAndUpdateMetaList(mappedMetaItemDto.partySize)
                     _metaItemState.value = MetaItemState.Success
                 }
                 .addOnFailureListener {
@@ -244,6 +249,10 @@ class FirebaseMetaManager @Inject constructor(
 
         if (metaItemDto.partySize == null)
             throw IllegalArgumentException("Party size can not be empty")
+
+        if (metaItemDto.youtubeVideoId.isNotEmpty() && metaItemDto.youtubeVideoId.length != 11) {
+            error = "Youtube video id is incorrect"
+        }
 
         with(metaItemDto.title) {
             if (isEmpty())

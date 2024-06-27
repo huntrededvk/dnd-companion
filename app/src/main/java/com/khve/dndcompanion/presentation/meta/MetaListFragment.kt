@@ -172,6 +172,7 @@ class MetaListFragment : Fragment() {
                 viewModel.metaCardListState.collect {
                     when (it) {
                         MetaCardListState.Initial -> {}
+
                         is MetaCardListState.MetaCardList -> {
                             val sortedMetaList = it.metaCardList.sortedBy {
                                 resources.getStringArray(R.array.tiers).indexOf(it.tier)

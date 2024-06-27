@@ -1,6 +1,7 @@
 package com.khve.dndcompanion.data.meta.model
 
 import com.google.gson.annotations.SerializedName
+import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 
 data class MetaItemDto(
@@ -9,6 +10,7 @@ data class MetaItemDto(
     @SerializedName("party_size") val partySize: PartySizeEnum? = null,
     @SerializedName("description") val description: String = DEFAULT_EMPTY_STRING,
     @SerializedName("tier") val tier: String = DEFAULT_EMPTY_STRING,
+    @SerializedName("youtube_video_id") val youtubeVideoId: String = DEFAULT_EMPTY_STRING,
     @SerializedName("activated") val activated: Boolean = false,
     @SerializedName("author") val author: Map<String, String> = mapOf(
         USERNAME to DEFAULT_EMPTY_STRING,
