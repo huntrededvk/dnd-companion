@@ -6,10 +6,12 @@ import com.khve.dndcompanion.data.meta.model.MetaCardItemDto
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
 import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
+import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,8 +35,11 @@ class FirebaseMetaManager @Inject constructor(
     )
     private val metaItemState = _metaItemState.asStateFlow()
 
-    fun getMetaCardList(): StateFlow<MetaCardListState> {
-        mDocRef.get()
+    fun getMetaCardList(
+        metaType: MetaTypeEnum,
+        metaBuild: MetaBuildEnum
+    ): StateFlow<MetaCardListState> {
+        mDocRef.document(metaType.name).collection(metaBuild.name).get()
             .addOnSuccessListener { snapshot ->
                 val metaList = mutableListOf<MetaCardItem>()
                 val snapshotList = snapshot?.documents ?: emptyList()
@@ -74,10 +79,11 @@ class FirebaseMetaManager @Inject constructor(
                 titleMaxLength = 200,
                 descriptionMinLength = 10,
                 descriptionMaxLength = 10000
-            ))
+            )
+        )
             return metaItemState
 
-        mDocRef.document()
+        mDocRef.document(metaItem.metaType.name).collection(metaItem.metaBuild.name).document()
             .set(mappedMetaItemDto)
             .addOnSuccessListener {
                 updateMetaListState(mappedMetaItemDto)
@@ -107,8 +113,10 @@ class FirebaseMetaManager @Inject constructor(
         val currentUser = userManager.getCurrentDbUserState()
 
         if (currentUser is UserState.User &&
-            currentUser.user.uid == metaItem.author[MetaItemDto.USER_UID]) {
-            mDocRef.document(metaItem.uid).delete()
+            currentUser.user.uid == metaItem.author[MetaItemDto.USER_UID]
+        ) {
+            mDocRef.document(metaItem.metaType.name).collection(metaItem.metaBuild.name)
+                .document(metaItem.uid).delete()
                 .addOnSuccessListener {
                     _metaItemState.value = MetaItemState.Success
                 }
@@ -129,8 +137,10 @@ class FirebaseMetaManager @Inject constructor(
         val mappedMetaItemDto = metaMapper.metaItemToMetaItemDto(metaItem)
 
         if (currentUser is UserState.User &&
-            currentUser.user.uid == mappedMetaItemDto.author[MetaItemDto.USER_UID]) {
-            mDocRef.document(mappedMetaItemDto.uid).set(mappedMetaItemDto)
+            currentUser.user.uid == mappedMetaItemDto.author[MetaItemDto.USER_UID]
+        ) {
+            mDocRef.document(metaItem.metaType.name).collection(metaItem.metaBuild.name)
+                .document(mappedMetaItemDto.uid).set(mappedMetaItemDto)
                 .addOnSuccessListener {
                     _metaItemState.value = MetaItemState.Success
                 }
@@ -146,9 +156,13 @@ class FirebaseMetaManager @Inject constructor(
         return metaItemState
     }
 
-    fun getMetaItem(metaItemUid: String): StateFlow<MetaItemState> {
+    fun getMetaItem(
+        metaItemUid: String,
+        metaType: MetaTypeEnum,
+        metaBuild: MetaBuildEnum
+    ): StateFlow<MetaItemState> {
         _metaItemState.value = MetaItemState.Initial
-        mDocRef.document(metaItemUid).get()
+        mDocRef.document(metaType.name).collection(metaBuild.name).document(metaItemUid).get()
             .addOnSuccessListener { snapshot ->
                 val metaItemDto = snapshot?.toObject(MetaItemDto::class.java)
                 _metaItemState.value = if (metaItemDto != null) {
@@ -178,6 +192,12 @@ class FirebaseMetaManager @Inject constructor(
         descriptionMaxLength: Int
     ): Boolean {
         var error = ""
+
+        if (metaItemDto.metaType == MetaTypeEnum.INITIAL)
+            throw IllegalArgumentException("Meta type can not be INITIAL")
+
+        if (metaItemDto.metaBuild == MetaBuildEnum.INITIAL)
+            throw IllegalArgumentException("Meta build can not be INITIAL")
 
         with(metaItemDto.title) {
             if (isEmpty())

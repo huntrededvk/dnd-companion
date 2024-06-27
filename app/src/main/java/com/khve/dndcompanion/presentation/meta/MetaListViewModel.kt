@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
+import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
+import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import com.khve.dndcompanion.domain.meta.usecase.GetMetaCardListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +28,6 @@ class MetaListViewModel @Inject constructor(
 
     init {
         updateUserState()
-        getMetaCardList()
     }
 
     private fun updateUserState() {
@@ -37,10 +38,10 @@ class MetaListViewModel @Inject constructor(
         }
     }
 
-    fun getMetaCardList() {
+    fun getMetaCardList(metaType: MetaTypeEnum, metaBuild: MetaBuildEnum) {
         viewModelScope.launch {
             _metaCardListState.value = MetaCardListState.Progress
-            getMetaCardListUseCase().collect {
+            getMetaCardListUseCase(metaType, metaBuild).collect {
                 _metaCardListState.value = it
             }
         }

@@ -17,8 +17,10 @@ import com.khve.dndcompanion.databinding.FragmentAddMetaItemBinding
 import com.khve.dndcompanion.domain.dnd.entity.DndContent
 import com.khve.dndcompanion.domain.dnd.entity.DndContentState
 import com.khve.dndcompanion.domain.dnd.entity.DndItem
+import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
+import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import com.khve.dndcompanion.presentation.CompanionApplication
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,8 +37,12 @@ class AddMetaItemFragment : Fragment() {
         (requireActivity().application as CompanionApplication).component
     }
 
+    private var metaType = MetaTypeEnum.INITIAL
+    private var metaBuild = MetaBuildEnum.INITIAL
+
     override fun onAttach(context: Context) {
         component.inject(this)
+        getMetaInfo()
         super.onAttach(context)
     }
 
@@ -72,6 +78,12 @@ class AddMetaItemFragment : Fragment() {
             items.map(DndItem::name)
         )
         actt.setAdapter(adapter)
+    }
+
+    private fun getMetaInfo() {
+        // TODO: Remove and move logic to parse params
+        metaType = MetaTypeEnum.BUILD
+        metaBuild = MetaBuildEnum.SOLO
     }
 
     private fun observerViewModel() {
@@ -141,6 +153,8 @@ class AddMetaItemFragment : Fragment() {
                 MetaItem(
                     title = binding.etTitle.text.toString().trim(),
                     description = binding.etDescription.text.toString().trim(),
+                    metaType = metaType,
+                    metaBuild = metaBuild,
                     tier = binding.acttTierDropdownMenu.text.toString().trim(),
                     dndClass = mapOf(
                         MetaItem.NAME to selectedClass,
@@ -195,8 +209,6 @@ class AddMetaItemFragment : Fragment() {
     }
 
     companion object {
-        const val BACKSTACK_NAME = "add_meta_item_fragment"
-
         @JvmStatic
         fun newInstance() = AddMetaItemFragment()
     }

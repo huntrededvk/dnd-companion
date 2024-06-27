@@ -32,113 +32,155 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_margin="15dp"
+
+                android:layout_marginBottom="15dp"
                 tools:context=".presentation.meta.MetaItemFragment">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_meta_title_card"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="4dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_meta_title_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/iv_class_preview"
+                            app:shapeAppearanceOverlay="@style/Circle"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            app:strokeWidth="2dp"
+                            app:strokeColor="@color/black"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/cl_meta_title_card"
+                            app:layout_constraintBottom_toBottomOf="@id/cl_meta_title_card"
+                            tools:src="@tools:sample/avatars"
+                            android:contentDescription="@null"/>
+
+                        <TextView
+                            android:id="@+id/tv_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_author"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/iv_class_preview"
+                            tools:layout_editor_absoluteX="128dp"
+                            app:layout_constraintVertical_chainStyle="spread_inside"
+                            android:layout_margin="10dp"
+                            tools:text="Title" />
+
+                        <TextView
+                            android:id="@+id/tv_author"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="#ACACAC"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:layout_editor_absoluteX="128dp"
+                            android:layout_margin="10dp"
+                            tools:text="u/User" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tier_field"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:layout_marginEnd="10dp"/>
+                            <TextView
+                                android:id="@+id/tv_tier"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="S"
+                                android:textSize="24sp"
+                                android:layout_marginEnd="20dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/class_field"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:layout_marginEnd="10dp"/>
+                            <TextView
+                                android:id="@+id/tv_class"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Fighter"
+                                android:textSize="20sp"
+                                android:layout_marginEnd="20dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp">
 
-                    <ImageView
-                        android:id="@+id/iv_class_preview"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:src="@tools:sample/avatars"
-                        android:contentDescription="@null"/>
-
-                    <TextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toTopOf="@+id/tv_author"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/iv_class_preview"
-                        tools:layout_editor_absoluteX="128dp"
-                        app:layout_constraintVertical_chainStyle="spread_inside"
-                        android:layout_margin="10dp"
-                        tools:text="Title" />
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_author"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:layout_editor_absoluteX="128dp"
-                        android:layout_margin="10dp"
-                        tools:text="u/User" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/tv_description_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            tools:layout_editor_absoluteX="128dp"
+                            android:text="@string/description" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                        <TextView
+                            android:id="@+id/tv_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            tools:layout_editor_absoluteX="128dp"
+                            tools:text="@string/description"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tier_field"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
-                        android:id="@+id/tv_tier"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="S"
-                        android:textSize="24sp"
-                        android:layout_marginEnd="20dp"/>
+                    </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/class_field"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
-                        android:id="@+id/tv_class"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="Fighter"
-                        android:textSize="20sp"
-                        android:layout_marginEnd="20dp"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_description_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    tools:layout_editor_absoluteX="128dp"
-                    android:text="@string/description" />
-
-                <TextView
-                    android:id="@+id/tv_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    tools:layout_editor_absoluteX="128dp"
-                    tools:text="@string/description"
-                    android:layout_marginBottom="10dp"/>
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/tv_gear_title"

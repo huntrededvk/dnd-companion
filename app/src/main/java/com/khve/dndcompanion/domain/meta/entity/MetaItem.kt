@@ -7,6 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class MetaItem(
     val uid: String = DEFAULT_EMPTY_STRING,
     val title: String = DEFAULT_EMPTY_STRING,
+    val metaType: MetaTypeEnum = MetaTypeEnum.INITIAL,
+    val metaBuild: MetaBuildEnum = MetaBuildEnum.INITIAL,
     val description: String = DEFAULT_EMPTY_STRING,
     val tier: String = DEFAULT_EMPTY_STRING,
     val author: Map<String, String> = mapOf(

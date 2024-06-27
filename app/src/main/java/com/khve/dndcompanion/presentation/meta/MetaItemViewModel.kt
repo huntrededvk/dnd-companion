@@ -2,8 +2,10 @@ package com.khve.dndcompanion.presentation.meta
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
+import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import com.khve.dndcompanion.domain.meta.usecase.DeleteMetaItemUseCase
 import com.khve.dndcompanion.domain.meta.usecase.GetMetaItemUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,10 +21,10 @@ class MetaItemViewModel @Inject constructor(
     private val _metaItemState = MutableStateFlow<MetaItemState>(MetaItemState.Initial)
     val metaItemState = _metaItemState.asStateFlow()
 
-    fun getMetaItem(metaItemUid: String) {
+    fun getMetaItem(metaItemUid: String, metaType: MetaTypeEnum, metaBuild: MetaBuildEnum) {
         viewModelScope.launch {
             _metaItemState.value = MetaItemState.Progress
-            getMetaItemUseCase(metaItemUid).collect {
+            getMetaItemUseCase(metaItemUid, metaType, metaBuild).collect {
                 _metaItemState.value = it
             }
         }

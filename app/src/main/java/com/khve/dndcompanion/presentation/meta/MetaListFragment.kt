@@ -15,8 +15,10 @@ import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.enum.Permission
+import com.khve.dndcompanion.domain.meta.entity.MetaBuildEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
+import com.khve.dndcompanion.domain.meta.entity.MetaTypeEnum
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter
 import kotlinx.coroutines.launch
@@ -31,6 +33,8 @@ class MetaListFragment : Fragment() {
         get() = _binding ?: throw NullPointerException("FragmentMetaListBinding == null")
 
     private lateinit var metaListAdapter: MetaListAdapter
+    private var metaType = MetaTypeEnum.INITIAL
+    private var metaBuild = MetaBuildEnum.INITIAL
 
     private val component by lazy {
         (requireActivity().application as CompanionApplication).component
@@ -38,6 +42,7 @@ class MetaListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         component.inject(this)
+        getMetaInfo()
         super.onAttach(context)
     }
 
@@ -54,6 +59,12 @@ class MetaListFragment : Fragment() {
         setupRecyclerView()
         observeUser()
         observeMetaList()
+    }
+    private fun getMetaInfo() {
+        // TODO: Remove and move logic to parse params
+        metaType = MetaTypeEnum.BUILD
+        metaBuild = MetaBuildEnum.SOLO
+        viewModel.getMetaCardList(metaType, metaBuild)
     }
 
     private fun isOnPaneMode(): Boolean {
@@ -81,11 +92,11 @@ class MetaListFragment : Fragment() {
     private fun startMetaItemFragment(metaCardItem: MetaCardItem) {
         if (isOnPaneMode()) {
             replaceFragment(
-                MetaItemFragment.newInstance(metaCardItem.uid),
+                MetaItemFragment.newInstance(metaCardItem),
                 R.id.fcv_meta_item_container
             )
         } else {
-            replaceFragment(MetaItemFragment.newInstance(metaCardItem.uid), R.id.auth_container)
+            replaceFragment(MetaItemFragment.newInstance(metaCardItem), R.id.auth_container)
         }
     }
 
@@ -115,7 +126,6 @@ class MetaListFragment : Fragment() {
     private fun observeMetaList() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.getMetaCardList()
                 // Collect Meta list
                 viewModel.metaCardListState.collect {
                     when(it) {

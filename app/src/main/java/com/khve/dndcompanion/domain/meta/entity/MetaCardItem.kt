@@ -1,8 +1,14 @@
 package com.khve.dndcompanion.domain.meta.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MetaCardItem (
     val uid: String = DEFAULT_EMPTY_STRING,
     val title: String = DEFAULT_EMPTY_STRING,
+    val metaType: MetaTypeEnum = MetaTypeEnum.INITIAL,
+    val metaBuild: MetaBuildEnum = MetaBuildEnum.INITIAL,
     val tier: String = DEFAULT_EMPTY_STRING,
     val author: Map<String, String> = mapOf(
         USERNAME to DEFAULT_EMPTY_STRING,
@@ -12,7 +18,7 @@ data class MetaCardItem (
         NAME to DEFAULT_EMPTY_STRING,
         PREVIEW_IMAGE to DEFAULT_EMPTY_STRING
     )
-) {
+): Parcelable {
     companion object {
         private const val DEFAULT_EMPTY_STRING = ""
         const val NAME = "name"
