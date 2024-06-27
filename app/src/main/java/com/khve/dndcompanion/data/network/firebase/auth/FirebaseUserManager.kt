@@ -39,7 +39,7 @@ class FirebaseUserManager @Inject constructor(
         return if (currentDbUserState is UserState.User) {
             currentDbUserState
         } else {
-            UserState.Error("User is not authorized")
+            UserState.NotAuthorized
         }
     }
 

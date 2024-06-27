@@ -17,6 +17,7 @@ import com.khve.dndcompanion.databinding.FragmentMainBinding
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.meta.MetaListFragment
+import com.khve.dndcompanion.presentation.meta.MetaListTabFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -84,14 +85,14 @@ class MainFragment : Fragment() {
             Firebase.auth.signOut()
         }
         binding.clMeta.setOnClickListener {
-            startMetaListFragment()
+            startMetaListTabFragment()
         }
     }
 
-    private fun startMetaListFragment() {
+    private fun startMetaListTabFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.auth_container, MetaListFragment.newInstance())
-            .addToBackStack(MetaListFragment.BACKSTACK_NAME)
+            .replace(R.id.auth_container, MetaListTabFragment.newInstance())
+            .addToBackStack(MetaListTabFragment.BACKSTACK_NAME)
             .commit()
     }
 

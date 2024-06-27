@@ -11,6 +11,8 @@ class MetaMapper @Inject constructor() {
         return MetaItem(
             uid = metaItemDto.uid,
             title = metaItemDto.title,
+            activated = metaItemDto.activated,
+            partySize = metaItemDto.partySize,
             description = metaItemDto.description,
             tier = metaItemDto.tier,
             author = metaItemDto.author,
@@ -35,6 +37,8 @@ class MetaMapper @Inject constructor() {
         return MetaCardItem(
             uid = metaCardItemDto.uid,
             title = metaCardItemDto.title,
+            activated = metaCardItemDto.activated,
+            partySize = metaCardItemDto.partySize,
             tier = metaCardItemDto.tier,
             author = metaCardItemDto.author,
             dndClass = metaCardItemDto.dndClass
@@ -45,6 +49,8 @@ class MetaMapper @Inject constructor() {
         return MetaCardItem(
             uid = metaItemDto.uid,
             title = metaItemDto.title,
+            activated = metaItemDto.activated,
+            partySize = metaItemDto.partySize,
             tier = metaItemDto.tier,
             author = metaItemDto.author,
             dndClass = metaItemDto.dndClass
@@ -55,6 +61,8 @@ class MetaMapper @Inject constructor() {
         return MetaItemDto(
             uid = metaItem.uid,
             title = metaItem.title,
+            activated = metaItem.activated,
+            partySize = metaItem.partySize,
             description = metaItem.description,
             tier = metaItem.tier,
             author = metaItem.author,

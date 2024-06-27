@@ -5,7 +5,10 @@ import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.auth.screen.SignInScreen
 
-class SignInScenario : Scenario() {
+class SignInScenario(
+    private val email: String,
+    private val password: String
+) : Scenario() {
     override val steps: TestContext<Unit>.() -> Unit = {
         step("Check UI elements") {
             SignInScreen {
@@ -33,6 +36,13 @@ class SignInScenario : Scenario() {
                     isVisible()
                     isClickable()
                 }
+            }
+        }
+        step("Enter email, password and click Sign In") {
+            SignInScreen {
+                etEmail.replaceText(email)
+                etPassword.replaceText(password)
+                btnSignIn.click()
             }
         }
     }

@@ -6,7 +6,6 @@ import com.google.firebase.ktx.Firebase
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import com.khve.dndcompanion.MainFragmentScreen
 import com.khve.dndcompanion.R
-import com.khve.dndcompanion.auth.scenario.SignInScenario
 import com.khve.dndcompanion.auth.scenario.SignUpScenario
 import com.khve.dndcompanion.auth.screen.SignInScreen
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
@@ -29,9 +28,9 @@ class AuthTest : TestCase() {
     @Test
     fun testSuccessfulUserCreateWithCorrectFields() = run {
         step("Check Sign In is opened") {
-            scenario(
-                SignInScenario()
-            )
+                SignInScreen {
+                    tvTitle.hasText(R.string.sign_in)
+                }
         }
         step("Open sign up, check all initial UI elements and Sign Up with provided values") {
             scenario(

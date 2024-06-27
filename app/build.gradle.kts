@@ -84,7 +84,7 @@ dependencies {
     implementation(libs.gson)
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:5.0.0-rc01")
+    implementation(libs.glide.v500rc01)
 
     // Test
     testImplementation(libs.junit)

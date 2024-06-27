@@ -60,4 +60,10 @@
     <string name="jewelry">Jewelry</string>
     <string name="pendant">Pendant</string>
     <string name="main_fragment">main_fragment</string>
+    <string name="solo_uppercase">SOLO</string>
+    <string name="duo_uppercase">DUO</string>
+    <string name="trio_uppercase">TRIO</string>
+    <string name="meta_uppercase">META</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
 </resources>
