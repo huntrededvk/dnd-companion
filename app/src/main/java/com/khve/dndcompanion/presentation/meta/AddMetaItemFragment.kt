@@ -1,6 +1,7 @@
 package com.khve.dndcompanion.presentation.meta
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.khve.dndcompanion.databinding.FragmentAddMetaItemBinding
 import com.khve.dndcompanion.domain.dnd.entity.DndContent
 import com.khve.dndcompanion.domain.dnd.entity.DndContentState
 import com.khve.dndcompanion.domain.dnd.entity.DndItem
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.presentation.CompanionApplication
@@ -35,8 +37,11 @@ class AddMetaItemFragment : Fragment() {
         (requireActivity().application as CompanionApplication).component
     }
 
+    private var partySize: PartySizeEnum? = null
+
     override fun onAttach(context: Context) {
         component.inject(this)
+        parseParams()
         super.onAttach(context)
     }
 
@@ -134,6 +139,19 @@ class AddMetaItemFragment : Fragment() {
         }
     }
 
+    private fun parseParams() {
+        arguments?.let {
+            partySize = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                it.getParcelable(PARTY_SIZE, PartySizeEnum::class.java)
+            } else {
+                it.getParcelable<PartySizeEnum>(PARTY_SIZE)
+            }
+
+            if (partySize == null)
+                throw IllegalArgumentException("AddMetaItemFragment received empty Party size")
+        }
+    }
+
     private fun buttonListener(content: DndContent) {
         binding.btnAddMetaItem.setOnClickListener {
             val selectedClass = binding.acttClassDropdownMenu.text.toString().trim()
@@ -141,7 +159,9 @@ class AddMetaItemFragment : Fragment() {
                 MetaItem(
                     title = binding.etTitle.text.toString().trim(),
                     description = binding.etDescription.text.toString().trim(),
+                    partySize = partySize,
                     tier = binding.acttTierDropdownMenu.text.toString().trim(),
+                    youtubeVideoId = binding.etYoutubeVideoId.text.toString().trim(),
                     dndClass = mapOf(
                         MetaItem.NAME to selectedClass,
                         MetaItem.PREVIEW_IMAGE to
@@ -195,9 +215,12 @@ class AddMetaItemFragment : Fragment() {
     }
 
     companion object {
-        const val BACKSTACK_NAME = "add_meta_item_fragment"
-
+        private const val PARTY_SIZE = "party_size"
         @JvmStatic
-        fun newInstance() = AddMetaItemFragment()
+        fun newInstance(partySize: PartySizeEnum) = AddMetaItemFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(PARTY_SIZE, partySize)
+            }
+        }
     }
 }

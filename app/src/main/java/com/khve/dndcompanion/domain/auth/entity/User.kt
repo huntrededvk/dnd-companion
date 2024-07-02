@@ -19,6 +19,15 @@ data class User(
         return UserRolePermissions.hasPermission(this, permission)
     }
 
+    fun hasOneOfRoles(userRoles: List<UserRole>, rolesToCompare: List<UserRole>): Boolean {
+        for (role in rolesToCompare) {
+            if (userRoles.contains(role))
+                return true
+        }
+
+        return false
+    }
+
     companion object {
         private const val EMPTY_STRING_VALUE = ""
     }

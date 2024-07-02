@@ -1,6 +1,7 @@
 package com.khve.dndcompanion.presentation.meta
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +13,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.khve.dndcompanion.databinding.FragmentMetaItemBinding
+import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.presentation.CompanionApplication
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,6 +44,21 @@ class MetaItemFragment : Fragment() {
         observeViewModel()
     }
 
+    private fun setUpYoutubePlayer(youtubeVideoId: String?) {
+        if (!youtubeVideoId.isNullOrEmpty()) {
+            binding.llYoutubePlayer.visibility = View.VISIBLE
+            val youTubePlayer = binding.youtubePlayerView
+            lifecycle.addObserver(youTubePlayer)
+            val youTubePlayerListener = object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    super.onReady(youTubePlayer)
+                    youTubePlayer.cueVideo(youtubeVideoId, 0F)
+                    youTubePlayer.removeListener(this)
+                }}
+            youTubePlayer.addYouTubePlayerListener(youTubePlayerListener)
+        }
+    }
+
     private fun observeViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -56,12 +74,13 @@ class MetaItemFragment : Fragment() {
                             setupViews(metaItem)
                             buttonListeners(metaItem)
                             loadMetaItemInProgress(false)
+                            setUpYoutubePlayer(metaItem.youtubeVideoId)
                         }
                         MetaItemState.Progress -> loadMetaItemInProgress(true)
                         MetaItemState.Success -> {
                             loadMetaItemInProgress(false)
                             requireActivity().supportFragmentManager.popBackStack(
-                                MetaListFragment.BACKSTACK_NAME,
+                                MetaListTabFragment.BACKSTACK_NAME,
                                 0
                             )
                         }
@@ -98,8 +117,9 @@ class MetaItemFragment : Fragment() {
             with(binding) {
 
                 // Load class preview image
-                context?.let { Glide.with(it).load(item.dndClass[MetaItem.PREVIEW_IMAGE])
-                    .apply(RequestOptions.circleCropTransform()).into(ivClassPreview) }
+                context?.let {
+                    Glide.with(it).load(item.dndClass[MetaItem.PREVIEW_IMAGE]).into(ivClassPreview)
+                }
 
                 // Set text values
                 tvTier.text = item.tier
@@ -145,8 +165,18 @@ class MetaItemFragment : Fragment() {
 
     private fun parseParams() {
         arguments?.let {
-            viewModel.getMetaItem(it.getString(META_ITEM_UID) ?:
-            throw NullPointerException("Meta UID wasn't passed through MetaItemFragment params"))
+            val metaCardItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                it.getParcelable(META_CARD_ITEM, MetaCardItem::class.java)
+            } else {
+                it.getParcelable<MetaCardItem>(META_CARD_ITEM)
+            }
+
+            if (metaCardItem == null)
+                throw IllegalArgumentException("MetaItemFragment received empty Meta card item")
+            else if (metaCardItem.partySize == null)
+                throw IllegalArgumentException("MetaCardItem has null party size in MetaItemFragment")
+
+            viewModel.getMetaItem(metaCardItem.uid, metaCardItem.partySize)
         }
     }
 
@@ -159,14 +189,13 @@ class MetaItemFragment : Fragment() {
     }
 
     companion object {
-        private const val META_ITEM_UID = "meta_item_uid"
-        const val BACKSTACK_NAME = "meta_item_fragment"
+        private const val META_CARD_ITEM = "meta_card_item"
 
         @JvmStatic
-        fun newInstance(metaItemUid: String) =
+        fun newInstance(metaCardItem: MetaCardItem) =
             MetaItemFragment().apply {
                 arguments = Bundle().apply {
-                    putString(META_ITEM_UID, metaItemUid)
+                    putParcelable(META_CARD_ITEM, metaCardItem)
                 }
             }
     }
