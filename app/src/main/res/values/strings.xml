@@ -68,4 +68,11 @@
     <string name="_2">2</string>
     <string name="video">Video</string>
     <string name="youtube_video_id_field">Youtube video id:</string>
+    <string name="likes">Likes</string>
+    <string name="karma">Karma</string>
+    <string name="_0">0</string>
+    <string name="like">Like</string>
+    <string name="dislike">Dislike</string>
+    <string name="team">Team</string>
+    <string name="title">Title</string>
 </resources>

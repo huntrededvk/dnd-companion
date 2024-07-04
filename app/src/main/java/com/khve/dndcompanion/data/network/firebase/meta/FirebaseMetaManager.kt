@@ -109,7 +109,7 @@ class FirebaseMetaManager @Inject constructor(
             if (!isValidated(
                     metaItemDto = mappedMetaItemDto,
                     titleMinLength = 3,
-                    titleMaxLength = 200,
+                    titleMaxLength = 50,
                     descriptionMinLength = 10,
                     descriptionMaxLength = 10000
                 )
@@ -258,18 +258,18 @@ class FirebaseMetaManager @Inject constructor(
             if (isEmpty())
                 error = "Title can not be empty"
             else if (length < titleMinLength)
-                error = "Title is too short"
+                error = "Title length can not be shorter than $titleMinLength symbols"
             else if (length > titleMaxLength)
-                error = "Title is too long"
+                error = "Title length can not be longer than $titleMaxLength symbols"
         }
 
         with(metaItemDto.description) {
             if (isEmpty()) {
                 error = "Description can not be empty"
             } else if (length < descriptionMinLength) {
-                error = "Description is too short"
+                error = "Description length can not be shorter than $descriptionMinLength symbols"
             } else if (length > descriptionMaxLength) {
-                error = "Description is too long"
+                error = "Description length can not be longer than $descriptionMaxLength symbols"
             }
         }
 

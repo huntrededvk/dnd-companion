@@ -176,7 +176,7 @@ class FirebaseUserManager @Inject constructor(
                 error = "Username can not be empty"
             else if (length < 3)
                 error = "Username is too short"
-            else if (length > 24)
+            else if (length > 20)
                 error = "Username is too long"
         }
 

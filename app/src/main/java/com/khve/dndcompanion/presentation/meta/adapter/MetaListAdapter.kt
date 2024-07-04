@@ -36,7 +36,13 @@ class MetaListAdapter (
             holder.cvMetaItem.background = AppCompatResources.getDrawable(context, R.color.white)
         }
 
-        holder.tvTitle.text = metaCardItem.title
+        val metaItemTitle = metaCardItem.title
+        val title = if (metaItemTitle.length > 20) {
+            "${metaItemTitle.substring(0,16)}..."
+        } else {
+            metaItemTitle
+        }
+        holder.tvTitle.text = title
         holder.tvAuthor.text = metaCardItem.author[MetaItem.USERNAME]
         holder.tvTier.text = metaCardItem.tier
         Glide.with(context).load(metaCardItem.dndClass[MetaItem.PREVIEW_IMAGE])

@@ -86,6 +86,9 @@ dependencies {
     // Glide
     implementation(libs.glide.v500rc01)
 
+    // UI
+    implementation(libs.flexbox)
+
     // YouTube Player
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
 

@@ -92,12 +92,8 @@ class MetaItemFragment : Fragment() {
 
     private fun loadMetaItemInProgress(isInProgress: Boolean) {
         if (isInProgress) {
-            binding.btnDelete.isClickable = false
-            binding.btnEdit.isClickable = false
             binding.progressBar.visibility = View.VISIBLE
         } else {
-            binding.btnDelete.isClickable = true
-            binding.btnEdit.isClickable = true
             binding.progressBar.visibility = View.INVISIBLE
         }
     }
@@ -123,6 +119,7 @@ class MetaItemFragment : Fragment() {
 
                 // Set text values
                 tvTier.text = item.tier
+                tvTeamSize.text = item.partySize?.name
                 tvClass.text = item.dndClass[MetaItem.NAME]
                 tvTitle.text = item.title
                 tvAuthor.text = item.author[MetaItem.USERNAME]
