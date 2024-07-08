@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.databinding.runtime)
     implementation(libs.symbol.processing)
-    implementation("androidx.fragment:fragment-ktx:1.8.1")
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -72,8 +71,9 @@ dependencies {
     implementation(libs.converter.gson)
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.fragment.ktx)
 
     // Gson
     implementation(libs.gson)
@@ -85,7 +85,7 @@ dependencies {
     implementation(libs.flexbox)
 
     // YouTube Player
-    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation(libs.youtube.player.core)
 
     // Test
     testImplementation(libs.junit)

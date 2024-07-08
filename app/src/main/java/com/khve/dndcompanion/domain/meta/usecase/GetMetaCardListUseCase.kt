@@ -1,7 +1,7 @@
 package com.khve.dndcompanion.domain.meta.usecase
 
-import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.repository.MetaListRepository
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject

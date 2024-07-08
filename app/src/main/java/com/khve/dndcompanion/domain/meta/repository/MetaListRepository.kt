@@ -1,9 +1,9 @@
 package com.khve.dndcompanion.domain.meta.repository
 
-import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import kotlinx.coroutines.flow.StateFlow
 
 interface MetaListRepository {

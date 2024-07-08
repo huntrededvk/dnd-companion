@@ -2,9 +2,9 @@ package com.khve.dndcompanion.presentation.meta
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.usecase.DeleteMetaItemUseCase
 import com.khve.dndcompanion.domain.meta.usecase.GetMetaItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

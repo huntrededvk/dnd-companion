@@ -1,7 +1,6 @@
 package com.khve.dndcompanion.data.meta.model
 
 import com.google.gson.annotations.SerializedName
-import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 
 data class MetaItemDto(

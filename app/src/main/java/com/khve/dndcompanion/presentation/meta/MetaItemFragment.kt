@@ -1,6 +1,5 @@
 package com.khve.dndcompanion.presentation.meta
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,14 +17,10 @@ import com.khve.dndcompanion.databinding.FragmentMetaItemBinding
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
-import com.khve.dndcompanion.presentation.CompanionApplication
-import com.khve.dndcompanion.presentation.main.MainFragmentViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MetaItemFragment : Fragment() {
@@ -162,6 +157,7 @@ class MetaItemFragment : Fragment() {
             val metaCardItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 it.getParcelable(META_CARD_ITEM, MetaCardItem::class.java)
             } else {
+                @Suppress("DEPRECATION")
                 it.getParcelable<MetaCardItem>(META_CARD_ITEM)
             }
 

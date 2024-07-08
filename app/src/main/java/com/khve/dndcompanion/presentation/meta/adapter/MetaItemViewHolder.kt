@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.khve.dndcompanion.R
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 class MetaItemViewHolder(
     view: View

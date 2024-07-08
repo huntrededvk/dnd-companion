@@ -1,6 +1,5 @@
 package com.khve.dndcompanion.presentation.auth
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.databinding.FragmentSignUpBinding
 import com.khve.dndcompanion.domain.auth.entity.AuthState
-import com.khve.dndcompanion.presentation.CompanionApplication
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {

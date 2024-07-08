@@ -1,12 +1,9 @@
 package com.khve.dndcompanion.di.module
 
-import android.app.Application
-import android.content.Context
 import com.khve.dndcompanion.data.main.repository.MainRepositoryImpl
 import com.khve.dndcompanion.domain.main.repository.MainRepository
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton

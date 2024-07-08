@@ -13,17 +13,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentMetaListBinding
-import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.auth.entity.Permission
+import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.presentation.auth.SignInFragment
-import com.khve.dndcompanion.presentation.main.MainFragmentViewModel
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MetaListFragment : Fragment() {
@@ -63,6 +61,7 @@ class MetaListFragment : Fragment() {
             partySize = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 it.getParcelable(PARTY_SIZE, PartySizeEnum::class.java)
             } else {
+                @Suppress("DEPRECATION")
                 it.getParcelable<PartySizeEnum>(PARTY_SIZE)
             }
 

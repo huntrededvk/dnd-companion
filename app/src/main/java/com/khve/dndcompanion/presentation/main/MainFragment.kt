@@ -1,6 +1,5 @@
 package com.khve.dndcompanion.presentation.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +15,9 @@ import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentMainBinding
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.presentation.CompanionApplication
-import com.khve.dndcompanion.presentation.auth.SignInViewModel
-import com.khve.dndcompanion.presentation.meta.MetaListFragment
 import com.khve.dndcompanion.presentation.meta.MetaListTabFragment
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {

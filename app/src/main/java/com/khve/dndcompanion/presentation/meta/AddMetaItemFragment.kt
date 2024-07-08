@@ -19,15 +19,11 @@ import com.khve.dndcompanion.databinding.FragmentAddMetaItemBinding
 import com.khve.dndcompanion.domain.dnd.entity.DndContent
 import com.khve.dndcompanion.domain.dnd.entity.DndContentState
 import com.khve.dndcompanion.domain.dnd.entity.DndItem
-import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
-import com.khve.dndcompanion.presentation.CompanionApplication
-import com.khve.dndcompanion.presentation.main.MainFragmentViewModel
-import dagger.hilt.EntryPoint
+import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddMetaItemFragment : Fragment() {
@@ -143,6 +139,7 @@ class AddMetaItemFragment : Fragment() {
             partySize = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 it.getParcelable(PARTY_SIZE, PartySizeEnum::class.java)
             } else {
+                @Suppress("DEPRECATION")
                 it.getParcelable<PartySizeEnum>(PARTY_SIZE)
             }
 

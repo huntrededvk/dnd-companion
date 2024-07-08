@@ -1,19 +1,14 @@
 package com.khve.dndcompanion.presentation.meta
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.khve.dndcompanion.R
-import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.databinding.FragmentMetaListTabBinding
 import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.presentation.meta.adapter.StateAdapter
-import dagger.hilt.EntryPoint
-import dagger.hilt.android.AndroidEntryPoint
 
 class MetaListTabFragment : Fragment() {
 
