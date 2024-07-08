@@ -4,35 +4,32 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.auth.SignInFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
 
     private var currentUserState: UserState = UserState.Initial
     private var savedOrientation: Int? = null
-
-    private val component by lazy {
-        (application as CompanionApplication).component
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         savedOrientation =
             savedInstanceState?.getInt("orientation") ?: resources.configuration.orientation
         onBackPressedPopBack()
         observeInternetConnection()
-        component.inject(this)
         observeViewModel()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

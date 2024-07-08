@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,25 +15,18 @@ import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 import com.khve.dndcompanion.databinding.FragmentSignUpBinding
 import com.khve.dndcompanion.domain.auth.entity.AuthState
 import com.khve.dndcompanion.presentation.CompanionApplication
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpViewModel by viewModels()
     private var _binding: FragmentSignUpBinding? = null
     private val binding: FragmentSignUpBinding
         get() = _binding ?: throw NullPointerException("FragmentSignUpBinding == null")
-
-    private val component by lazy {
-        (requireActivity().application as CompanionApplication).component
-    }
-
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

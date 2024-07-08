@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,28 +17,22 @@ import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentMainBinding
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.presentation.CompanionApplication
+import com.khve.dndcompanion.presentation.auth.SignInViewModel
 import com.khve.dndcompanion.presentation.meta.MetaListFragment
 import com.khve.dndcompanion.presentation.meta.MetaListTabFragment
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: MainFragmentViewModel
+    private val viewModel: MainFragmentViewModel by viewModels()
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding ?: throw NullPointerException("FragmentMainBinding == null")
     private lateinit var backPressedCallback: OnBackPressedCallback
-
-    private val component by lazy {
-        (requireActivity().application as CompanionApplication).component
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupBackPressed()
-    }
 
     private fun setupBackPressed() {
         backPressedCallback = object : OnBackPressedCallback(true) {
@@ -46,11 +41,6 @@ class MainFragment : Fragment() {
             }
         }
         activity?.onBackPressedDispatcher?.addCallback(this, backPressedCallback)
-    }
-
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
     }
 
     override fun onCreateView(

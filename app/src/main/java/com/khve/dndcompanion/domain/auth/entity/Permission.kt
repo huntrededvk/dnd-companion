@@ -1,4 +1,4 @@
-package com.khve.dndcompanion.domain.auth.enum
+package com.khve.dndcompanion.domain.auth.entity
 
 enum class Permission {
     DELETE_META_ITEM,

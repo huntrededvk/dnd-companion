@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,25 +19,21 @@ import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.presentation.CompanionApplication
+import com.khve.dndcompanion.presentation.main.MainFragmentViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MetaItemFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: MetaItemViewModel
+    private val viewModel: MetaItemViewModel by viewModels()
     private var _binding: FragmentMetaItemBinding? = null
     private val binding: FragmentMetaItemBinding
         get() = _binding ?: throw NullPointerException("FragmentMetaItemBinding == null")
-    private val component by lazy {
-        (requireActivity().application as CompanionApplication).component
-    }
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

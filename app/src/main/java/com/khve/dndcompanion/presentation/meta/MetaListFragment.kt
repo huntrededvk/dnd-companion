@@ -1,6 +1,5 @@
 package com.khve.dndcompanion.presentation.meta
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,46 +7,36 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.databinding.FragmentMetaListBinding
-import com.khve.dndcompanion.domain.auth.entity.User
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.auth.enum.UserRole
+import com.khve.dndcompanion.domain.auth.entity.Permission
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
-import com.khve.dndcompanion.presentation.CompanionApplication
 import com.khve.dndcompanion.presentation.auth.SignInFragment
+import com.khve.dndcompanion.presentation.main.MainFragmentViewModel
 import com.khve.dndcompanion.presentation.meta.adapter.MetaListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MetaListFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: MetaListViewModel
+    private val viewModel: MetaListViewModel by viewModels()
     private var _binding: FragmentMetaListBinding? = null
     private val binding: FragmentMetaListBinding
         get() = _binding ?: throw NullPointerException("FragmentMetaListBinding == null")
 
     private lateinit var metaListAdapter: MetaListAdapter
 
-    private val component by lazy {
-        (requireActivity().application as CompanionApplication).component
-    }
-
     private var retrievedUserState: UserState? = null
     private var partySize: PartySizeEnum? = null
-
-
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

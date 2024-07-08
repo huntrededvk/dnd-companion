@@ -2,7 +2,7 @@ package com.khve.dndcompanion.data.auth.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.khve.dndcompanion.domain.auth.enum.UserRole
+import com.khve.dndcompanion.domain.auth.entity.UserRole
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

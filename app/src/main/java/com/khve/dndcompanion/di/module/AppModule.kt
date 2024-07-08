@@ -2,9 +2,6 @@ package com.khve.dndcompanion.di.module
 
 import android.app.Application
 import android.content.Context
-import com.khve.dndcompanion.data.main.repository.MainRepositoryImpl
-import com.khve.dndcompanion.domain.main.repository.MainRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,10 +10,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface MainModule {
+object AppModule {
 
+    @Provides
     @Singleton
-    @Binds
-    fun bindUserRepository(impl: MainRepositoryImpl): MainRepository
+    fun provideApplicationContext(app: Application): Context {
+        return app.applicationContext
+    }
 
 }

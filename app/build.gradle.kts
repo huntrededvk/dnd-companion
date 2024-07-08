@@ -1,9 +1,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("com.google.devtools.ksp") version "2.0.0-1.0.21"
-    id("com.google.gms.google-services")
     id("kotlin-parcelize")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -50,9 +51,8 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.databinding.runtime)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.symbol.processing)
+    implementation("androidx.fragment:fragment-ktx:1.8.1")
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -67,18 +67,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    // Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    // Dagger
-    implementation(libs.dagger)
-    ksp(libs.dagger.compiler)
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
     // Gson
     implementation(libs.gson)
@@ -106,4 +101,8 @@ dependencies {
     androidTestUtil(libs.androidx.orchestrator)
     androidTestImplementation(libs.androidx.rules)
 
+}
+
+kapt {
+    correctErrorTypes = true
 }

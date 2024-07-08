@@ -7,11 +7,13 @@ import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.usecase.GetMetaCardListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MetaListViewModel @Inject constructor(
     private val userManager: FirebaseUserManager,
     private val getMetaCardListUseCase: GetMetaCardListUseCase

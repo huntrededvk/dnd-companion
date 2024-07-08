@@ -2,7 +2,6 @@ package com.khve.dndcompanion.data.dnd.repository
 
 import com.khve.dndcompanion.data.dnd.mapper.DndMapper
 import com.khve.dndcompanion.data.network.retrofit.dnd.ApiFactory
-import com.khve.dndcompanion.di.scope.ApplicationScope
 import com.khve.dndcompanion.domain.dnd.entity.DndArmor
 import com.khve.dndcompanion.domain.dnd.entity.DndContent
 import com.khve.dndcompanion.domain.dnd.entity.DndContentState
@@ -14,8 +13,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ApplicationScope
+@Singleton
 class DndRepositoryImpl @Inject constructor(
     private val dndMapper: DndMapper
 ) : DndRepository {

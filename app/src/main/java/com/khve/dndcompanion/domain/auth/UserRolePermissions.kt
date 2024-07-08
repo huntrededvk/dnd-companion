@@ -1,8 +1,8 @@
 package com.khve.dndcompanion.domain.auth
 
 import com.khve.dndcompanion.domain.auth.entity.User
-import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.auth.enum.UserRole
+import com.khve.dndcompanion.domain.auth.entity.Permission
+import com.khve.dndcompanion.domain.auth.entity.UserRole
 
 class UserRolePermissions {
     companion object {

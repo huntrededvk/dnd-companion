@@ -4,17 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.auth.enum.Permission
+import com.khve.dndcompanion.domain.auth.entity.Permission
 import com.khve.dndcompanion.domain.dnd.entity.DndContentState
 import com.khve.dndcompanion.domain.dnd.usecase.GetDndContentUseCase
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.domain.meta.usecase.AddMetaItemUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class AddMetaItemViewModel @Inject constructor(
     private val addMetaItemUseCase: AddMetaItemUseCase,
     private val userManager: FirebaseUserManager,

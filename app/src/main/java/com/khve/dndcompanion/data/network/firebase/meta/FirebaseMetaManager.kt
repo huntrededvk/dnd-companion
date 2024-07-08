@@ -6,8 +6,8 @@ import com.khve.dndcompanion.data.meta.model.MetaCardItemDto
 import com.khve.dndcompanion.data.meta.model.MetaItemDto
 import com.khve.dndcompanion.data.network.firebase.auth.FirebaseUserManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
-import com.khve.dndcompanion.domain.auth.enum.Permission
-import com.khve.dndcompanion.domain.auth.enum.UserRole
+import com.khve.dndcompanion.domain.auth.entity.Permission
+import com.khve.dndcompanion.domain.auth.entity.UserRole
 import com.khve.dndcompanion.domain.meta.entity.MetaCardItem
 import com.khve.dndcompanion.domain.meta.entity.MetaCardListState
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
@@ -17,7 +17,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FirebaseMetaManager @Inject constructor(
     private val userManager: FirebaseUserManager,
     private val metaMapper: MetaMapper

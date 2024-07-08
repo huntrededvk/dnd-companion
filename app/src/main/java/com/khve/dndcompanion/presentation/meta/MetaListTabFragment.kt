@@ -12,6 +12,8 @@ import com.khve.dndcompanion.databinding.FragmentMetaListBinding
 import com.khve.dndcompanion.databinding.FragmentMetaListTabBinding
 import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.presentation.meta.adapter.StateAdapter
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
 class MetaListTabFragment : Fragment() {
 

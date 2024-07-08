@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.khve.dndcompanion.data.util.ConnectionManager
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import com.khve.dndcompanion.domain.main.usecase.GetCurrentUserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MainViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val connectionManager: ConnectionManager

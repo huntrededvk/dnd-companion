@@ -7,15 +7,15 @@ import com.google.firebase.ktx.Firebase
 import com.khve.dndcompanion.data.auth.mapper.UserMapper
 import com.khve.dndcompanion.data.auth.model.UserDbDto
 import com.khve.dndcompanion.data.auth.model.UserSignUpDto
-import com.khve.dndcompanion.di.scope.ApplicationScope
 import com.khve.dndcompanion.domain.auth.entity.AuthState
 import com.khve.dndcompanion.domain.auth.entity.UserState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ApplicationScope
+@Singleton
 class FirebaseUserManager @Inject constructor(
     private val userMapper: UserMapper
 ) {

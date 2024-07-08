@@ -7,11 +7,13 @@ import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.domain.meta.usecase.DeleteMetaItemUseCase
 import com.khve.dndcompanion.domain.meta.usecase.GetMetaItemUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MetaItemViewModel @Inject constructor(
     private val deleteMetaItemUseCase: DeleteMetaItemUseCase,
     private val getMetaItemUseCase: GetMetaItemUseCase

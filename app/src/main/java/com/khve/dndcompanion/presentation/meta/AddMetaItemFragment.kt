@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,25 +23,23 @@ import com.khve.dndcompanion.domain.meta.entity.PartySizeEnum
 import com.khve.dndcompanion.domain.meta.entity.MetaItem
 import com.khve.dndcompanion.domain.meta.entity.MetaItemState
 import com.khve.dndcompanion.presentation.CompanionApplication
+import com.khve.dndcompanion.presentation.main.MainFragmentViewModel
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddMetaItemFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: AddMetaItemViewModel
+    private val viewModel: AddMetaItemViewModel by viewModels()
     private var _binding: FragmentAddMetaItemBinding? = null
     private val binding: FragmentAddMetaItemBinding
         get() = _binding ?: throw NullPointerException("FragmentAddMetaItemBinding == null")
 
-    private val component by lazy {
-        (requireActivity().application as CompanionApplication).component
-    }
-
     private var partySize: PartySizeEnum? = null
 
     override fun onAttach(context: Context) {
-        component.inject(this)
         parseParams()
         super.onAttach(context)
     }
