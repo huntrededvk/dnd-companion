@@ -11,13 +11,14 @@ glideVersion = "5.0.0-rc01"
 gson = "2.10.1"
 hiltAndroid = "2.51.1"
 kaspresso = "1.5.5"
-kotlin = "1.9.24"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
-kotlinxCoroutinesAndroid = "1.7.3"
+kotlinxCoroutinesAndroid = "1.8.1"
+kotlinSymbolProcessing = "2.0.0-1.0.21"
 kotlinxCoroutinesCore = "1.9.0-RC"
 lifecycleRuntimeKtx = "2.8.3"
 lifecycleViewmodelKtx = "2.8.3"
@@ -26,7 +27,7 @@ activity = "1.9.0"
 constraintlayout = "2.1.4"
 mockk = "1.13.11"
 orchestrator = "1.5.0"
-retrofit = "2.9.0"
+retrofit = "2.11.0"
 symbolProcessingApi = "2.0.0-1.0.21"
 testRunnerVersion = "1.6.1"
 uiDesktop = "1.6.8"
@@ -34,6 +35,13 @@ annotation = "1.8.0"
 lifecycleLivedataKtx = "2.8.3"
 databindingRuntime = "8.5.0"
 youtubePlayer = "12.1.0"
+spotless = "6.25.0"
+detekt = "1.23.6"
+daggerHilt = "2.51.1"
+
+compileSdk = "34"
+targetSdk = "34"
+minSdk = "26"
 
 [libraries]
 youtube-player-core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "youtubePlayer"}
@@ -77,7 +85,23 @@ androidx-annotation = { group = "androidx.annotation", name = "annotation", vers
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
 
+[bundles]
+hilt = ["hilt-android", "androidx-fragment-ktx"]
+retrofit = ["retrofit", "converter-gson"]
+default = ["androidx-core-ktx", "androidx-appcompat", "material"]
+main = ["androidx-activity", "androidx-constraintlayout", "androidx-ui-desktop", "androidx-annotation", "androidx-databinding-runtime", "symbol-processing"]
+firebase = ["firebase-analytics", "firebase-firestore", "firebase-auth", "symbol-processing-api"]
+coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
+lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-livedata-ktx"]
+android-test = ["androidx-core-v150", "core-ktx", "androidx-espresso-core", "androidx-junit", "androidx-junit-ktx", "androidx-truth", "androidx-runner", "androidx-rules"]
+test = ["mockk", "junit"]
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-symbolProcessing = { id = "com.google.devtools.ksp", version.ref = "kotlinSymbolProcessing" }
+daggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
