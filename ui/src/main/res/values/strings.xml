@@ -8,7 +8,10 @@
         <item>D</item>
     </string-array>
 
-    <string name="app_name">dndcompanion</string>
+    <string name="app_name">DnD Companion</string>
+    <string name="meta_build">Meta build</string>
+    <string name="meta_builds">Meta builds</string>
+    <string name="add_meta_build">Add meta build</string>
     <string name="meta">Meta</string>
     <string name="sign_up">Sign Up</string>
     <string name="username_field">Username:</string>
@@ -75,4 +78,7 @@
     <string name="dislike">Dislike</string>
     <string name="team">Team</string>
     <string name="title">Title</string>
+    <string name="navigation_drawer_open">drawer_open</string>
+    <string name="navigation_drawer_close">drawer_closed</string>
+    <string name="github_open_source">GitHub Open Source</string>
 </resources>

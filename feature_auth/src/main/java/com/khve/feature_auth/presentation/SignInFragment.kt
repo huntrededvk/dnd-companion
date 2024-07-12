@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -23,21 +22,6 @@ class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding: FragmentSignInBinding
         get() = _binding ?: throw NullPointerException("FragmentSignInBinding == null")
-    private lateinit var backPressedCallback: OnBackPressedCallback
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupBackPressed()
-    }
-
-    private fun setupBackPressed() {
-        backPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().finish()
-            }
-        }
-        activity?.onBackPressedDispatcher?.addCallback(this, backPressedCallback)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,14 +85,9 @@ class SignInFragment : Fragment() {
 
     private fun startSignUpFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.auth_container, SignUpFragment.newInstance())
+            .replace(R.id.main_container, SignUpFragment.newInstance())
             .addToBackStack(SignUpFragment.BACKSTACK_NAME)
             .commit()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        backPressedCallback.remove()
     }
 
     companion object {

@@ -11,7 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.khve.feature_auth.domain.entity.Permission
+import com.khve.feature_auth.domain.entity.UserState
 import com.khve.feature_auth.presentation.SignInFragment
+import com.khve.feature_meta.domain.entity.MetaCardItem
+import com.khve.feature_meta.domain.entity.MetaCardListState
+import com.khve.feature_meta.domain.entity.PartySizeEnum
 import com.khve.feature_meta.presentation.adapter.MetaListAdapter
 import com.khve.ui.R
 import com.khve.ui.databinding.FragmentMetaListBinding
@@ -28,8 +33,8 @@ class MetaListFragment : Fragment() {
 
     private lateinit var metaListAdapter: MetaListAdapter
 
-    private var retrievedUserState: com.khve.feature_auth.domain.entity.UserState? = null
-    private var partySize: com.khve.feature_meta.domain.entity.PartySizeEnum? = null
+    private var retrievedUserState: UserState? = null
+    private var partySize: PartySizeEnum? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,10 +59,10 @@ class MetaListFragment : Fragment() {
     private fun parseParams() {
         arguments?.let {
             partySize = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable(PARTY_SIZE, com.khve.feature_meta.domain.entity.PartySizeEnum::class.java)
+                it.getParcelable(PARTY_SIZE, PartySizeEnum::class.java)
             } else {
                 @Suppress("DEPRECATION")
-                it.getParcelable<com.khve.feature_meta.domain.entity.PartySizeEnum>(PARTY_SIZE)
+                it.getParcelable<PartySizeEnum>(PARTY_SIZE)
             }
 
             if (partySize == null)
@@ -80,10 +85,10 @@ class MetaListFragment : Fragment() {
         binding.fabAddMetaItem.setOnClickListener {
             val currentUser = retrievedUserState
 
-            if (currentUser is com.khve.feature_auth.domain.entity.UserState.NotAuthorized) {
+            if (currentUser is UserState.NotAuthorized) {
                 startSignInFragment()
-            } else if (currentUser is com.khve.feature_auth.domain.entity.UserState.User &&
-                currentUser.user.hasPermission(com.khve.feature_auth.domain.entity.Permission.ADD_META_ITEM)) {
+            } else if (currentUser is UserState.User &&
+                currentUser.user.hasPermission(Permission.ADD_META_ITEM)) {
                 startAddMetaItemFragment()
             } else {
                 Toast.makeText(requireContext(), "Forbidden", Toast.LENGTH_SHORT).show()
@@ -92,7 +97,7 @@ class MetaListFragment : Fragment() {
     }
 
     private fun startSignInFragment() {
-        replaceFragment(SignInFragment.newInstance(), R.id.auth_container)
+        replaceFragment(SignInFragment.newInstance(), R.id.main_container)
     }
 
     private fun startAddMetaItemFragment() {
@@ -106,7 +111,7 @@ class MetaListFragment : Fragment() {
             } else {
                 replaceFragment(
                     AddMetaItemFragment.newInstance(currentPartySize),
-                    R.id.auth_container
+                    R.id.main_container
                 )
             }
         } else {
@@ -114,14 +119,14 @@ class MetaListFragment : Fragment() {
         }
     }
 
-    private fun startMetaItemFragment(metaCardItem: com.khve.feature_meta.domain.entity.MetaCardItem) {
+    private fun startMetaItemFragment(metaCardItem: MetaCardItem) {
         if (isOnPaneMode()) {
             replaceFragment(
                 MetaItemFragment.newInstance(metaCardItem),
                 R.id.fcv_meta_item_container
             )
         } else {
-            replaceFragment(MetaItemFragment.newInstance(metaCardItem), R.id.auth_container)
+            replaceFragment(MetaItemFragment.newInstance(metaCardItem), R.id.main_container)
         }
     }
 
@@ -139,7 +144,7 @@ class MetaListFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.currentUser.collect {
-                    if (it is com.khve.feature_auth.domain.entity.UserState.User) {
+                    if (it is UserState.User) {
                         retrievedUserState = it
                         buttonListeners()
                     }
@@ -154,9 +159,9 @@ class MetaListFragment : Fragment() {
                 // Collect Meta list
                 viewModel.metaCardListState.collect {
                     when (it) {
-                        com.khve.feature_meta.domain.entity.MetaCardListState.Initial -> {}
+                        MetaCardListState.Initial -> {}
 
-                        is com.khve.feature_meta.domain.entity.MetaCardListState.MetaCardList -> {
+                        is MetaCardListState.MetaCardList -> {
                             val sortedMetaList = it.metaCardList.sortedBy {
                                 resources.getStringArray(R.array.tiers).indexOf(it.tier)
                             }
@@ -164,13 +169,13 @@ class MetaListFragment : Fragment() {
                             loadMetaListInProgress(false)
                         }
 
-                        is com.khve.feature_meta.domain.entity.MetaCardListState.Error -> {
+                        is MetaCardListState.Error -> {
                             loadMetaListInProgress(false)
                             Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT)
                                 .show()
                         }
 
-                        com.khve.feature_meta.domain.entity.MetaCardListState.Progress -> {
+                        MetaCardListState.Progress -> {
                             loadMetaListInProgress(true)
                         }
                     }
@@ -208,7 +213,7 @@ class MetaListFragment : Fragment() {
         const val PARTY_SIZE = "party_size"
 
         @JvmStatic
-        fun newInstance(partySize: com.khve.feature_meta.domain.entity.PartySizeEnum) = MetaListFragment().apply {
+        fun newInstance(partySize: PartySizeEnum) = MetaListFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(PARTY_SIZE, partySize)
             }

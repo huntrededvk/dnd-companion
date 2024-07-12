@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -23,16 +22,6 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding ?: throw NullPointerException("FragmentMainBinding == null")
-    private lateinit var backPressedCallback: OnBackPressedCallback
-
-    private fun setupBackPressed() {
-        backPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().finish()
-            }
-        }
-        activity?.onBackPressedDispatcher?.addCallback(this, backPressedCallback)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,14 +61,9 @@ class MainFragment : Fragment() {
 
     private fun startMetaListTabFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.auth_container, MetaListTabFragment.newInstance())
+            .replace(R.id.main_container, MetaListTabFragment.newInstance())
             .addToBackStack(MetaListTabFragment.BACKSTACK_NAME)
             .commit()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        backPressedCallback.remove()
     }
 
     companion object {

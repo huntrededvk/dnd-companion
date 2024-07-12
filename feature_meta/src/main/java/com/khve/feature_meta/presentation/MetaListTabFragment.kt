@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.khve.feature_meta.presentation.adapter.StateAdapter
@@ -15,12 +16,28 @@ class MetaListTabFragment : Fragment() {
     private val binding: FragmentMetaListTabBinding
         get() = _binding ?: throw NullPointerException("FragmentMetaListTabBinding == null")
 
+    private lateinit var backPressedCallback: OnBackPressedCallback
+
+    private fun setupBackPressed() {
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(this, backPressedCallback)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMetaListTabBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupBackPressed()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +54,10 @@ class MetaListTabFragment : Fragment() {
         }.attach()
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        backPressedCallback.remove()
+    }
 
     companion object {
         const val BACKSTACK_NAME = "meta_list_tab_fragment"
