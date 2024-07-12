@@ -31,7 +31,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="15dp"
                 android:orientation="vertical"
                 android:padding="10dp"
                 tools:context=".presentation.meta.MetaItemFragment">
@@ -46,11 +45,12 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_class_preview"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/gray_button"
                         android:contentDescription="@null"
+                        android:padding="2dp"
                         android:scaleType="center"
-                        app:shapeAppearanceOverlay="@style/Circle"
                         app:strokeColor="@color/dark_gray"
                         app:strokeWidth="2dp"
                         tools:src="@tools:sample/avatars" />
@@ -60,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textSize="36sp"
+                        android:textSize="28sp"
                         android:textStyle="bold"
                         app:layout_constraintVertical_chainStyle="spread_inside"
                         tools:text="Class" />
@@ -1053,7 +1053,9 @@
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
 
                     <TextView
                         android:id="@+id/btn_edit"
@@ -1067,7 +1069,9 @@
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
                 </LinearLayout>
             </LinearLayout>

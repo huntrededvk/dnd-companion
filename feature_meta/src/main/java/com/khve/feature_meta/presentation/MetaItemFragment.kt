@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
+import com.khve.feature_meta.domain.entity.MetaItem
 import com.khve.ui.databinding.FragmentMetaItemBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -87,13 +88,20 @@ class MetaItemFragment : Fragment() {
         }
     }
 
-    private fun buttonListeners(metaItem: com.khve.feature_meta.domain.entity.MetaItem) {
-        binding.btnDelete.setOnClickListener {
-            viewModel.deleteMetaItem(metaItem)
-        }
+    private fun buttonListeners(metaItem: MetaItem) {
+        val metaItemAuthor = metaItem.author[MetaItem.USER_UID] ?: ""
+        if (viewModel.compareUserUidWith(metaItemAuthor)) {
+            with(binding.btnDelete) {
+                visibility = View.VISIBLE
+                setOnClickListener { viewModel.deleteMetaItem(metaItem) }
+            }
 
-        binding.btnEdit.setOnClickListener {
-            // TODO
+            with(binding.btnEdit) {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    // TODO
+                }
+            }
         }
     }
 

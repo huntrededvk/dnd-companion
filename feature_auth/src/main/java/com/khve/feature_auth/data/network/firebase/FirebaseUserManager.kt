@@ -4,6 +4,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.khve.feature_auth.domain.entity.AuthState
+import com.khve.feature_auth.domain.entity.UserState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,27 +21,29 @@ class FirebaseUserManager @Inject constructor(
     private val auth = Firebase.auth
     private val mDocRef = FirebaseFirestore.getInstance().collection("users")
 
-    private val _userState = MutableStateFlow<com.khve.feature_auth.domain.entity.UserState>(com.khve.feature_auth.domain.entity.UserState.Initial)
+    private val _userState = MutableStateFlow<UserState>(UserState.Initial)
     val userState = _userState.asStateFlow()
 
-    private val _authState = MutableStateFlow<com.khve.feature_auth.domain.entity.AuthState>(com.khve.feature_auth.domain.entity.AuthState.Initial)
-    val authState = _authState.asStateFlow()
+    private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
+    private val authState = _authState.asStateFlow()
 
     init {
         getCurrentUserState()
     }
+    
+    fun compareUserUidWith(uid: String) = uid == auth.uid
 
-    fun getCurrentDbUserState(): com.khve.feature_auth.domain.entity.UserState {
+    fun getCurrentDbUserState(): UserState {
         val currentDbUserState = userState.value
-        return if (currentDbUserState is com.khve.feature_auth.domain.entity.UserState.User) {
+        return if (currentDbUserState is UserState.User) {
             currentDbUserState
         } else {
-            com.khve.feature_auth.domain.entity.UserState.NotAuthorized
+            UserState.NotAuthorized
         }
     }
 
-    fun createUser(userSignUpDto: com.khve.feature_auth.data.model.UserSignUpDto): StateFlow<com.khve.feature_auth.domain.entity.AuthState> {
-        _authState.value = com.khve.feature_auth.domain.entity.AuthState.Progress
+    fun createUser(userSignUpDto: com.khve.feature_auth.data.model.UserSignUpDto): StateFlow<AuthState> {
+        _authState.value = AuthState.Progress
         // Validate user
         if (!isValidated(userSignUpDto))
             return authState
@@ -60,7 +64,7 @@ class FirebaseUserManager @Inject constructor(
                     if (task.exception != null) {
                         val exception = task.exception
                         _authState.value =
-                            com.khve.feature_auth.domain.entity.AuthState.Error(exception?.localizedMessage ?: "Unknown error")
+                            AuthState.Error(exception?.localizedMessage ?: "Unknown error")
                     }
                 }
             }
@@ -68,18 +72,18 @@ class FirebaseUserManager @Inject constructor(
         return _authState.asStateFlow()
     }
 
-    fun signInWithEmailAndPassword(email: String, password: String): StateFlow<com.khve.feature_auth.domain.entity.AuthState> {
+    fun signInWithEmailAndPassword(email: String, password: String): StateFlow<AuthState> {
         if (email.isEmpty()) {
-            _authState.value = com.khve.feature_auth.domain.entity.AuthState.Error("Email cannot be empty")
+            _authState.value = AuthState.Error("Email cannot be empty")
             return authState
         } else if (password.isEmpty()) {
-            _authState.value = com.khve.feature_auth.domain.entity.AuthState.Error("Password cannot be empty")
+            _authState.value = AuthState.Error("Password cannot be empty")
             return authState
         }
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnFailureListener { e ->
-                _authState.value = com.khve.feature_auth.domain.entity.AuthState.Error(e.localizedMessage ?: "Unknown error")
+                _authState.value = AuthState.Error(e.localizedMessage ?: "Unknown error")
             }
 
         return authState
@@ -94,7 +98,7 @@ class FirebaseUserManager @Inject constructor(
             .set(user)
             .addOnFailureListener { e ->
                 auth.currentUser?.delete()
-                _authState.value = com.khve.feature_auth.domain.entity.AuthState.Error(e.message.toString())
+                _authState.value = AuthState.Error(e.message.toString())
             }
     }
 
@@ -104,7 +108,7 @@ class FirebaseUserManager @Inject constructor(
             getUserFromDbByUid(currentUser.uid)
             addUserDbListener(currentUser.uid)
         } else {
-            _userState.value = com.khve.feature_auth.domain.entity.UserState.NotAuthorized
+            _userState.value = UserState.NotAuthorized
         }
         addUserAuthListener()
     }
@@ -114,13 +118,13 @@ class FirebaseUserManager @Inject constructor(
             .addOnSuccessListener { snapshot ->
                 val userDbDto = snapshot?.toObject(com.khve.feature_auth.data.model.UserDbDto::class.java)
                 _userState.value = if (userDbDto != null) {
-                    com.khve.feature_auth.domain.entity.UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
+                    UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
                 } else {
-                    com.khve.feature_auth.domain.entity.UserState.Error("User's data is empty")
+                    UserState.Error("User's data is empty")
                 }
             }
             .addOnFailureListener {
-                _userState.value = com.khve.feature_auth.domain.entity.UserState.Error(
+                _userState.value = UserState.Error(
                     it.localizedMessage ?: "Unknown error"
                 )
             }
@@ -129,15 +133,15 @@ class FirebaseUserManager @Inject constructor(
     private fun addUserDbListener(userUid: String) {
         mDocRef.document(userUid).addSnapshotListener { snapshot, e ->
             if (e != null) {
-                _userState.value = com.khve.feature_auth.domain.entity.UserState.Error(e.localizedMessage ?: "Unknown error")
+                _userState.value = UserState.Error(e.localizedMessage ?: "Unknown error")
                 return@addSnapshotListener
             }
 
             val userDbDto = snapshot?.toObject(com.khve.feature_auth.data.model.UserDbDto::class.java)
             _userState.value = if (userDbDto != null) {
-                com.khve.feature_auth.domain.entity.UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
+                UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
             } else {
-                com.khve.feature_auth.domain.entity.UserState.Error("User's data is empty")
+                UserState.Error("User's data is empty")
             }
         }
     }
@@ -146,7 +150,7 @@ class FirebaseUserManager @Inject constructor(
         instance.addAuthStateListener {
             val currentUser = it.currentUser
             if (currentUser == null) {
-                _userState.value = com.khve.feature_auth.domain.entity.UserState.NotAuthorized
+                _userState.value = UserState.NotAuthorized
             } else {
                 getUserFromDbByUid(currentUser.uid)
             }
@@ -187,7 +191,7 @@ class FirebaseUserManager @Inject constructor(
         }
 
         if (error.isNotEmpty()) {
-            _authState.value = com.khve.feature_auth.domain.entity.AuthState.Error(error)
+            _authState.value = AuthState.Error(error)
             return false
         }
 
