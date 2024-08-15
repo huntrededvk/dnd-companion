@@ -9,10 +9,13 @@ dependencies {
     implementation(plugin(libs.plugins.androidApplication))
     implementation(plugin(libs.plugins.androidLibrary))
     implementation(plugin(libs.plugins.daggerHilt))
+    implementation(plugin(libs.plugins.googleServices))
 }
 
 kotlin {
     jvmToolchain(17)
 }
 
-fun plugin(plugin: Provider<PluginDependency>) = plugin.map { "${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}" }
+fun plugin(plugin: Provider<PluginDependency>) = plugin.map {
+    "${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}"
+}
