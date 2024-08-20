@@ -52,8 +52,9 @@ dependencies {
     implementation(projects.featureAuth)
     implementation(projects.featureMain)
     implementation(projects.featureMeta)
-    implementation(projects.featureDnd)
+    implementation(projects.data)
     implementation(projects.ui)
+    implementation(projects.config)
 }
 
 fun ApplicationDefaultConfig.buildConfigFieldFromGradleProperty(gradlePropertyName: String) {

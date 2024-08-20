@@ -6,6 +6,8 @@ import com.khve.feature_meta.domain.entity.PartySizeEnum
 data class MetaItemDto(
     @SerializedName("uid") val uid: String = DEFAULT_EMPTY_STRING,
     @SerializedName("title") val title: String = DEFAULT_EMPTY_STRING,
+    @SerializedName("likes") val likes: List<BuildKarmaDto> = emptyList(),
+    @SerializedName("dislikes") val dislikes: List<BuildKarmaDto> = emptyList(),
     @SerializedName("party_size") val partySize: PartySizeEnum? = null,
     @SerializedName("description") val description: String = DEFAULT_EMPTY_STRING,
     @SerializedName("tier") val tier: String = DEFAULT_EMPTY_STRING,

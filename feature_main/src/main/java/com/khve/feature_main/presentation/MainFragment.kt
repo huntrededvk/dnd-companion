@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.khve.feature_auth.domain.entity.UserState
 import com.khve.feature_meta.presentation.MetaListTabFragment
 import com.khve.ui.R
 import com.khve.ui.databinding.FragmentMainBinding
@@ -42,7 +43,7 @@ class MainFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.currentUser.collect {
-                    if (it is com.khve.feature_auth.domain.entity.UserState.User) {
+                    if (it is UserState.User) {
                         binding.tvUserUsername.text = it.user.username
                     }
                 }

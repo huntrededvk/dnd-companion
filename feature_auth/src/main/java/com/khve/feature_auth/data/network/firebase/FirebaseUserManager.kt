@@ -4,6 +4,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.khve.feature_auth.data.mapper.UserMapper
+import com.khve.feature_auth.data.model.UserDbDto
+import com.khve.feature_auth.data.model.UserSignUpDto
 import com.khve.feature_auth.domain.entity.AuthState
 import com.khve.feature_auth.domain.entity.UserState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +17,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FirebaseUserManager @Inject constructor(
-    private val userMapper: com.khve.feature_auth.data.mapper.UserMapper
+    private val userMapper: UserMapper
 ) {
 
     private val instance = FirebaseAuth.getInstance()
@@ -42,7 +45,11 @@ class FirebaseUserManager @Inject constructor(
         }
     }
 
-    fun createUser(userSignUpDto: com.khve.feature_auth.data.model.UserSignUpDto): StateFlow<AuthState> {
+    fun getCurrentUserId(): String? {
+        return auth.currentUser?.uid
+    }
+
+    fun createUser(userSignUpDto: UserSignUpDto): StateFlow<AuthState> {
         _authState.value = AuthState.Progress
         // Validate user
         if (!isValidated(userSignUpDto))
@@ -93,7 +100,7 @@ class FirebaseUserManager @Inject constructor(
         auth.signOut()
     }
 
-    private fun setUserToDb(user: com.khve.feature_auth.data.model.UserDbDto, userUid: String) {
+    private fun setUserToDb(user: UserDbDto, userUid: String) {
         mDocRef.document(userUid)
             .set(user)
             .addOnFailureListener { e ->
@@ -116,7 +123,7 @@ class FirebaseUserManager @Inject constructor(
     private fun getUserFromDbByUid(userUid: String) {
         mDocRef.document(userUid).get()
             .addOnSuccessListener { snapshot ->
-                val userDbDto = snapshot?.toObject(com.khve.feature_auth.data.model.UserDbDto::class.java)
+                val userDbDto = snapshot?.toObject(UserDbDto::class.java)
                 _userState.value = if (userDbDto != null) {
                     UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
                 } else {
@@ -137,7 +144,7 @@ class FirebaseUserManager @Inject constructor(
                 return@addSnapshotListener
             }
 
-            val userDbDto = snapshot?.toObject(com.khve.feature_auth.data.model.UserDbDto::class.java)
+            val userDbDto = snapshot?.toObject(UserDbDto::class.java)
             _userState.value = if (userDbDto != null) {
                 UserState.User(userMapper.mapUserDbDtoToUser(userDbDto, userUid))
             } else {
@@ -157,7 +164,7 @@ class FirebaseUserManager @Inject constructor(
         }
     }
 
-    private fun isValidated(validateUserSignUpDto: com.khve.feature_auth.data.model.UserSignUpDto): Boolean {
+    private fun isValidated(validateUserSignUpDto: UserSignUpDto): Boolean {
         var error = ""
 
         val userToValidate = validateUserSignUpDto.copy(

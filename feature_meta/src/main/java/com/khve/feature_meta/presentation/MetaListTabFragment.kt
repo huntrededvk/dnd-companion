@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.khve.feature_meta.domain.entity.PartySizeEnum
 import com.khve.feature_meta.presentation.adapter.StateAdapter
 import com.khve.ui.databinding.FragmentMetaListTabBinding
 
@@ -50,7 +51,7 @@ class MetaListTabFragment : Fragment() {
         )
         TabLayoutMediator(tabLayout, viewPager2
         ) {
-          tab, position -> tab.text = com.khve.feature_meta.domain.entity.PartySizeEnum.entries[position].name
+          tab, position -> tab.text = PartySizeEnum.entries[position].name
         }.attach()
     }
 

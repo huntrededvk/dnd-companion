@@ -1,7 +1,9 @@
 package com.khve.feature_meta.data.mapper
 
+import com.khve.feature_meta.data.model.BuildKarmaDto
 import com.khve.feature_meta.data.model.MetaCardItemDto
 import com.khve.feature_meta.data.model.MetaItemDto
+import com.khve.feature_meta.domain.entity.BuildKarma
 import com.khve.feature_meta.domain.entity.MetaCardItem
 import com.khve.feature_meta.domain.entity.MetaItem
 import javax.inject.Inject
@@ -11,6 +13,8 @@ class MetaMapper @Inject constructor() {
         return MetaItem(
             uid = metaItemDto.uid,
             title = metaItemDto.title,
+            likes = buildKarmaDtoListToBuildKarmaList(metaItemDto.likes),
+            dislikes = buildKarmaDtoListToBuildKarmaList(metaItemDto.dislikes),
             activated = metaItemDto.activated,
             partySize = metaItemDto.partySize,
             description = metaItemDto.description,
@@ -38,6 +42,8 @@ class MetaMapper @Inject constructor() {
         return MetaCardItem(
             uid = metaCardItemDto.uid,
             title = metaCardItemDto.title,
+            likes = buildKarmaDtoListToBuildKarmaList(metaCardItemDto.likes),
+            dislikes = buildKarmaDtoListToBuildKarmaList(metaCardItemDto.dislikes),
             activated = metaCardItemDto.activated,
             partySize = metaCardItemDto.partySize,
             tier = metaCardItemDto.tier,
@@ -46,22 +52,12 @@ class MetaMapper @Inject constructor() {
         )
     }
 
-    fun metaItemDtoToMetaCardItem(metaItemDto: MetaItemDto) : MetaCardItem {
-        return MetaCardItem(
-            uid = metaItemDto.uid,
-            title = metaItemDto.title,
-            activated = metaItemDto.activated,
-            partySize = metaItemDto.partySize,
-            tier = metaItemDto.tier,
-            author = metaItemDto.author,
-            dndClass = metaItemDto.dndClass
-        )
-    }
-
     fun metaItemToMetaItemDto(metaItem: MetaItem): MetaItemDto {
         return MetaItemDto(
             uid = metaItem.uid,
             title = metaItem.title,
+            likes = buildKarmaListToBuildKarmaDtoList(metaItem.likes),
+            dislikes = buildKarmaListToBuildKarmaDtoList(metaItem.dislikes),
             activated = metaItem.activated,
             partySize = metaItem.partySize,
             description = metaItem.description,
@@ -84,4 +80,10 @@ class MetaMapper @Inject constructor() {
             ringSlotTwo = metaItem.ringSlotTwo
         )
     }
+
+    private fun buildKarmaDtoListToBuildKarmaList(buildKarmaDto: List<BuildKarmaDto>) =
+        buildKarmaDto.map { BuildKarma(it.userId) }
+
+    private fun buildKarmaListToBuildKarmaDtoList(buildKarma: List<BuildKarma>) =
+        buildKarma.map { BuildKarmaDto(it.userId) }
 }

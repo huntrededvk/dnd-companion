@@ -16,7 +16,7 @@ class AuthTest : TestCase() {
     @get:Rule
     val activityScenario = activityScenarioRule<com.khve.feature_main.presentation.MainActivity>()
 
-    private val userForSuccessfulAuth = com.khve.feature_auth.data.model.UserSignUpDto(
+    private val userForSuccessfulAuth = com.khve.auth.model.UserSignUpDto(
         email = "    test@gmail.com   ",
         password = "    111111",
         username = "    Test     ",

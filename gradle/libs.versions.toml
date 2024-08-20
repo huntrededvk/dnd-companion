@@ -44,6 +44,7 @@ compileSdk = "34"
 targetSdk = "34"
 minSdk = "26"
 drawerlayout = "1.2.0"
+kotlinGradlePlugin = "1.9.0"
 
 [libraries]
 youtube-player-core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "youtubePlayer"}
@@ -59,6 +60,7 @@ androidx-runner = { module = "androidx.test:runner", version.ref = "testRunnerVe
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidXTestVersion" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-config = { module = "com.google.firebase:firebase-config", version.ref = "firebaseAnalytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
@@ -86,6 +88,7 @@ androidx-annotation = { group = "androidx.annotation", name = "annotation", vers
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
 androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version.ref = "drawerlayout" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
 
 [bundles]
 hilt = ["hilt-android", "androidx-fragment-ktx"]
@@ -93,6 +96,7 @@ retrofit = ["retrofit", "converter-gson"]
 default = ["androidx-core-ktx", "androidx-appcompat", "material"]
 main = ["androidx-activity", "androidx-constraintlayout", "androidx-ui-desktop", "androidx-annotation", "androidx-databinding-runtime", "symbol-processing"]
 firebase = ["firebase-analytics", "firebase-firestore", "firebase-auth", "symbol-processing-api"]
+firebaseConfig = ["firebase-analytics","firebase-config", "symbol-processing-api"]
 coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
 lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-livedata-ktx"]
 android-test = ["androidx-core-v150", "core-ktx", "androidx-espresso-core", "androidx-junit", "androidx-junit-ktx", "androidx-runner", "androidx-rules"]

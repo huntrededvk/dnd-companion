@@ -26,6 +26,14 @@ class MetaListRepositoryImpl @Inject constructor(
     ): StateFlow<MetaItemState> =
         metaManager.getMetaItem(metaItemUid, partySize)
 
+    override fun like(metaItem: MetaItem) {
+        metaManager.like(metaItem)
+    }
+
+    override fun dislike(metaItem: MetaItem) {
+        metaManager.dislike(metaItem)
+    }
+
     override fun deleteMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> =
         metaManager.deleteMetaItem(metaItem)
 

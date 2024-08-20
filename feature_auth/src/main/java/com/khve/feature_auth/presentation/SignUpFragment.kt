@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.khve.feature_auth.data.model.UserSignUpDto
+import com.khve.feature_auth.domain.entity.AuthState
 import com.khve.ui.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -39,7 +41,7 @@ class SignUpFragment : Fragment() {
 
     private fun addViewListeners() {
         binding.btnSignUp.setOnClickListener {
-            val userSignUpDto = com.khve.feature_auth.data.model.UserSignUpDto(
+            val userSignUpDto = UserSignUpDto(
                 email = binding.etEmail.text.toString().trim(),
                 password = binding.etPassword.text.toString().trim(),
                 username = binding.etUsername.text.toString().trim(),
@@ -59,12 +61,12 @@ class SignUpFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.authState.collect {
                     when (it) {
-                        is com.khve.feature_auth.domain.entity.AuthState.Error -> {
+                        is AuthState.Error -> {
                             signUpInProgress(false)
                             Toast.makeText(context, it.error, Toast.LENGTH_SHORT).show()
                         }
-                        com.khve.feature_auth.domain.entity.AuthState.Initial -> signUpInProgress(false)
-                        com.khve.feature_auth.domain.entity.AuthState.Progress -> signUpInProgress(true)
+                        AuthState.Initial -> signUpInProgress(false)
+                        AuthState.Progress -> signUpInProgress(true)
                     }
                 }
             }

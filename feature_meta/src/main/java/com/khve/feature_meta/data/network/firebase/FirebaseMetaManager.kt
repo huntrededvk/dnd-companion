@@ -2,7 +2,13 @@ package com.khve.feature_meta.data.network.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.khve.feature_auth.data.network.firebase.FirebaseUserManager
+import com.khve.feature_auth.domain.entity.Permission
+import com.khve.feature_auth.domain.entity.UserRole
+import com.khve.feature_auth.domain.entity.UserState
 import com.khve.feature_meta.data.mapper.MetaMapper
+import com.khve.feature_meta.data.model.MetaCardItemDto
+import com.khve.feature_meta.data.model.MetaItemDto
+import com.khve.feature_meta.domain.entity.BuildKarma
 import com.khve.feature_meta.domain.entity.MetaCardItem
 import com.khve.feature_meta.domain.entity.MetaCardListState
 import com.khve.feature_meta.domain.entity.MetaItem
@@ -33,6 +39,70 @@ class FirebaseMetaManager @Inject constructor(
     )
     private val metaItemState = _metaItemState.asStateFlow()
 
+    fun like(metaItem: MetaItem) {
+        toggleLikeDislike(metaItem, isLike = true)
+    }
+
+    fun dislike(metaItem: MetaItem) {
+        toggleLikeDislike(metaItem, isLike = false)
+    }
+
+    private fun toggleLikeDislike(metaItem: MetaItem, isLike: Boolean) {
+        val userId = userManager.getCurrentUserId()
+        val partySize = metaItem.partySize
+        val hasPermission = hasPermission(Permission.LIKE_DISLIKE_BUILD)
+
+        if (userId == null || partySize == null || !hasPermission) {
+            _metaItemState.value = MetaItemState.Error("Forbidden")
+            _metaItemState.value = MetaItemState.Initial
+            return
+        }
+
+        val buildKarma = BuildKarma(userId)
+        val metaItemToSave = metaItem.copy(
+            likes = if (isLike) {
+                toggleItem(metaItem.likes, buildKarma)
+            } else {
+                metaItem.likes.filterNot { it.userId == userId }
+            },
+            dislikes = if (isLike) {
+                metaItem.dislikes.filterNot { it.userId == userId }
+            } else {
+                toggleItem(metaItem.dislikes, buildKarma)
+            }
+        )
+
+        mDocRef.document(META_BUILDS).collection(partySize.name).document(metaItemToSave.uid)
+            .set(metaItemToSave)
+            .addOnSuccessListener {
+                _metaItemState.value = MetaItemState.MetaItem(metaItemToSave)
+                updateCardItemInMetaCardList(metaItemToSave)
+            }
+    }
+
+    private fun updateCardItemInMetaCardList(metaItem: MetaItem) {
+        val metaCardListState = _metaCardListState.value
+        if (metaCardListState is MetaCardListState.MetaCardList) {
+            _metaCardListState.value = MetaCardListState.MetaCardList(
+                metaCardListState.metaCardList.map { metaCard ->
+                    if (metaCard.uid == metaItem.uid) {
+                        metaCard.copy(likes = metaItem.likes, dislikes = metaItem.dislikes)
+                    } else {
+                        metaCard
+                    }
+                }
+            )
+        }
+    }
+
+    private fun toggleItem(items: List<BuildKarma>, buildKarma: BuildKarma): List<BuildKarma> {
+        return if (items.any { it.userId == buildKarma.userId }) {
+            items.filterNot { it.userId == buildKarma.userId }
+        } else {
+            items + buildKarma
+        }
+    }
+
     fun getMetaCardList(partySize: PartySizeEnum): StateFlow<MetaCardListState> {
         _metaCardListState.value = MetaCardListState.Initial
 
@@ -42,12 +112,13 @@ class FirebaseMetaManager @Inject constructor(
                 val snapshotList = snapshot?.documents ?: emptyList()
 
                 for (currentSnapshot in snapshotList) {
-                    val retrievedMetaItem = currentSnapshot?.toObject(com.khve.feature_meta.data.model.MetaCardItemDto::class.java)
+                    val retrievedMetaItem =
+                        currentSnapshot?.toObject(MetaCardItemDto::class.java)
                     retrievedMetaItem?.let {
                         val metaCardItem = metaMapper.metaCardItemDtoToMetaCardItem(
                             it.copy(uid = currentSnapshot.id)
                         )
-                        if (it.activated || isAuthor(metaCardItem.author[com.khve.feature_meta.data.model.MetaItemDto.USER_UID])
+                        if (it.activated || isAuthor(metaCardItem.author[MetaItemDto.USER_UID])
                             || isAdminOrModerator()
                         ) {
                             metaList.add(metaCardItem)
@@ -56,7 +127,8 @@ class FirebaseMetaManager @Inject constructor(
                 }
 
                 if (metaList.isEmpty()) {
-                    _metaCardListState.value = MetaCardListState.Error("We don't have any meta yet")
+                    _metaCardListState.value =
+                        MetaCardListState.Error("We don't have any meta yet")
                 }
 
                 _metaCardListState.value = MetaCardListState.MetaCardList(metaList)
@@ -70,36 +142,40 @@ class FirebaseMetaManager @Inject constructor(
     }
 
     private fun isAuthor(metaItemUid: String?): Boolean {
-        val currentUser = userManager.getCurrentDbUserState() as? com.khve.feature_auth.domain.entity.UserState.User
+        val currentUser = userManager.getCurrentDbUserState() as? UserState.User
         return currentUser?.user?.uid == metaItemUid
     }
 
     private fun isAdminOrModerator(): Boolean {
-        val currentUser = userManager.getCurrentDbUserState() as? com.khve.feature_auth.domain.entity.UserState.User
+        val currentUser = userManager.getCurrentDbUserState() as? UserState.User
         return currentUser?.user?.hasOneOfRoles(
             currentUser.user.role,
-            listOf(com.khve.feature_auth.domain.entity.UserRole.ADMIN, com.khve.feature_auth.domain.entity.UserRole.MODERATOR)
+            listOf(UserRole.ADMIN, UserRole.MODERATOR)
         ) == true
     }
 
-    private fun isAuthorOrHasPermission(metaItemDto: com.khve.feature_meta.data.model.MetaItemDto, permission: com.khve.feature_auth.domain.entity.Permission): Boolean {
-        val currentUser = userManager.getCurrentDbUserState() as? com.khve.feature_auth.domain.entity.UserState.User
-        val isCurrentUserAuthor = currentUser?.user?.uid == metaItemDto.author[com.khve.feature_meta.data.model.MetaItemDto.USER_UID]
+    private fun isAuthorOrHasPermission(
+        metaItemDto: MetaItemDto,
+        permission: Permission
+    ): Boolean {
+        val currentUser = userManager.getCurrentDbUserState() as? UserState.User
+        val isCurrentUserAuthor =
+            currentUser?.user?.uid == metaItemDto.author[MetaItemDto.USER_UID]
         val hasRole = currentUser?.user?.hasPermission(permission) ?: false
         return isCurrentUserAuthor || hasRole
     }
 
-    private fun hasPermission(permission: com.khve.feature_auth.domain.entity.Permission): Boolean {
-        return (userManager.getCurrentDbUserState() as? com.khve.feature_auth.domain.entity.UserState.User)?.user?.hasPermission(
+    private fun hasPermission(permission: Permission): Boolean {
+        return (userManager.getCurrentDbUserState() as? UserState.User)?.user?.hasPermission(
             permission
         ) ?: false
     }
 
     fun addMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> {
-        if (hasPermission(com.khve.feature_auth.domain.entity.Permission.ADD_META_ITEM)) {
+        if (hasPermission(Permission.ADD_META_ITEM)) {
             var mappedMetaItemDto = metaMapper.metaItemToMetaItemDto(metaItem)
 
-            if (hasPermission(com.khve.feature_auth.domain.entity.Permission.APPROVE_SELF_META_ITEM)) {
+            if (hasPermission(Permission.APPROVE_SELF_META_ITEM)) {
                 mappedMetaItemDto = mappedMetaItemDto.copy(activated = true)
             }
 
@@ -136,13 +212,16 @@ class FirebaseMetaManager @Inject constructor(
 
     private fun resetStateAndUpdateMetaList(partySize: PartySizeEnum?) {
         _metaItemState.value = MetaItemState.Initial
-        getMetaCardList(partySize ?: throw IllegalArgumentException("Can not update MetaCardList after Meta Item was deleted, party size is null"))
+        getMetaCardList(
+            partySize
+                ?: throw IllegalArgumentException("Can not update MetaCardList after Meta Item was deleted, party size is null")
+        )
     }
 
     fun deleteMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> {
         val mappedMetaItemDto = metaMapper.metaItemToMetaItemDto(metaItem)
 
-        if (isAuthorOrHasPermission(mappedMetaItemDto, com.khve.feature_auth.domain.entity.Permission.DELETE_META_ITEM)) {
+        if (isAuthorOrHasPermission(mappedMetaItemDto, Permission.DELETE_META_ITEM)) {
             mDocRef.document(META_BUILDS).collection(
                 metaItem.partySize?.name
                     ?: throw IllegalArgumentException("Can not delete meta item, party size is null")
@@ -188,7 +267,7 @@ class FirebaseMetaManager @Inject constructor(
     fun updateMetaItem(metaItem: MetaItem): StateFlow<MetaItemState> {
         val mappedMetaItemDto = metaMapper.metaItemToMetaItemDto(metaItem)
 
-        if (isAuthorOrHasPermission(mappedMetaItemDto, com.khve.feature_auth.domain.entity.Permission.EDIT_META_ITEM)) {
+        if (isAuthorOrHasPermission(mappedMetaItemDto, Permission.EDIT_META_ITEM)) {
             mDocRef.document(META_BUILDS).collection(
                 metaItem.partySize?.name
                     ?: throw IllegalArgumentException("Can not update meta item, party size is null")
@@ -215,7 +294,7 @@ class FirebaseMetaManager @Inject constructor(
         _metaItemState.value = MetaItemState.Initial
         mDocRef.document(META_BUILDS).collection(partySize.name).document(metaItemUid).get()
             .addOnSuccessListener { snapshot ->
-                val metaItemDto = snapshot?.toObject(com.khve.feature_meta.data.model.MetaItemDto::class.java)
+                val metaItemDto = snapshot?.toObject(MetaItemDto::class.java)
                 _metaItemState.value = if (metaItemDto != null) {
                     val metaItemDtoWithUid = metaItemDto.copy(uid = snapshot.id)
                     val mappedMetaItem = metaMapper.metaItemDtoToMetaItem(metaItemDtoWithUid)
@@ -236,7 +315,7 @@ class FirebaseMetaManager @Inject constructor(
     }
 
     private fun isValidated(
-        metaItemDto: com.khve.feature_meta.data.model.MetaItemDto,
+        metaItemDto: MetaItemDto,
         titleMinLength: Int,
         titleMaxLength: Int,
         descriptionMinLength: Int,
@@ -264,9 +343,11 @@ class FirebaseMetaManager @Inject constructor(
             if (isEmpty()) {
                 error = "Description can not be empty"
             } else if (length < descriptionMinLength) {
-                error = "Description length can not be shorter than $descriptionMinLength symbols"
+                error =
+                    "Description length can not be shorter than $descriptionMinLength symbols"
             } else if (length > descriptionMaxLength) {
-                error = "Description length can not be longer than $descriptionMaxLength symbols"
+                error =
+                    "Description length can not be longer than $descriptionMaxLength symbols"
             }
         }
 

@@ -1,4 +1,4 @@
-package com.khve.feature_karma
+package com.khve.config
 
 import org.junit.Test
 

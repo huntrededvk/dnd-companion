@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.khve.feature_auth.domain.entity.AuthState
 import com.khve.ui.R
 import com.khve.ui.databinding.FragmentSignInBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,15 +43,15 @@ class SignInFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.authState.collect {
                     when (it) {
-                        com.khve.feature_auth.domain.entity.AuthState.Initial -> {
+                        AuthState.Initial -> {
                             signInInProgress(false)
                         }
-                        is com.khve.feature_auth.domain.entity.AuthState.Error -> {
+                        is AuthState.Error -> {
                             signInInProgress(false)
                             Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                         }
 
-                        com.khve.feature_auth.domain.entity.AuthState.Progress -> {
+                        AuthState.Progress -> {
                             signInInProgress(true)
                         }
                     }

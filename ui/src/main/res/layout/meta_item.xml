@@ -41,7 +41,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tv_author"
-            app:layout_constraintEnd_toStartOf="@+id/tv_tier"
+            app:layout_constraintEnd_toStartOf="@+id/tv_karma"
             app:layout_constraintHorizontal_weight="6"
             app:layout_constraintStart_toEndOf="@+id/iv_character_preview"
             app:layout_constraintTop_toTopOf="parent"
@@ -61,7 +61,7 @@
             tools:text="u/RepozeRepozeRepozeRepozeRepozeRepozeRepozeRepozeRepozeRepozeRepozeRepozeRepoze" />
 
         <TextView
-            android:id="@+id/tv_tier"
+            android:id="@+id/tv_karma"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -74,7 +74,7 @@
             app:layout_constraintStart_toEndOf="@id/tv_title"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="21dp"
-            tools:text="S"
+            tools:text="0"
             tools:textColor="@android:color/holo_orange_dark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

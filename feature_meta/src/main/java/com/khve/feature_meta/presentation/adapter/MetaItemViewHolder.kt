@@ -14,5 +14,5 @@ class MetaItemViewHolder(
     val ivCharacterPreview: ImageView = view.findViewById(R.id.iv_character_preview)
     val tvTitle: TextView = view.findViewById(R.id.tv_title)
     val tvAuthor: TextView = view.findViewById(R.id.tv_author)
-    val tvTier: TextView = view.findViewById(R.id.tv_tier)
+    val tvKarma: TextView = view.findViewById(R.id.tv_karma)
 }

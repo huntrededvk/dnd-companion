@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.khve.feature_auth.domain.entity.Permission
 import com.khve.feature_auth.domain.entity.UserState
-import com.khve.feature_auth.presentation.SignInFragment
 import com.khve.feature_meta.domain.entity.MetaCardItem
 import com.khve.feature_meta.domain.entity.MetaCardListState
 import com.khve.feature_meta.domain.entity.PartySizeEnum
@@ -86,7 +85,7 @@ class MetaListFragment : Fragment() {
             val currentUser = retrievedUserState
 
             if (currentUser is UserState.NotAuthorized) {
-                startSignInFragment()
+                Toast.makeText(requireContext(), "Please, authorize", Toast.LENGTH_SHORT).show()
             } else if (currentUser is UserState.User &&
                 currentUser.user.hasPermission(Permission.ADD_META_ITEM)) {
                 startAddMetaItemFragment()
@@ -94,10 +93,6 @@ class MetaListFragment : Fragment() {
                 Toast.makeText(requireContext(), "Forbidden", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun startSignInFragment() {
-        replaceFragment(SignInFragment.newInstance(), R.id.main_container)
     }
 
     private fun startAddMetaItemFragment() {

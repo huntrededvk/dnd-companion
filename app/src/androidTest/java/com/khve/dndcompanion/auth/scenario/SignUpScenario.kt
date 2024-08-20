@@ -7,7 +7,7 @@ import com.khve.dndcompanion.auth.screen.SignInScreen
 import com.khve.dndcompanion.auth.screen.SignUpScreen
 
 class SignUpScenario(
-    private val user: com.khve.feature_auth.data.model.UserSignUpDto
+    private val user: com.khve.auth.model.UserSignUpDto
 ) : Scenario() {
 
     override val steps: TestContext<Unit>.() -> Unit = {

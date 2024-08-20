@@ -7,6 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class MetaCardItem (
     val uid: String = DEFAULT_EMPTY_STRING,
     val title: String = DEFAULT_EMPTY_STRING,
+    val likes: List<BuildKarma> = emptyList(),
+    val dislikes: List<BuildKarma> = emptyList(),
     val partySize: PartySizeEnum?,
     val tier: String = DEFAULT_EMPTY_STRING,
     val activated: Boolean = false,

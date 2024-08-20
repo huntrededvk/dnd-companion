@@ -143,6 +143,7 @@
                             android:src="@drawable/thumbs_up_down_48dp_white_icon" />
 
                         <TextView
+                            android:id="@+id/tv_karma"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"

@@ -2,6 +2,9 @@ package com.khve.feature_auth.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.khve.feature_auth.data.model.UserSignUpDto
+import com.khve.feature_auth.domain.entity.AuthState
+import com.khve.feature_auth.domain.usercase.CreateUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,15 +13,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val createUserUseCase: com.khve.feature_auth.domain.usercase.CreateUserUseCase
+    private val createUserUseCase: CreateUserUseCase
 ) : ViewModel() {
 
-    private val _authState = MutableStateFlow<com.khve.feature_auth.domain.entity.AuthState>(com.khve.feature_auth.domain.entity.AuthState.Initial)
+    private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
     val authState = _authState.asStateFlow()
 
-    fun createUser(userSignUpDto: com.khve.feature_auth.data.model.UserSignUpDto) {
+    fun createUser(userSignUpDto: UserSignUpDto) {
         viewModelScope.launch {
-            _authState.value = com.khve.feature_auth.domain.entity.AuthState.Progress
+            _authState.value = AuthState.Progress
             createUserUseCase(userSignUpDto).collect {
                 _authState.value = it
             }

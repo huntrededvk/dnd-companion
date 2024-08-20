@@ -17,6 +17,8 @@ interface MetaListRepository {
         partySize: PartySizeEnum
     ): StateFlow<MetaItemState>
 
+    fun like(metaItem: MetaItem)
+    fun dislike(metaItem: MetaItem)
     fun deleteMetaItem(metaItem: MetaItem): StateFlow<MetaItemState>
     fun updateMetaItem(metaItem: MetaItem): StateFlow<MetaItemState>
 }

@@ -36,7 +36,7 @@ dependencies {
     implementation(libs.youtube.player.core)
 
     // Modules
-    implementation(projects.featureDnd)
+    implementation(projects.data)
     implementation(projects.featureAuth)
     implementation(projects.ui)
 
