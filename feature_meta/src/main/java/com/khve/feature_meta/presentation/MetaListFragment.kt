@@ -64,13 +64,10 @@ class MetaListFragment : Fragment() {
                 it.getParcelable<PartySizeEnum>(PARTY_SIZE)
             }
 
-            if (partySize == null)
-                throw IllegalArgumentException("MetaListFragment received empty Party size")
+            val currentPartySize = partySize
+            require(currentPartySize != null) { "MetaListFragment received empty Party size" }
 
-            viewModel.getMetaCardList(
-                partySize
-                    ?: throw IllegalArgumentException("Can not get Meta card list, Party size is empty")
-            )
+            viewModel.getMetaCardList(currentPartySize)
         }
     }
 
@@ -82,35 +79,31 @@ class MetaListFragment : Fragment() {
         binding.fabAddMetaItem.visibility = View.VISIBLE
         binding.fabAddMetaItem.isClickable = true
         binding.fabAddMetaItem.setOnClickListener {
-            val currentUser = retrievedUserState
+            val isCurrentUserVerified = viewModel.verifyUserAndPermission(Permission.ADD_META_ITEM)
 
-            if (currentUser is UserState.NotAuthorized) {
-                Toast.makeText(requireContext(), "Please, authorize", Toast.LENGTH_SHORT).show()
-            } else if (currentUser is UserState.User &&
-                currentUser.user.hasPermission(Permission.ADD_META_ITEM)) {
-                startAddMetaItemFragment()
+            if (!isCurrentUserVerified) {
+                Toast.makeText(requireContext(), "You don't have permission", Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                Toast.makeText(requireContext(), "Forbidden", Toast.LENGTH_SHORT).show()
+                startAddMetaItemFragment()
             }
         }
     }
 
     private fun startAddMetaItemFragment() {
         val currentPartySize = partySize
-        if (currentPartySize != null) {
-            if (isOnPaneMode()) {
-                replaceFragment(
-                    AddMetaItemFragment.newInstance(currentPartySize),
-                    R.id.fcv_meta_item_container
-                )
-            } else {
-                replaceFragment(
-                    AddMetaItemFragment.newInstance(currentPartySize),
-                    R.id.main_container
-                )
-            }
+        require(currentPartySize != null) { "Party size cannot be null" }
+
+        if (isOnPaneMode()) {
+            replaceFragment(
+                AddMetaItemFragment.newInstance(currentPartySize),
+                R.id.fcv_meta_item_container
+            )
         } else {
-            throw IllegalArgumentException("Can not start AddMetaItemFragment, party size is null")
+            replaceFragment(
+                AddMetaItemFragment.newInstance(currentPartySize),
+                R.id.main_container
+            )
         }
     }
 
@@ -157,11 +150,16 @@ class MetaListFragment : Fragment() {
                         MetaCardListState.Initial -> {}
 
                         is MetaCardListState.MetaCardList -> {
-                            val sortedMetaList = it.metaCardList.sortedBy {
-                                resources.getStringArray(R.array.tiers).indexOf(it.tier)
+                            if (it.metaCardList.isEmpty()) {
+                                binding.tvEmptyList?.visibility = View.VISIBLE
+                            } else {
+                                binding.tvEmptyList?.visibility = View.GONE
+                                val sortedMetaList = it.metaCardList.sortedBy {
+                                    resources.getStringArray(R.array.tiers).indexOf(it.tier)
+                                }
+                                metaListAdapter.submitList(sortedMetaList)
+                                loadMetaListInProgress(false)
                             }
-                            metaListAdapter.submitList(sortedMetaList)
-                            loadMetaListInProgress(false)
                         }
 
                         is MetaCardListState.Error -> {

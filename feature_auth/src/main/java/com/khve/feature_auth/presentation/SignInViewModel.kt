@@ -3,7 +3,7 @@ package com.khve.feature_auth.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khve.feature_auth.domain.entity.AuthState
-import com.khve.feature_auth.domain.usercase.SignInWithEmailAndPasswordUseCase
+import com.khve.feature_auth.domain.usecase.SignInWithEmailAndPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

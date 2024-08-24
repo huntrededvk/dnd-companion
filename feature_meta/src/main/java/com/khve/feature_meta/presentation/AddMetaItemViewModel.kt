@@ -7,6 +7,7 @@ import com.khve.feature_auth.domain.entity.Permission
 import com.khve.feature_auth.domain.entity.UserState
 import com.khve.feature_dnd.domain.entity.DndContentState
 import com.khve.feature_dnd.domain.usecase.GetDndContentUseCase
+import com.khve.feature_meta.domain.entity.MetaItem
 import com.khve.feature_meta.domain.entity.MetaItemState
 import com.khve.feature_meta.domain.usecase.AddMetaItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -69,11 +70,12 @@ class AddMetaItemViewModel @Inject constructor(
             val currentUser = (_userState.value as? UserState.User)?.user
             val currentContent = (_dndContentState.value as? DndContentState.Content)?.content
 
-            if (currentUser?.hasPermission(Permission.ADD_META_ITEM) == true && currentContent != null) {
+            if (userManager.hasPermission(Permission.ADD_META_ITEM)
+                && currentContent != null && currentUser != null) {
                 val metaItemToSave = metaItem.copy(
                     author = mapOf(
-                        com.khve.feature_meta.domain.entity.MetaItem.USERNAME to currentUser.username,
-                        com.khve.feature_meta.domain.entity.MetaItem.USER_UID to currentUser.uid
+                        MetaItem.USERNAME to currentUser.username,
+                        MetaItem.USER_UID to currentUser.uid
                     ),
                 )
                 addMetaItemUseCase(metaItemToSave).collect {

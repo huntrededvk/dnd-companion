@@ -9,10 +9,7 @@ import javax.inject.Inject
 class GetMetaItemUseCase @Inject constructor(
     private val repository: MetaListRepository
 ) {
-    operator fun invoke(
-        metaItemUid: String,
-        partySize: PartySizeEnum
-    ): StateFlow<MetaItemState> {
-        return repository.getMetaItem(metaItemUid, partySize)
+    operator fun invoke(metaItemUid: String): StateFlow<MetaItemState> {
+        return repository.getMetaItem(metaItemUid)
     }
 }

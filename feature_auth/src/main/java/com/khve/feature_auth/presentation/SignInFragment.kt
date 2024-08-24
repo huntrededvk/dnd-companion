@@ -75,13 +75,20 @@ class SignInFragment : Fragment() {
             startSignUpFragment()
         }
         binding.tvForgotPassword.setOnClickListener {
-            // TODO: Forgot password
+            startForgotPasswordFragment()
         }
         binding.btnSignIn.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             viewModel.signInWithEmailAndPassword(email, password)
         }
+    }
+
+    private fun startForgotPasswordFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, ForgotPasswordFragment.newInstance())
+            .addToBackStack(ForgotPasswordFragment.BACKSTACK_NAME)
+            .commit()
     }
 
     private fun startSignUpFragment() {

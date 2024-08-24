@@ -21,10 +21,9 @@ class MetaListRepositoryImpl @Inject constructor(
         metaManager.addMetaItem(metaItemDto)
 
     override fun getMetaItem(
-        metaItemUid: String,
-        partySize: PartySizeEnum
+        metaItemUid: String
     ): StateFlow<MetaItemState> =
-        metaManager.getMetaItem(metaItemUid, partySize)
+        metaManager.getMetaItem(metaItemUid)
 
     override fun like(metaItem: MetaItem) {
         metaManager.like(metaItem)

@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
+import com.khve.feature_auth.presentation.SignInFragment
 import com.khve.ui.R
 import com.khve.feature_meta.domain.entity.MetaItem
 import com.khve.feature_meta.domain.entity.MetaItemState
@@ -31,6 +32,14 @@ class MetaItemFragment : Fragment() {
     private var _binding: FragmentMetaItemBinding? = null
     private val binding: FragmentMetaItemBinding
         get() = _binding ?: throw NullPointerException("FragmentMetaItemBinding == null")
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMetaItemBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,8 +69,12 @@ class MetaItemFragment : Fragment() {
                     when(it) {
                         MetaItemState.Initial -> loadMetaItemInProgress(false)
                         is MetaItemState.Error -> {
-                            loadMetaItemInProgress(false)
-                            Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                            if (it.notAuthorized == true) {
+                                openSignInFragment()
+                            } else {
+                                loadMetaItemInProgress(false)
+                                Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                            }
                         }
                         is MetaItemState.MetaItem -> {
                             val metaItem = it.metaItem
@@ -83,6 +96,13 @@ class MetaItemFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openSignInFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, SignInFragment.newInstance())
+            .addToBackStack(SignInFragment.BACKSTACK_NAME)
+            .commit()
     }
 
     private fun loadMetaItemInProgress(isInProgress: Boolean) {
@@ -132,12 +152,16 @@ class MetaItemFragment : Fragment() {
                 tvKarma.setTextColor(ContextCompat.getColor(requireContext(), colorRes))
                 tvKarma.text = karma.toString()
 
+                // Set author
+                btnProfile.setOnClickListener {
+
+                }
+
                 // Set text values
                 tvTier.text = item.tier
                 tvTeamSize.text = item.partySize?.name
                 tvClass.text = item.dndClass[MetaItem.NAME]
                 tvTitle.text = item.title
-                tvAuthor.text = item.author[MetaItem.USERNAME]
                 tvDescription.text = item.description
                 tvLeftWeaponSlotOne.text = item.primaryWeaponSlotOne[MetaItem.NAME]
                 tvLeftWeaponSlotTwo.text = item.primaryWeaponSlotTwo[MetaItem.NAME]
@@ -189,16 +213,8 @@ class MetaItemFragment : Fragment() {
             else if (metaCardItem.partySize == null)
                 throw IllegalArgumentException("MetaCardItem has null party size in MetaItemFragment")
 
-            viewModel.getMetaItem(metaCardItem.uid, metaCardItem.partySize)
+            viewModel.getMetaItem(metaCardItem.uid)
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMetaItemBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     companion object {

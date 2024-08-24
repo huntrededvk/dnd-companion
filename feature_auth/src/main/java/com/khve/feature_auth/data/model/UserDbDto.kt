@@ -11,7 +11,7 @@ data class UserDbDto(
     @SerializedName("email") val email: String = DEFAULT_EMPTY_STRING,
     @SerializedName("username") val username: String = DEFAULT_EMPTY_STRING,
     @SerializedName("discord") val discord: String = DEFAULT_EMPTY_STRING,
-    @SerializedName("role") val role: List<UserRole> = listOf(UserRole.NOT_AUTHORIZED),
+    @SerializedName("role") val role: UserRole = UserRole.NOT_VERIFIED,
 ) : Parcelable {
     companion object {
         private const val DEFAULT_EMPTY_STRING = ""

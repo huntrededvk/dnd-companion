@@ -12,10 +12,7 @@ interface MetaListRepository {
     ): StateFlow<MetaCardListState>
 
     fun addMetaItem(metaItemDto: MetaItem): StateFlow<MetaItemState>
-    fun getMetaItem(
-        metaItemUid: String,
-        partySize: PartySizeEnum
-    ): StateFlow<MetaItemState>
+    fun getMetaItem(metaItemUid: String): StateFlow<MetaItemState>
 
     fun like(metaItem: MetaItem)
     fun dislike(metaItem: MetaItem)

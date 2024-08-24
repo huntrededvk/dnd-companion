@@ -11,6 +11,7 @@ import com.khve.feature_meta.MetaModule
 import com.khve.feature_meta.presentation.AddMetaItemFragment
 import com.khve.feature_meta.presentation.MetaItemFragment
 import com.khve.feature_meta.presentation.MetaListFragment
+import com.khve.feature_profile.presentation.UserProfileFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -33,5 +34,6 @@ interface ApplicationComponent {
     fun inject(fragment: AddMetaItemFragment)
     fun inject(activity: MainActivity)
     fun inject(fragment: MainFragment)
+    fun inject(fragment: UserProfileFragment)
 
 }

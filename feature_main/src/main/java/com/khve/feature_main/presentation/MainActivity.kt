@@ -19,6 +19,7 @@ import com.khve.feature_auth.domain.entity.UserState
 import com.khve.feature_auth.presentation.SignInFragment
 import com.khve.feature_auth.presentation.SignUpFragment
 import com.khve.feature_meta.presentation.MetaListTabFragment
+import com.khve.feature_profile.presentation.UserProfileFragment
 import com.khve.ui.R
 import com.khve.ui.databinding.ActivityMainBinding
 import com.khve.ui.databinding.NavHeaderMainBinding
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_meta -> startMetaListTabFragment()
+                R.id.nav_profile -> startProfileFragment()
                 R.id.nav_sign_in -> startSignInFragment()
                 R.id.nav_sign_out -> viewModel.signOut()
                 R.id.nav_github -> startActivity(
@@ -120,10 +122,11 @@ class MainActivity : AppCompatActivity() {
         val navHeaderBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
         val navSignIn = binding.navView.menu.findItem(R.id.nav_sign_in)
         val navSignOut = binding.navView.menu.findItem(R.id.nav_sign_out)
+        val navUserProfile = binding.navView.menu.findItem(R.id.nav_profile)
 
         when (userState) {
             is UserState.Error -> Toast.makeText(
-                this@MainActivity,
+                applicationContext,
                 userState.errorMessage,
                 Toast.LENGTH_SHORT
             ).show()
@@ -131,6 +134,7 @@ class MainActivity : AppCompatActivity() {
             is UserState.User -> {
                 navSignIn.isVisible = false
                 navSignOut.isVisible = true
+                navUserProfile.isVisible = true
                 navHeaderBinding.tvUserUsername.text = userState.user.username
                 navHeaderBinding.llWelcomeUser.visibility = View.VISIBLE
 
@@ -143,6 +147,7 @@ class MainActivity : AppCompatActivity() {
             UserState.NotAuthorized -> {
                 navSignIn.isVisible = true
                 navSignOut.isVisible = false
+                navUserProfile.isVisible = false
                 navHeaderBinding.llWelcomeUser.visibility = View.GONE
                 startMetaListTabFragment()
             }
@@ -164,6 +169,7 @@ class MainActivity : AppCompatActivity() {
                 is SignInFragment -> setToolbarTitle(R.string.sign_in)
                 is SignUpFragment -> setToolbarTitle(R.string.sign_up)
                 is MetaListTabFragment -> setToolbarTitle(R.string.meta_builds)
+                is UserProfileFragment -> setToolbarTitle(R.string.profile)
             }
         }
     }
@@ -177,6 +183,13 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, MetaListTabFragment.newInstance())
             .addToBackStack(MetaListTabFragment.BACKSTACK_NAME)
+            .commit()
+    }
+
+    private fun startProfileFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, UserProfileFragment.newInstance(null))
+            .addToBackStack(UserProfileFragment.BACKSTACK_NAME)
             .commit()
     }
 

@@ -1,4 +1,4 @@
-package com.khve.feature_auth.domain.usercase
+package com.khve.feature_auth.domain.usecase
 
 import com.khve.feature_auth.data.model.UserSignUpDto
 import com.khve.feature_auth.domain.entity.AuthState

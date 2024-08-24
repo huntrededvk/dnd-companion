@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khve.feature_auth.data.model.UserSignUpDto
 import com.khve.feature_auth.domain.entity.AuthState
-import com.khve.feature_auth.domain.usercase.CreateUserUseCase
+import com.khve.feature_auth.domain.usecase.CreateUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

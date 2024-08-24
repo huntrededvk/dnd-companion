@@ -81,4 +81,9 @@
     <string name="navigation_drawer_open">drawer_open</string>
     <string name="navigation_drawer_close">drawer_closed</string>
     <string name="github_open_source">GitHub Open Source</string>
+    <string name="reset_password">Reset password</string>
+    <string name="password_recovery_will_be_sent_to_your_email">Password recovery will be sent to your email</string>
+    <string name="profile">Profile</string>
+    <string name="verify_email">Verify email</string>
+    <string name="we_don_t_have_any_meta_builds_yet">We don\'t have any meta builds yet</string>
 </resources>

@@ -2,6 +2,7 @@ plugins {
     id("local.library")
     id("local.hilt")
     id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {

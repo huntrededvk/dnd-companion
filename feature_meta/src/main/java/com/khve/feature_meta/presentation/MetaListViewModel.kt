@@ -3,6 +3,7 @@ package com.khve.feature_meta.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.khve.feature_auth.data.network.firebase.FirebaseUserManager
+import com.khve.feature_auth.domain.entity.Permission
 import com.khve.feature_auth.domain.entity.UserState
 import com.khve.feature_meta.domain.entity.MetaCardListState
 import com.khve.feature_meta.domain.entity.PartySizeEnum
@@ -29,6 +30,10 @@ class MetaListViewModel @Inject constructor(
 
     init {
         updateUserState()
+    }
+
+    fun verifyUserAndPermission(permission: Permission): Boolean {
+        return userManager.hasPermission(permission)
     }
 
     private fun updateUserState() {

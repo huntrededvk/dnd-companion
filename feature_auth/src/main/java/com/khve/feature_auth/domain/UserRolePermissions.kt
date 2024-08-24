@@ -8,20 +8,19 @@ object UserRolePermissions {
     private val moderator = listOf(
         Permission.DELETE_META_ITEM
     )
+
     private val streamer = emptyList<Permission>()
+
     private val contentCreator = listOf(
         Permission.APPROVE_SELF_META_ITEM
     )
+
     private val user = listOf(
         Permission.ADD_META_ITEM,
         Permission.LIKE_DISLIKE_BUILD
     )
 
-    // TODO: Change authorized permissions to none
-    private val authorized = listOf(
-        Permission.ADD_META_ITEM,
-        Permission.LIKE_DISLIKE_BUILD
-    )
+    private val authorized = emptyList<Permission>()
 
     private val permissionsMap = mapOf(
         UserRole.ADMIN to Permission.entries,
@@ -29,10 +28,11 @@ object UserRolePermissions {
         UserRole.CONTENT_CREATOR to contentCreator + user,
         UserRole.STREAMER to streamer + user + contentCreator,
         UserRole.USER to user,
-        UserRole.AUTHORIZED to authorized
+        UserRole.NOT_VERIFIED to authorized
     )
 
     fun hasPermission(user: User, permission: Permission): Boolean {
-        return user.role.flatMap { permissionsMap[it] ?: emptyList() }.contains(permission)
+        if (user.role !in permissionsMap) return false
+        return permission in permissionsMap[user.role]!!
     }
 }

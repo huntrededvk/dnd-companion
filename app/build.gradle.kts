@@ -49,6 +49,7 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     // Modules
+    implementation(projects.featureProfile)
     implementation(projects.featureAuth)
     implementation(projects.featureMain)
     implementation(projects.featureMeta)

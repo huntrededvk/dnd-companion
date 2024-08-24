@@ -13,7 +13,7 @@ class UserMapper @Inject constructor() {
             email = userSignUpDto.email,
             username = userSignUpDto.username,
             discord = userSignUpDto.discord,
-            role = listOf(UserRole.AUTHORIZED),
+            role = UserRole.NOT_VERIFIED,
         )
     }
 

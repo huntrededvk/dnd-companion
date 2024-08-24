@@ -41,10 +41,10 @@ class MetaItemViewModel @Inject constructor(
         dislikeMetaItemUseCase.invoke(metaItem)
     }
     
-    fun getMetaItem(metaItemUid: String, partySize: PartySizeEnum) {
+    fun getMetaItem(metaItemUid: String) {
         viewModelScope.launch {
             _metaItemState.value = MetaItemState.Progress
-            getMetaItemUseCase(metaItemUid, partySize).collect {
+            getMetaItemUseCase(metaItemUid).collect {
                 _metaItemState.value = it
             }
         }
