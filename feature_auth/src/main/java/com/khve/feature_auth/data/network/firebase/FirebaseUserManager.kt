@@ -214,9 +214,9 @@ class FirebaseUserManager @Inject constructor(
                     _userState.value = userState
                 }
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
                 _userState.value = UserState.Error(
-                    it.localizedMessage ?: "Unknown error"
+                    e.localizedMessage ?: "Unknown error"
                 )
             }
     }

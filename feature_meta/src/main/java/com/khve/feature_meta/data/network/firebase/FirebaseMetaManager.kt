@@ -74,6 +74,10 @@ class FirebaseMetaManager @Inject constructor(
                 _metaItemState.value = MetaItemState.MetaItem(metaItemToSave)
                 updateCardItemInMetaCardList(metaItemToSave)
             }
+            .addOnFailureListener { e ->
+                _metaItemState.value = MetaItemState.Initial
+                _metaItemState.value = MetaItemState.Error(e.localizedMessage ?: "Unknown error")
+            }
     }
 
     private fun updateCardItemInMetaCardList(metaItem: MetaItem) {
@@ -124,9 +128,9 @@ class FirebaseMetaManager @Inject constructor(
 
                 _metaCardListState.value = MetaCardListState.MetaCardList(metaList)
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
                 _metaCardListState.value =
-                    MetaCardListState.Error(it.localizedMessage ?: "Unknown error")
+                    MetaCardListState.Error(e.localizedMessage ?: "Unknown error")
             }
 
         return metaCardListState
@@ -157,9 +161,9 @@ class FirebaseMetaManager @Inject constructor(
 
                 _metaCardListState.value = MetaCardListState.MetaCardList(metaList)
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
                 _metaCardListState.value =
-                    MetaCardListState.Error(it.localizedMessage ?: "Unknown error")
+                    MetaCardListState.Error(e.localizedMessage ?: "Unknown error")
             }
 
         return metaCardListState
@@ -207,9 +211,8 @@ class FirebaseMetaManager @Inject constructor(
                     _metaItemState.value = MetaItemState.Success
                 }
                 .addOnFailureListener { e ->
-                    _metaItemState.value = MetaItemState.Error(
-                        e.localizedMessage ?: "Unknown error"
-                    )
+                    _metaItemState.value = MetaItemState.Initial
+                    _metaItemState.value = MetaItemState.Error(e.localizedMessage ?: "Unknown error")
                 }
         } else {
             _metaItemState.value = MetaItemState.Error("Forbidden")
@@ -235,10 +238,9 @@ class FirebaseMetaManager @Inject constructor(
                     resetStateAndUpdateMetaList(mappedMetaItemDto.partySize)
                     _metaItemState.value = MetaItemState.Success
                 }
-                .addOnFailureListener {
-                    _metaItemState.value = MetaItemState.Error(
-                        it.localizedMessage ?: "Couldn't delete meta data"
-                    )
+                .addOnFailureListener { e ->
+                    _metaItemState.value = MetaItemState.Initial
+                    _metaItemState.value = MetaItemState.Error(e.localizedMessage ?: "Unknown error")
                 }
         }
 
@@ -254,10 +256,9 @@ class FirebaseMetaManager @Inject constructor(
                     resetStateAndUpdateMetaList(metaItemDtoApproved.partySize)
                     _metaItemState.value = MetaItemState.Success
                 }
-                .addOnFailureListener {
-                    _metaItemState.value = MetaItemState.Error(
-                        it.localizedMessage ?: "Couldn't approve meta data"
-                    )
+                .addOnFailureListener { e ->
+                    _metaItemState.value = MetaItemState.Initial
+                    _metaItemState.value = MetaItemState.Error(e.localizedMessage ?: "Unknown error")
                 }
         }
 
@@ -273,10 +274,9 @@ class FirebaseMetaManager @Inject constructor(
                     resetStateAndUpdateMetaList(mappedMetaItemDto.partySize)
                     _metaItemState.value = MetaItemState.Success
                 }
-                .addOnFailureListener {
-                    _metaItemState.value = MetaItemState.Error(
-                        it.localizedMessage ?: "Couldn't delete meta data"
-                    )
+                .addOnFailureListener { e ->
+                    _metaItemState.value = MetaItemState.Initial
+                    _metaItemState.value = MetaItemState.Error(e.localizedMessage ?: "Unknown error")
                 }
         }
 
@@ -298,10 +298,9 @@ class FirebaseMetaManager @Inject constructor(
                     MetaItemState.Error("Meta data is empty")
                 }
             }
-            .addOnFailureListener {
-                _metaItemState.value = MetaItemState.Error(
-                    it.localizedMessage ?: "Unknown error"
-                )
+            .addOnFailureListener { e ->
+                _metaItemState.value = MetaItemState.Initial
+                _metaItemState.value = MetaItemState.Error(e.localizedMessage ?: "Unknown error")
             }
 
         return metaItemState
@@ -358,6 +357,7 @@ class FirebaseMetaManager @Inject constructor(
 
         return true
     }
+
 
     companion object {
         const val META_BUILDS = "builds"

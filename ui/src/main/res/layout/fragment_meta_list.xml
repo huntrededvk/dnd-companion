@@ -15,20 +15,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/tv_empty_list"
-        android:text="@string/we_don_t_have_any_meta_builds_yet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"
-        android:textColor="@color/dark_gray"
-        android:textSize="16sp"
-        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_horizontal"
         tools:visibility="visible"
-        android:visibility="gone" />
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/logo_sad_empty"/>
+
+        <TextView
+            android:text="@string/we_don_t_have_any_meta_builds_yet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/dark_gray"
+            android:textSize="18sp"
+            android:layout_margin="20dp" />
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_meta_item"

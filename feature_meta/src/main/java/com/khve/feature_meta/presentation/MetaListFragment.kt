@@ -150,10 +150,16 @@ class MetaListFragment : Fragment() {
                         MetaCardListState.Initial -> {}
 
                         is MetaCardListState.MetaCardList -> {
-                            if (it.metaCardList.isEmpty()) {
-                                binding.tvEmptyList?.visibility = View.VISIBLE
+                            val tvEmptyList = if (binding.tvEmptyListLand != null) {
+                                binding.tvEmptyListLand
                             } else {
-                                binding.tvEmptyList?.visibility = View.GONE
+                                binding.tvEmptyList
+                            }
+
+                            if (it.metaCardList.isEmpty()) {
+                                tvEmptyList?.visibility = View.VISIBLE
+                            } else {
+                                tvEmptyList?.visibility = View.GONE
                                 val sortedMetaList = it.metaCardList.sortedBy {
                                     resources.getStringArray(R.array.tiers).indexOf(it.tier)
                                 }
