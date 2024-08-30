@@ -10,6 +10,7 @@ dependencies {
     implementation(plugin(libs.plugins.androidLibrary))
     implementation(plugin(libs.plugins.daggerHilt))
     implementation(plugin(libs.plugins.googleServices))
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }
 
 kotlin {

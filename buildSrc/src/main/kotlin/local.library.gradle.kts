@@ -1,3 +1,5 @@
+import org.gradle.accessors.dm.LibrariesForLibs
+
 plugins {
     id("com.android.library")
     id("local.kotlin")
@@ -35,5 +37,20 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 }
+
+dependencies {
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.compiler)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.activity.compose)
+    debugImplementation(libs.androidx.ui.tooling)
+}
+
+internal val Project.libs: LibrariesForLibs
+    get() = (this as ExtensionAware).extensions.getByName("libs") as LibrariesForLibs
