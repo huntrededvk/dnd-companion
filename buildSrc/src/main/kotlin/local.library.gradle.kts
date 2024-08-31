@@ -3,6 +3,7 @@ import org.gradle.accessors.dm.LibrariesForLibs
 plugins {
     id("com.android.library")
     id("local.kotlin")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -39,17 +40,19 @@ android {
         viewBinding = true
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
 }
 
 dependencies {
-    implementation(libs.androidx.material)
-    implementation(libs.androidx.compiler)
-    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }
 
 internal val Project.libs: LibrariesForLibs
