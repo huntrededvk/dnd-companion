@@ -5,10 +5,9 @@ import com.kaspersky.kaspresso.testcases.core.testcontext.TestContext
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.auth.screen.SignInScreen
 import com.khve.dndcompanion.auth.screen.SignUpScreen
-import com.khve.dndcompanion.data.auth.model.UserSignUpDto
 
 class SignUpScenario(
-    private val user: UserSignUpDto
+    private val user: com.khve.auth.model.UserSignUpDto
 ) : Scenario() {
 
     override val steps: TestContext<Unit>.() -> Unit = {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_meta"
+            android:icon="@drawable/meta_medal_48dp_dark_gray"
+            android:title="@string/meta" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/meta_medal_48dp_dark_gray"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/nav_sign_in"
+            android:icon="@drawable/signin_48dp_dark_gray"
+            android:title="@string/sign_in"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/logout_48dp_dark_gray"
+            android:title="@string/sign_out"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_github"
+            android:icon="@drawable/open_in_browser_48dp_dark_gray"
+            android:title="@string/github_open_source" />
+    </group>
+</menu>

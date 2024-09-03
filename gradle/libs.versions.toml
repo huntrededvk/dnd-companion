@@ -1,103 +1,128 @@
 [versions]
-agp = "8.3.2"
-androidSlantedTextview = "1.2"
-androidxEspressoCore = "3.6.1"
-androidXTestVersion = "1.6.0"
-core = "1.6.0-rc01"
-dagger = "2.51.1"
-espressoCoreVersion = "3.6.1"
-firebaseAnalytics = "22.0.2"
+agp = "8.5.2"
+androidxMaterial = "1.3.0-rc01"
+androidXTestVersion = "1.6.1"
+compiler = "1.5.15"
+firebaseAnalytics = "22.1.0"
 firebaseAuth = "23.0.0"
-firebaseBom = "33.1.1"
-firebaseFirestore = "25.0.0"
-glide = "4.16.0"
+firebaseBom = "33.2.0"
+firebaseFirestore = "25.1.0"
+flexbox = "3.0.0"
+fragmentKtx = "1.8.2"
 glideVersion = "5.0.0-rc01"
 gson = "2.10.1"
+hiltAndroid = "2.51.1"
 kaspresso = "1.5.5"
-kotlin = "1.9.21"
+kotlin = "2.0.10"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
-kotlinGradlePlugin = "2.0.0"
-kotlinxCoroutinesAndroid = "1.7.3"
-kotlinxCoroutinesCore = "1.7.3"
-lifecycleRuntimeKtx = "2.8.2"
-lifecycleViewmodelKtx = "2.8.2"
+kotlinxCoroutinesAndroid = "1.8.1"
+kotlinSymbolProcessing = "2.0.0-1.0.21"
+kotlinxCoroutinesCore = "1.9.0-RC.2"
+lifecycleRuntimeKtx = "2.8.4"
+lifecycleViewmodelKtx = "2.8.4"
 material = "1.12.0"
-activity = "1.9.0"
+activity = "1.9.1"
 constraintlayout = "2.1.4"
-materialIconsExtendedVersion = "1.6.8"
 mockk = "1.13.11"
-orchestrator = "1.4.2"
-playServicesAds = "23.1.0"
-retrofit = "2.9.0"
-richeditorAndroid = "2.0.0"
-roomRuntime = "2.6.1"
-rules = "1.5.0"
-runner = "1.5.2"
+orchestrator = "1.5.0"
+retrofit = "2.11.0"
 symbolProcessingApi = "2.0.0-1.0.21"
-testRunnerVersion = "1.5.2"
-uiDesktop = "1.6.8"
-annotation = "1.8.0"
-lifecycleLivedataKtx = "2.8.2"
-databindingRuntime = "8.5.0"
+testRunnerVersion = "1.6.2"
+annotation = "1.8.2"
+lifecycleLivedataKtx = "2.8.4"
+databindingRuntime = "8.6.0"
+activityCompose = "1.9.1"
+composeBom = "2024.08.00"
+youtubePlayer = "12.1.0"
+spotless = "6.25.0"
+detekt = "1.23.6"
+daggerHilt = "2.51.1"
+googleServices = "4.4.2"
+
+compileSdk = "34"
+targetSdk = "34"
+minSdk = "26"
+drawerlayout = "1.2.0"
+kotlinGradlePlugin = "1.9.0"
 
 [libraries]
-adb-server-common = { module = "com.kaspersky.android-components:adb-server-common", version.ref = "kaspresso" }
-android-slanted-textview = { module = "com.haozhang.libary:android-slanted-textview", version.ref = "androidSlantedTextview" }
-androidx-core = { module = "androidx.test:core", version.ref = "core" }
+
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+youtube-player-core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "youtubePlayer"}
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-v150 = { module = "androidx.test:core", version.ref = "androidXTestVersion" }
-androidx-espresso-core-v1 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
-androidx-espresso-core-v340 = { module = "androidx.test.espresso:espresso-core", version.ref = "androidxEspressoCore" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitVersion" }
 androidx-orchestrator = { module = "androidx.test:orchestrator", version.ref = "orchestrator" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-rules = { module = "androidx.test:rules", version.ref = "androidXTestVersion" }
-androidx-rules-v140 = { module = "androidx.test:rules", version.ref = "rules" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "testRunnerVersion" }
-androidx-runner-v140 = { module = "androidx.test:runner", version.ref = "runner" }
-androidx-truth = { module = "androidx.test.ext:truth", version.ref = "androidXTestVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidXTestVersion" }
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-config = { module = "com.google.firebase:firebase-config" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
 glide-v500rc01 = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kaspresso = { module = "com.kaspersky.android-components:kaspresso", version.ref = "kaspresso" }
-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtendedVersion" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-richeditor-android = { module = "jp.wasabeef:richeditor-android", version.ref = "richeditorAndroid" }
+symbol-processing = { module = "com.google.devtools.ksp:symbol-processing", version.ref = "symbolProcessingApi" }
 symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "symbolProcessingApi" }
-androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
+androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version.ref = "drawerlayout" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+
+[bundles]
+hilt = ["hilt-android", "androidx-fragment-ktx"]
+retrofit = ["retrofit", "converter-gson"]
+default = ["androidx-core-ktx", "androidx-appcompat", "material"]
+main = ["androidx-activity", "androidx-constraintlayout", "androidx-annotation", "androidx-databinding-runtime", "symbol-processing"]
+firebase = ["firebase-analytics", "firebase-firestore", "firebase-auth", "symbol-processing-api"]
+firebaseConfig = ["firebase-analytics","firebase-config", "symbol-processing-api"]
+coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
+lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-livedata-ktx"]
+android-test = ["androidx-core-v150", "core-ktx", "androidx-espresso-core", "androidx-junit", "androidx-junit-ktx", "androidx-runner", "androidx-rules"]
+test = ["mockk", "junit"]
 
 [plugins]
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-symbolProcessing = { id = "com.google.devtools.ksp", version.ref = "kotlinSymbolProcessing" }
+daggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

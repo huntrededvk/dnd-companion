@@ -1,0 +1,89 @@
+<resources>
+
+    <string-array name="tiers">
+        <item>S</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+
+    <string name="app_name">DnD Companion</string>
+    <string name="meta_build">Meta build</string>
+    <string name="meta_builds">Meta builds</string>
+    <string name="add_meta_build">Add meta build</string>
+    <string name="meta">Meta</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username_field">Username:</string>
+    <string name="discord_field">Discord</string>
+    <string name="password_field">Password:</string>
+    <string name="email_field">Email:</string>
+    <string name="sign_in">Sign In</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="slash">/</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="welcome_back">Welcome back,</string>
+    <string name="guides">Guides</string>
+    <string name="events">Events</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_new_meta">Create new meta</string>
+    <string name="title_field">Title:</string>
+    <string name="description_field">Description:</string>
+    <string name="add_meta">Add meta</string>
+    <string name="tier">Tier</string>
+    <string name="class_">Class</string>
+    <string name="head_armor">Head armor</string>
+    <string name="chest_armor">Chest armor</string>
+    <string name="legs_armor">Legs armor</string>
+    <string name="foot_armor">Foot armor</string>
+    <string name="gloves_armor">Gloves armor</string>
+    <string name="back_armor">Back armor</string>
+    <string name="new_meta_build">New meta build</string>
+    <string name="primary_weapon">Primary weapon</string>
+    <string name="slot_2">Slot 2</string>
+    <string name="secondary_weapon">Secondary weapon</string>
+    <string name="neckless">Neckless</string>
+    <string name="ring">Ring</string>
+    <string name="description">Description</string>
+    <string name="tier_field">Tier:</string>
+    <string name="class_field">Class:</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="gear">Gear</string>
+    <string name="weapon">Weapon</string>
+    <string name="armor">Armor</string>
+    <string name="head">Head</string>
+    <string name="chest">Chest</string>
+    <string name="legs">Legs</string>
+    <string name="foot">Foot</string>
+    <string name="back">Back</string>
+    <string name="gloves">Gloves</string>
+    <string name="jewelry">Jewelry</string>
+    <string name="pendant">Pendant</string>
+    <string name="main_fragment">main_fragment</string>
+    <string name="solo_uppercase">SOLO</string>
+    <string name="duo_uppercase">DUO</string>
+    <string name="trio_uppercase">TRIO</string>
+    <string name="meta_uppercase">META</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="video">Video</string>
+    <string name="youtube_video_id_field">Youtube video id:</string>
+    <string name="likes">Likes</string>
+    <string name="karma">Karma</string>
+    <string name="_0">0</string>
+    <string name="like">Like</string>
+    <string name="dislike">Dislike</string>
+    <string name="team">Team</string>
+    <string name="title">Title</string>
+    <string name="navigation_drawer_open">drawer_open</string>
+    <string name="navigation_drawer_close">drawer_closed</string>
+    <string name="github_open_source">GitHub Open Source</string>
+    <string name="reset_password">Reset password</string>
+    <string name="password_recovery_will_be_sent_to_your_email">Password recovery will be sent to your email</string>
+    <string name="profile">Profile</string>
+    <string name="verify_email">Verify email</string>
+    <string name="we_don_t_have_any_meta_builds_yet">We don\'t have any meta builds yet</string>
+</resources>

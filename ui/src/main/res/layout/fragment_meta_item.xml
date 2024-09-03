@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/black"
+        android:visibility="invisible" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:fillViewport="true">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                tools:context=".presentation.meta.MetaItemFragment">
+
+                <LinearLayout
+                    android:id="@+id/ll_meta_title_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iv_class_preview"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/gray_button"
+                        android:contentDescription="@null"
+                        android:padding="2dp"
+                        android:scaleType="center"
+                        app:strokeColor="@color/dark_gray"
+                        app:strokeWidth="2dp"
+                        tools:src="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/tv_class"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        app:layout_constraintVertical_chainStyle="spread_inside"
+                        tools:text="Class" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:baselineAligned="false"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_weight="0.33"
+                        android:gravity="center_vertical|start"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:background="@drawable/gray_button"
+                            android:contentDescription="@null"
+                            android:padding="2dp"
+                            android:src="@drawable/tier_medals_48dp_white_icon" />
+
+                        <TextView
+                            android:id="@+id/tv_tier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            tools:text="S" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_weight="0.33"
+                        android:gravity="center|center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:background="@drawable/gray_button"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            android:src="@drawable/team_48dp_white_icon" />
+
+                        <TextView
+                            android:id="@+id/tv_team_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            tools:text="SOLO" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_weight="0.33"
+                        android:gravity="end|center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:background="@drawable/gray_button"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            android:src="@drawable/thumbs_up_down_48dp_white_icon" />
+
+                        <TextView
+                            android:id="@+id/tv_karma"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/_0"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:flexDirection="row"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_end">
+
+                    <LinearLayout
+                        android:id="@+id/btn_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_flexGrow="1">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/gray_button"
+                            android:padding="10dp"
+                            android:src="@drawable/user_icon" />
+
+                        <TextView
+                            android:id="@+id/tv_author"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:textSize="14sp"
+                            tools:text="\@@@@@@@@@@@@@@@@@@@@@@@@" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_flexGrow="0">
+
+                        <ImageView
+                            android:id="@+id/btn_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/green_button"
+                            android:padding="10dp"
+                            android:src="@drawable/thumb_up_icon" />
+
+                        <ImageView
+                            android:id="@+id/btn_dislike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/red_button"
+                            android:padding="10dp"
+                            android:src="@drawable/thumb_down_icon" />
+
+                    </LinearLayout>
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gray_button"
+                        android:padding="10dp"
+                        android:src="@drawable/title_24dp_icon"
+                        android:contentDescription="@string/title"/>
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="20sp"
+                        tools:text="\@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_youtube_player"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_youtube_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/video"
+                        android:textAlignment="center"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        tools:layout_editor_absoluteX="128dp" />
+
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/youtube_player_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:autoPlay="false" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_description_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        tools:layout_editor_absoluteX="128dp" />
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        tools:layout_editor_absoluteX="128dp"
+                        tools:text="@string/description" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_gear_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+
+                    android:text="@string/weapon"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="128dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_middle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_percent="0.5"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_start_25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_percent="0.25"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_end_25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_percent="0.75"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_primary_weapon_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/dnd_item_title_bg"
+                        android:padding="5dp"
+                        android:text="@string/_1"
+                        android:textAlignment="center"
+                        android:textColor="#d0af7b"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_middle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_secondary_weapon_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:background="@drawable/dnd_item_title_bg"
+                        android:padding="5dp"
+                        android:text="@string/_2"
+                        android:textAlignment="center"
+                        android:textColor="#71634d"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/guideline_middle"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_left_weapon_slot_one"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/dnd_item_content_bg"
+                        android:contentDescription="@null"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_start_25"
+                        app:layout_constraintStart_toStartOf="@id/tv_primary_weapon_number"
+                        app:layout_constraintTop_toBottomOf="@id/tv_primary_weapon_number"
+                        tools:src="@tools:sample/avatars" />
+
+                    <ImageView
+                        android:id="@+id/iv_left_weapon_slot_two"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginEnd="2dp"
+                        android:background="@drawable/dnd_item_content_bg"
+                        android:contentDescription="@null"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline_middle"
+                        app:layout_constraintStart_toEndOf="@+id/iv_left_weapon_slot_one"
+                        app:layout_constraintTop_toBottomOf="@id/tv_primary_weapon_number"
+                        tools:src="@tools:sample/avatars" />
+
+                    <ImageView
+                        android:id="@+id/iv_right_weapon_slot_one"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="2dp"
+                        android:background="@drawable/dnd_item_content_bg"
+                        android:contentDescription="@null"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_end_25"
+                        app:layout_constraintStart_toEndOf="@id/guideline_middle"
+                        app:layout_constraintTop_toBottomOf="@id/tv_secondary_weapon_number"
+                        tools:src="@tools:sample/avatars" />
+
+                    <ImageView
+                        android:id="@+id/iv_right_weapon_slot_two"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/dnd_item_content_bg"
+                        android:contentDescription="@null"
+                        android:padding="10dp"
+                        app:layout_constraintEnd_toEndOf="@id/tv_secondary_weapon_number"
+                        app:layout_constraintStart_toEndOf="@id/guideline_end_25"
+                        app:layout_constraintTop_toBottomOf="@id/tv_secondary_weapon_number"
+                        tools:src="@tools:sample/avatars" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/dnd_item_name_bg"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_left_weapon_slot_two"
+                        app:layout_constraintStart_toStartOf="@+id/iv_left_weapon_slot_one"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_left_weapon_slot_one" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/dnd_item_name_bg"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_right_weapon_slot_two"
+                        app:layout_constraintStart_toStartOf="@+id/iv_right_weapon_slot_one"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_right_weapon_slot_one" />
+
+                    <TextView
+                        android:id="@+id/tv_left_weapon_slot_one"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_start_25"
+                        app:layout_constraintStart_toStartOf="@id/iv_left_weapon_slot_one"
+                        app:layout_constraintTop_toBottomOf="@id/iv_left_weapon_slot_one"
+                        tools:text="Sword" />
+
+                    <TextView
+                        android:id="@+id/tv_left_weapon_slot_two"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:padding="5dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_middle"
+                        app:layout_constraintStart_toEndOf="@id/guideline_start_25"
+                        app:layout_constraintTop_toBottomOf="@id/iv_left_weapon_slot_one"
+                        tools:text="Shield" />
+
+                    <TextView
+                        android:id="@+id/tv_right_weapon_slot_one"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:padding="5dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_end_25"
+                        app:layout_constraintStart_toEndOf="@id/guideline_middle"
+                        app:layout_constraintTop_toBottomOf="@id/iv_right_weapon_slot_one"
+                        tools:text="Sword" />
+
+                    <TextView
+                        android:id="@+id/tv_right_weapon_slot_two"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="@id/iv_right_weapon_slot_two"
+                        app:layout_constraintStart_toEndOf="@id/guideline_end_25"
+                        app:layout_constraintTop_toBottomOf="@id/iv_right_weapon_slot_two"
+                        tools:text="Shield" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_armor_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+
+                    android:text="@string/armor"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="128dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_armor_head_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/head"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_chest_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/chest"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_legs_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/legs"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_armor_head"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+
+                            tools:src="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/iv_armor_chest"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/iv_armor_legs"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_armor_head"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+
+                            tools:text="Sword" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_chest"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+
+                            tools:text="Shield" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_legs"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+
+                            tools:text="Sword" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_armor_foot_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/foot"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_gloves_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/gloves"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_back_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/back"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_armor_foot"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/iv_armor_gloves"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/iv_armor_back"
+                            android:layout_width="0dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_armor_foot"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Sword" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_gloves"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Shield" />
+
+                        <TextView
+                            android:id="@+id/tv_armor_back"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Sword" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_jewelry_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+
+                    android:text="@string/jewelry"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="128dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_jewelry_pendant_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/pendant"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_jewelry_ring_slot_one_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/ring"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_jewelry_ring_slot_two_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_title_bg"
+                            android:padding="5dp"
+                            android:text="@string/ring"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_jewelry_pendant"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/iv_jewelry_ring_slot_one"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                        <ImageView
+                            android:id="@+id/iv_jewelry_ring_slot_two"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_content_bg"
+                            android:contentDescription="@null"
+                            android:padding="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@tools:sample/avatars" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_jewelry_pendant"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Sword" />
+
+                        <TextView
+                            android:id="@+id/tv_jewelry_ring_slot_one"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Shield" />
+
+                        <TextView
+                            android:id="@+id/tv_jewelry_ring_slot_two"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_weight="0.30"
+                            android:background="@drawable/dnd_item_name_bg"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Sword" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btn_delete"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/red_button"
+                        android:padding="10dp"
+                        android:text="@string/delete"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/btn_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/blue_button"
+                        android:padding="10dp"
+                        android:text="@string/edit"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
+
+</RelativeLayout>

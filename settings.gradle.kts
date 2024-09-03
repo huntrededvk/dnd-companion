@@ -21,3 +21,12 @@ dependencyResolutionManagement {
 
 rootProject.name = "dndcompanion"
 include(":app")
+include(":feature_auth")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+include(":ui")
+include(":feature_meta")
+include(":data")
+include(":feature_main")
+include(":config")
+include(":feature_profile")

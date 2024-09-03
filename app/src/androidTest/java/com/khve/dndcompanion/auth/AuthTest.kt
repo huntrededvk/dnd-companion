@@ -8,17 +8,15 @@ import com.khve.dndcompanion.MainFragmentScreen
 import com.khve.dndcompanion.R
 import com.khve.dndcompanion.auth.scenario.SignUpScenario
 import com.khve.dndcompanion.auth.screen.SignInScreen
-import com.khve.dndcompanion.data.auth.model.UserSignUpDto
-import com.khve.dndcompanion.presentation.main.MainActivity
 import org.junit.Rule
 import org.junit.Test
 
 class AuthTest : TestCase() {
 
     @get:Rule
-    val activityScenario = activityScenarioRule<MainActivity>()
+    val activityScenario = activityScenarioRule<com.khve.feature_main.presentation.MainActivity>()
 
-    private val userForSuccessfulAuth = UserSignUpDto(
+    private val userForSuccessfulAuth = com.khve.auth.model.UserSignUpDto(
         email = "    test@gmail.com   ",
         password = "    111111",
         username = "    Test     ",

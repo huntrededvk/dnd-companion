@@ -1,37 +1,32 @@
 package com.khve.dndcompanion.di
 
-import android.app.Application
-import android.content.Context
-import com.khve.dndcompanion.di.module.AuthModule
-import com.khve.dndcompanion.di.module.DndModule
-import com.khve.dndcompanion.di.module.MainModule
-import com.khve.dndcompanion.di.module.MetaModule
-import com.khve.dndcompanion.di.module.ViewModelModule
-import com.khve.dndcompanion.di.scope.ApplicationScope
-import com.khve.dndcompanion.presentation.ViewModelFactory
-import com.khve.dndcompanion.presentation.auth.SignInFragment
-import com.khve.dndcompanion.presentation.auth.SignUpFragment
-import com.khve.dndcompanion.presentation.main.MainActivity
-import com.khve.dndcompanion.presentation.main.MainFragment
-import com.khve.dndcompanion.presentation.meta.AddMetaItemFragment
-import com.khve.dndcompanion.presentation.meta.MetaItemFragment
-import com.khve.dndcompanion.presentation.meta.MetaListFragment
-import dagger.BindsInstance
+import com.khve.feature_auth.AuthModule
+import com.khve.feature_auth.presentation.SignInFragment
+import com.khve.feature_auth.presentation.SignUpFragment
+import com.khve.feature_dnd.DndModule
+import com.khve.feature_main.MainModule
+import com.khve.feature_main.presentation.MainActivity
+import com.khve.feature_main.presentation.MainFragment
+import com.khve.feature_meta.MetaModule
+import com.khve.feature_meta.presentation.AddMetaItemFragment
+import com.khve.feature_meta.presentation.MetaItemFragment
+import com.khve.feature_meta.presentation.MetaListFragment
+import com.khve.feature_profile.presentation.UserProfileFragment
 import dagger.Component
+import javax.inject.Singleton
 
-@ApplicationScope
+@Singleton
 @Component(
     modules = [
-        MainModule::class,
         AuthModule::class,
+        AppModule::class,
+        MainModule::class,
         MetaModule::class,
-        DndModule::class,
-        ViewModelModule::class
+        DndModule::class
     ]
 )
 interface ApplicationComponent {
 
-    fun getViewModelFactory(): ViewModelFactory
     fun inject(fragment: SignUpFragment)
     fun inject(fragment: SignInFragment)
     fun inject(fragment: MetaListFragment)
@@ -39,12 +34,6 @@ interface ApplicationComponent {
     fun inject(fragment: AddMetaItemFragment)
     fun inject(activity: MainActivity)
     fun inject(fragment: MainFragment)
+    fun inject(fragment: UserProfileFragment)
 
-    @Component.Factory
-    interface Factory {
-        fun create(
-            @BindsInstance context: Context,
-            @BindsInstance application: Application
-        ): ApplicationComponent
-    }
 }
